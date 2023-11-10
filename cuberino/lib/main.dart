@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,29 +14,156 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Cuberino',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Cuberino'),
+      
+      home: Home(),
     );
   }
 }
+
+class Home extends StatefulWidget {
+  const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+
+  int seconds = 0, minutes = 0, milliseconds = 0;
+  String digitSeconds = "00", digitMinutes = "00", digitMilliseconds = "000";
+  Timer? timer;
+  bool started = false;
+  List laps = [];
+
+
+  // stop timer func
+  void stop() {
+    timer!.cancel();
+    setState(() {
+      started = false;
+    });
+  }
+
+  // reset
+  void reset() {
+    timer!.cancel();
+    setState(() {
+      milliseconds = 0;
+      seconds = 0;
+      minutes = 0;
+
+      digitSeconds = "00";
+      digitMinutes = "00";
+      digitMilliseconds = "00";
+
+      started = false;
+    });
+  }
+
+  void start() {
+    started = true;
+    timer = Timer.periodic(Duration(milliseconds: 10), (timer) {
+      int localMilliseconds = milliseconds + 1;
+      int localSeconds = seconds;
+      int localMinutes = minutes;
+
+      if(localMilliseconds > 99) {
+        if (localSeconds > 59) {
+          localMinutes++;
+          localSeconds = 0;
+        }
+        else{
+          localSeconds++;
+          localMilliseconds = 0;
+        }
+      }
+      setState(() {
+        seconds = localSeconds;
+        minutes = localMinutes;
+        milliseconds = localMilliseconds;
+        digitSeconds = (seconds >= 10) ? "$seconds":"0$seconds";
+        digitMinutes = (minutes >= 10) ? "$minutes":"0$minutes";
+        digitMilliseconds = (milliseconds >= 10) ? "$milliseconds":"0$milliseconds";
+      });
+
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFF1C2757),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Center(
+                child: Text(
+                    "StopWatch",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 28.0,
+                      fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Center(
+                child: Text(
+                    "$digitMinutes:$digitSeconds:$digitMilliseconds",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 82.0,
+                        fontWeight: FontWeight.w600,
+                    ),
+                ),
+              ),
+
+              SizedBox(
+                height: 20.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                      child: RawMaterialButton(
+                        onPressed: () {
+                          (!started) ? start() : stop();
+                        },
+                        shape: const StadiumBorder(side: BorderSide(color: Colors.blue),
+                        ),
+                        child: Text((!started) ? "Start" : "Pause", style: TextStyle(color: Colors.white)),
+                      )
+                  ),
+                  SizedBox(width: 8.0),
+
+                  Expanded(
+                      child: RawMaterialButton(
+                        onPressed: () {
+                          reset();
+                        },
+                        fillColor: Colors.blue,
+                        shape: const StadiumBorder(
+                          side: BorderSide(color: Colors.blue),
+                        ),
+                        child: Text("Reset", style: TextStyle(color: Colors.white)),
+                      )
+                  )
+                ]
+              )
+            ]
+          )
+        )
+      )
+    );
+  }
+}
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
