@@ -29,8 +29,11 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+  Color background = Color(0xFF1C2757);
+  Color secondBackground = Color(0xFF323F68);
+
   int seconds = 0, minutes = 0, milliseconds = 0;
-  String digitSeconds = "00", digitMinutes = "00", digitMilliseconds = "000";
+  String digitSeconds = "00", digitMinutes = "00", digitMilliseconds = "00";
   Timer? timer;
   bool started = false;
   List laps = [];
@@ -92,26 +95,36 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1C2757),
+      backgroundColor: background,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(14.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Center(
-                child: Text(
-                    "StopWatch",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 28.0,
-                      fontWeight: FontWeight.bold,
+                Container(
+                  height: 200.0,
+                  padding: EdgeInsetsDirectional.zero,
+                  decoration: BoxDecoration(
+                    color: secondBackground,
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
-              ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: RawMaterialButton(
+                            onPressed: () {},
+                            shape: StadiumBorder(side: BorderSide(color: Colors.blue),
+                            ),
+                            child: Text("Generate Scramble", style: TextStyle(color: Colors.white),)
+                        ),
+                      ),
+                    ]
+                ),
               SizedBox(
-                height: 20.0,
+                height: 50.0,
               ),
               Center(
                 child: Text(
@@ -119,43 +132,45 @@ class _HomeState extends State<Home> {
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 82.0,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.bold,
                     ),
                 ),
               ),
-
-              SizedBox(
-                height: 20.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                      child: RawMaterialButton(
-                        onPressed: () {
-                          (!started) ? start() : stop();
-                        },
-                        shape: const StadiumBorder(side: BorderSide(color: Colors.blue),
-                        ),
-                        child: Text((!started) ? "Start" : "Pause", style: TextStyle(color: Colors.white)),
-                      )
+              Text(
+                  "Press and hold to start the timer.",
+                  style: TextStyle(
+                    color: Colors.teal.shade100,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16.0,
                   ),
-                  SizedBox(width: 8.0),
-
-                  Expanded(
-                      child: RawMaterialButton(
-                        onPressed: () {
-                          reset();
-                        },
-                        fillColor: Colors.blue,
-                        shape: const StadiumBorder(
-                          side: BorderSide(color: Colors.blue),
-                        ),
-                        child: Text("Reset", style: TextStyle(color: Colors.white)),
-                      )
-                  )
-                ]
-              )
+              ),
+              Listener(
+                onPointerDown: (event) {
+                  if(background == Color(0xFF1C2757)){
+                    Timer.periodic(Duration(milliseconds: 750), (timer) {
+                      background = Colors.green;
+                      secondBackground = Colors.lightGreen;
+                    });
+                  }
+                  else{
+                    stop();
+                    background = Color(0xFF1C2757);
+                    secondBackground = Color(0xFF323F68);
+                  }
+                },
+                onPointerUp: (event) {
+                  if(background ==  Colors.green){
+                    start();
+                  }
+                },
+                child: Container(
+                  height: 150.0,
+                  decoration: BoxDecoration(
+                    color: secondBackground,
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
             ]
           )
         )
