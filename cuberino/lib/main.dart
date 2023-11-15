@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 
@@ -28,15 +29,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List logs = [];
 
   Color background = Color(0xFF1C2757);
   Color secondBackground = Color(0xFF323F68);
+  String timerInstruction = "Press and hold to start the timer.";
 
   int seconds = 0, minutes = 0, milliseconds = 0;
   String digitSeconds = "00", digitMinutes = "00", digitMilliseconds = "00";
   Timer? timer;
   bool started = false;
   List laps = [];
+
+  String currentScramble = "";
+
+  bool holding = false;
 
 
   // stop timer func
@@ -65,6 +72,12 @@ class _HomeState extends State<Home> {
 
   void start() {
     started = true;
+    digitSeconds = "00";
+    digitMinutes = "00";
+    digitMilliseconds = "00";
+    seconds = 0;
+    minutes = 0;
+    milliseconds = 0;
     timer = Timer.periodic(Duration(milliseconds: 10), (timer) {
       int localMilliseconds = milliseconds + 1;
       int localSeconds = seconds;
@@ -92,6 +105,89 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void getScramble(){
+    const moves = ["L", "R", "F", "D", "B", "U"];
+    Map<String, String> inverts = {
+      "L" : "L'",
+      "R" : "R'",
+      "F" : "F'",
+      "D" : "D'",
+      "B" : "B'",
+      "U" : "U'",
+      "2L" : "2L",
+      "2R" : "2R",
+      "2B" : "2B",
+      "2D" : "2D",
+      "2F" : "2F",
+      "2U" : "2U",
+      "R'" : "R",
+      "L'" : "L",
+      "U'" : "U",
+      "B'" : "B",
+      "F'" : "F",
+      "D'" : "D",
+    };
+    var random = Random();
+    var scramble = [];
+    var len = scramble.length;
+    // Single, Double, Revert
+    while (scramble.length < 20) {
+      var move = random.nextInt(moves.length);
+      var type = random.nextInt(3);
+      switch(type){
+        case 0: //single thingie
+          if (scramble.isEmpty){
+            scramble.add(moves[move]);
+          }
+          else if ( scramble[scramble.length-1] == moves[move]){
+            scramble[scramble.length-1] = "2${moves[move]}";
+          }
+          else if ( scramble[scramble.length-1] == inverts[moves[move]]){
+            break;
+          }
+          else if(scramble[scramble.length-1] == "2${moves[move]}"){
+            break;
+          }
+          else {
+            scramble.add(moves[move]);
+          }
+          break;
+        case 1: //double move
+          if (scramble.isEmpty){
+            scramble.add("2${moves[move]}");
+          }
+          else if ((scramble[scramble.length-1] == ("2${moves[move]}"))|| (scramble[scramble.length-1] == inverts["2${moves[move]}"])){
+            break;
+          }
+          else if(scramble[scramble.length-1] == moves[move] || scramble[scramble.length-1] == inverts[move]){
+            break;
+          }
+          else {
+            scramble.add("2${moves[move]}");
+          }
+          break;
+        case 2: //invers
+          if (scramble.isEmpty){
+            scramble.add("${moves[move]}'");
+          }
+          else if(scramble[scramble.length-1] == "${moves[move]}'"){
+            scramble[scramble.length-1] = "2${moves[move]}";
+          }
+          else if(scramble[scramble.length-1] == moves[move] || scramble[scramble.length-1] == "2${moves[move]}"){
+            break;
+          }
+          else {
+            scramble.add("${moves[move]}'");
+          }
+          break;
+        default:break;
+      }
+    }
+    setState(() {
+      currentScramble = scramble.join("  ");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,29 +198,62 @@ class _HomeState extends State<Home> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-                Container(
-                  height: 200.0,
-                  padding: EdgeInsetsDirectional.zero,
-                  decoration: BoxDecoration(
-                    color: secondBackground,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: RawMaterialButton(
-                            onPressed: () {},
-                            shape: StadiumBorder(side: BorderSide(color: Colors.blue),
-                            ),
-                            child: Text("Generate Scramble", style: TextStyle(color: Colors.white),)
+              Visibility(
+                  maintainAnimation: true,
+                  maintainState: true,
+                  maintainSize: true,
+                  visible: !started,
+                  child: Container(
+                    height: 200.0,
+                    width: double.infinity,
+                    padding: EdgeInsetsDirectional.zero,
+                    decoration: BoxDecoration(
+                      color: secondBackground,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 11, left: 15),
+                        child: Text(
+                          currentScramble,
+                          style: const TextStyle(
+                            fontSize: 35,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            height: 2.5,
+                          ),
                         ),
                       ),
-                    ]
+                      ),
+            ],
+                    ),
+                  ),
+              ),
+                Visibility(
+                  maintainAnimation: true,
+                  maintainState: true,
+                  maintainSize: true,
+                  visible: !started,
+                  child:  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: RawMaterialButton(
+                              onPressed: () {
+                                getScramble();
+                              },
+                              shape: StadiumBorder(side: BorderSide(color: Colors.blue),
+                              ),
+                              child: Text("Generate Scramble", style: TextStyle(color: Colors.white),)
+                          ),
+                        ),
+                      ]
+                  ),
                 ),
               SizedBox(
-                height: 50.0,
+                height: 25.0,
               ),
               Center(
                 child: Text(
@@ -137,7 +266,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
               Text(
-                  "Press and hold to start the timer.",
+                timerInstruction,
                   style: TextStyle(
                     color: Colors.teal.shade100,
                     fontWeight: FontWeight.w600,
@@ -146,21 +275,37 @@ class _HomeState extends State<Home> {
               ),
               Listener(
                 onPointerDown: (event) {
+                  holding = true;
                   if(background == Color(0xFF1C2757)){
-                    Timer.periodic(Duration(milliseconds: 750), (timer) {
-                      background = Colors.green;
-                      secondBackground = Colors.lightGreen;
+                    Timer.periodic(Duration(milliseconds: 1500), (timer) {
+                      setState(() {
+                        if(!started && holding) {
+                          background = Colors.green;
+                          secondBackground = Colors.lightGreen;
+                          timerInstruction = "Let go to start the timer. \nPress again to stop the timer.";
+                        }
+                        timer.cancel();
+                      });
+
                     });
                   }
                   else{
                     stop();
                     background = Color(0xFF1C2757);
                     secondBackground = Color(0xFF323F68);
+                    timerInstruction = "Press and hold to start the timer.";
+
+                    String time = digitMinutes + ":" + digitSeconds + ":" + digitMilliseconds;
+                    DateTime date = DateTime.now();
+                    logs.add([time, date]);
+                    print(logs);
                   }
                 },
                 onPointerUp: (event) {
+                  holding = false;
                   if(background ==  Colors.green){
                     start();
+
                   }
                 },
                 child: Container(
@@ -171,6 +316,51 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
+              Container(
+                height: 150,
+                child:
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: logs.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        color: secondBackground,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 5),
+                          child: Row(
+                      children: [
+                        Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 15),
+                              child: Text(logs[index][0]),
+                            )]
+                        ),
+                        Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 15),
+                                child: Text(logs[index][1].toString()),
+                              )]
+                        ),
+                        Column(
+                          children: [
+                            RawMaterialButton(
+                            onPressed: () {
+                              setState(() {
+                                logs.removeAt(index);
+                              });
+                            },
+                            child: Text("Del"),
+                          ),]
+                        ),
+                      ]
+                          )
+                        ),
+                      );
+                    }
+                  )
+              )
             ]
           )
         )
@@ -188,7 +378,7 @@ class MyHomePage extends StatefulWidget {
   // how it looks.
 
   // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
+  // case the title) provided by the parent (in this case the App widgetF) and
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
