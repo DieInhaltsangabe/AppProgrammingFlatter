@@ -1,4 +1,4 @@
-import 'package:cuberino/tutorial.dart';
+import 'package:cuberino/tutorial_section.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
             secondary: Color.fromRGBO(255, 255, 255, 1)),
         useMaterial3: true,
       ),
-      home: const Tutorial(),
+      home: TutorialSection(),
     );
   }
 }
