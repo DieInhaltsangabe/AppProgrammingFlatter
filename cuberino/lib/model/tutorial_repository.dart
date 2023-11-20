@@ -50,7 +50,8 @@ class TutorialRepository {
       const TutorialModel(
           id: 6,
           pathToImage: 'assets/tutorialwhitecross.jpeg',
-          subsectionText: 'Erster Schritt',
+          subsectionText:
+              'Wir starten mit dem Lösen der weißen Kanten. Du kannst natürlich auch mit jeder anderen Farbe beginnen, doch in diesem Tutorial nehmen wir die weiße Seite als Beispiel. Wir wissen ja bereits, dass die mittleren Steine immer am gleichen Platz bleiben. Deshalb müssen wir darauf aufpassen, dass auch die zweite Farbe der Kanten mit den mittleren Steine der mittleren Seite übereinstimmt. Dieser Schritt ist intuitiv und relativ einfach, da es noch nicht so viele gelöste Steine gibt, auf die man achten muss. In vielen Fällen muss man die Kanten nur in ihren gelösten Zustand drehen. Hier sind noch ein paar Beispiele, die etwas spezieller sind.',
           parentId: 5)
     ];
     List<TutorialModel> result = [];
@@ -60,5 +61,21 @@ class TutorialRepository {
       }
     }
     return result;
+  }
+
+  static loadCaptionText(int id) {
+    var tutorials = [
+      const TutorialCardModel(
+          id: 5,
+          pathToImage: 'assets/tutorialwhitecross.jpeg',
+          captionText: 'Weißes Kreuz',
+          subsectionText: 'Erster Schritt',
+          parentId: 1)
+    ];
+    for (var tutorial in tutorials) {
+      if (tutorial.id == id) {
+        return tutorial.captionText;
+      }
+    }
   }
 }
