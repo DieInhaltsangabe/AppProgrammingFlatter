@@ -1,4 +1,3 @@
-import 'package:cuberino/model/tutorial_card_model.dart';
 import 'package:cuberino/model/tutorial_repository.dart';
 import 'package:cuberino/tutorialcard.dart';
 import 'package:flutter/material.dart';
@@ -12,20 +11,37 @@ class TutorialDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GridView.count(
-        crossAxisCount: 2,
-        mainAxisSpacing: 5,
-        crossAxisSpacing: 5,
-        children:
-            TutorialRepository.loadDataChild(parentId).map<Widget>((tutorial) {
-          return TutorialCard(
-              pathToImage: tutorial.pathToImage,
-              captionText: tutorial.captionText,
-              subsectionText: tutorial.subsectionText,
-              id: tutorial.id,
-              parentId: tutorial.parentId);
-        }).toList(),
-      ),
+      body: Column(children: [
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 4.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Icon(Icons.arrow_back_sharp),
+              ),
+            )
+          ],
+        ),
+        Expanded(
+            child: GridView.count(
+          primary: false,
+          crossAxisCount: 2,
+          mainAxisSpacing: 5,
+          crossAxisSpacing: 5,
+          children: TutorialRepository.loadDataChild(parentId)
+              .map<Widget>((tutorial) {
+            return TutorialCard(
+                pathToImage: tutorial.pathToImage,
+                captionText: tutorial.captionText,
+                subsectionText: tutorial.subsectionText,
+                id: tutorial.id,
+                parentId: tutorial.parentId);
+          }).toList(),
+        ))
+      ]),
     );
   }
 }
