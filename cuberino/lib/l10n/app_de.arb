@@ -1,5 +1,10 @@
 {
-  "settings": "Einstellung",
+  "settings": "Einstellungen",
   "language": "Sprache",
-  "timer": "Drücken und halten um den timer zu starten."
+  "timerOff": "Drücke und halte um die Stoppuhr zu starten.",
+  "timerArmed": "Lassen Sie los um die Stoppuhr zu starten. \n Drücken Sie erneut um die Stoppuhr daraufhin zu stoppen.",
+  "deleteButton": "Löschen",
+  "generateScramble": "Generiere Permutation",
+  "best": "Bestzeit: ",
+  "avg": "Durchschnitt: "
 }

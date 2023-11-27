@@ -7,7 +7,12 @@
   "@language": {
     "description": "Appbar language title"
   },
-  "timer": "Press and hold to start the timer.",
+  "timerOff": "Press and hold to start the timer.",
+  "timerArmed": "Let go to start the timer. \n Press again to stop the timer.",
+  "deleteButton": "Delete",
+  "best": "PR: ",
+  "avg": "Average: ",
+  "generateScramble": "Generate scramble",
   "@timer": {
     "description": "Press and hold to start the timer."
   }

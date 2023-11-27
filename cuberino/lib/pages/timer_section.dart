@@ -3,53 +3,112 @@ import 'package:cuberino/components/bottom_app_bar.dart';
 import 'package:cuberino/app_settings.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Cuberino',
-      home: Home(),
-    );
-  }
-}
-
-class Home extends StatefulWidget {
-  const Home({super.key});
+class TimerSection extends StatefulWidget {
+  const TimerSection({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<TimerSection> createState() => TimerApp();
 }
 
-class _HomeState extends State<Home> {
+class TimerApp extends State<TimerSection> {
+  List logs = [];
 
   Color background = Color(0xFF1C2757);
   Color secondBackground = Color(0xFF323F68);
+  String timerInstruction = "Press and hold to start the timer.";
+  String prText = "Bestzeit: -";
+  String avgText = "Durchschnitt: -";
 
   int seconds = 0, minutes = 0, milliseconds = 0;
   String digitSeconds = "00", digitMinutes = "00", digitMilliseconds = "00";
+  int prMin = 0, prSec = 0, prMil = 0;
   Timer? timer;
   bool started = false;
-  List laps = [];
+  bool hideLog = false;
 
+  String currentScramble = "";
+
+  bool holding = false;
+
+  String _formatTwoDigits(int value) {
+    return value < 10 ? '0$value' : '$value';
+  }
+
+  void calculateAverageAndPR(){
+
+    bool newBest = false;
+
+    if(logs.length == 0){
+      setState(() {
+        started = false;
+        prText = "Bestzeit: -";
+        avgText = "Durchschnitt: -";
+      });
+      return;
+    }
+    double avgSumMilliseconds = 0.0;
+
+    for(int i = 0; i < logs.length; i++){
+      List<String> current = logs[i][0].split(':');
+      // min kleiner
+      if((prMin > int.parse(current[0]) || prMin >= int.parse(current[0]) && prSec > int.parse(current[1]) || prMin >= int.parse(current[0]) && prSec >= int.parse(current[1]) && prMil > int.parse(current[2])) || logs.length == 1){
+        prMin = int.parse(current[0]);
+        prSec = int.parse(current[1]);
+        prMil = int.parse(current[2]);
+        if(prMil >= 100 && prMil <= 999){
+          prMil = ((prMil/100).round()) % 100;
+        }
+        newBest = true;
+      }
+      double secondToMillisecond = double.parse(current[1]) * 1000;
+      double minuteToMillisecond = double.parse(current[0]) * 1000 * 60;
+      avgSumMilliseconds = avgSumMilliseconds + secondToMillisecond + minuteToMillisecond + double.parse(current[2]);
+    }
+
+    avgSumMilliseconds = avgSumMilliseconds / logs.length;
+
+    int minutes = ( avgSumMilliseconds ~/ (1000 * 60)) % 60;
+    avgSumMilliseconds = avgSumMilliseconds - (minutes * (60000));
+    int seconds = ( avgSumMilliseconds ~/ 1000) % 60;
+    avgSumMilliseconds = avgSumMilliseconds - (seconds * 1000);
+    int avg = avgSumMilliseconds.round();
+    String tempAVG;
+    if(avg >= 100){
+      avg = ((avg/100).round()) % 100;
+      tempAVG = avg.toString();
+    }
+    else if(avg < 100 && avg >= 10){
+      tempAVG = avg.toString();
+    }
+    else{
+      tempAVG = "0"+avg.toString();
+    }
+
+    String formattedTimeAVG = '$minutes:${_formatTwoDigits(seconds)}:$tempAVG';
+
+    setState(() {
+      if(newBest){
+        prText = "Bestzeit: " + (prMin.toString().length == 2 ? prMin.toString() : "0"+prMin.toString()) + ":" + (prSec.toString().length == 2 ? prSec.toString() : "0"+prSec.toString()) + ":" + _formatTwoDigits(prMil);
+      }
+
+      avgText = "Durchschnitt: " + formattedTimeAVG;
+
+    });
+  }
 
   // stop timer func
-  void stop() {
+  void stopTimer() {
     timer!.cancel();
+
     setState(() {
       started = false;
     });
   }
 
   // reset
-  void reset() {
+  void resetTimer() {
     timer!.cancel();
     setState(() {
       milliseconds = 0;
@@ -64,8 +123,14 @@ class _HomeState extends State<Home> {
     });
   }
 
-  void start() {
+  void startTimer() {
     started = true;
+    digitSeconds = "00";
+    digitMinutes = "00";
+    digitMilliseconds = "00";
+    seconds = 0;
+    minutes = 0;
+    milliseconds = 0;
     timer = Timer.periodic(Duration(milliseconds: 10), (timer) {
       int localMilliseconds = milliseconds + 1;
       int localSeconds = seconds;
@@ -93,6 +158,94 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void getScramble(){
+    const moves = ["L", "R", "F", "D", "B", "U"];
+    Map<String, String> inverts = {
+      "L" : "L'",
+      "R" : "R'",
+      "F" : "F'",
+      "D" : "D'",
+      "B" : "B'",
+      "U" : "U'",
+      "2L" : "2L",
+      "2R" : "2R",
+      "2B" : "2B",
+      "2D" : "2D",
+      "2F" : "2F",
+      "2U" : "2U",
+      "R'" : "R",
+      "L'" : "L",
+      "U'" : "U",
+      "B'" : "B",
+      "F'" : "F",
+      "D'" : "D",
+    };
+    var random = Random();
+    var scramble = [];
+    var len = scramble.length;
+    // Single, Double, Revert
+    while (scramble.length < 20) {
+      var move = random.nextInt(moves.length);
+      var type = random.nextInt(3);
+      switch(type){
+        case 0: //single thingie
+          if (scramble.isEmpty){
+            scramble.add(moves[move]);
+          }
+          else if ( scramble[scramble.length-1] == moves[move]){
+            scramble[scramble.length-1] = "2${moves[move]}";
+          }
+          else if ( scramble[scramble.length-1] == inverts[moves[move]]){
+            break;
+          }
+          else if(scramble[scramble.length-1] == "2${moves[move]}"){
+            break;
+          }
+          else {
+            scramble.add(moves[move]);
+          }
+          break;
+        case 1: //double move
+          if (scramble.isEmpty){
+            scramble.add("2${moves[move]}");
+          }
+          else if ((scramble[scramble.length-1] == ("2${moves[move]}"))|| (scramble[scramble.length-1] == inverts["2${moves[move]}"])){
+            break;
+          }
+          else if(scramble[scramble.length-1] == moves[move] || scramble[scramble.length-1] == inverts[move]){
+            break;
+          }
+          else {
+            scramble.add("2${moves[move]}");
+          }
+          break;
+        case 2: //invers
+          if (scramble.isEmpty){
+            scramble.add("${moves[move]}'");
+          }
+          else if(scramble[scramble.length-1] == "${moves[move]}'"){
+            scramble[scramble.length-1] = "2${moves[move]}";
+          }
+          else if(scramble[scramble.length-1] == moves[move] || scramble[scramble.length-1] == "2${moves[move]}"){
+            break;
+          }
+          else {
+            scramble.add("${moves[move]}'");
+          }
+          break;
+        default:break;
+      }
+    }
+    setState(() {
+      currentScramble = scramble.join("  ");
+    });
+  }
+
+  String getFormattedDate(String date){
+    List<String> data = date.split("-");
+    return "${data[2]}.${data[1]}.${data[0]}";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,29 +256,62 @@ class _HomeState extends State<Home> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        height: 200.0,
-                        padding: EdgeInsetsDirectional.zero,
-                        decoration: BoxDecoration(
-                          color: secondBackground,
-                          borderRadius: BorderRadius.circular(8.0),
+                      Visibility(
+                        maintainAnimation: true,
+                        maintainState: true,
+                        maintainSize: true,
+                        visible: !started,
+                        child: Container(
+                          height: 200.0,
+                          width: double.infinity,
+                          padding: EdgeInsetsDirectional.zero,
+                          decoration: BoxDecoration(
+                            color: secondBackground,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 11, left: 15),
+                                  child: Text(
+                                    currentScramble,
+                                    style: const TextStyle(
+                                      fontSize: 35,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      height: 2.5,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: RawMaterialButton(
-                                  onPressed: () {},
-                                  shape: StadiumBorder(side: BorderSide(color: Colors.blue),
-                                  ),
-                                  child: Text("Generate Scramble", style: TextStyle(color: Colors.white),)
+                      Visibility(
+                        maintainAnimation: true,
+                        maintainState: true,
+                        maintainSize: true,
+                        visible: !started,
+                        child:  Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: RawMaterialButton(
+                                    onPressed: () {
+                                      getScramble();
+                                    },
+                                    shape: StadiumBorder(side: BorderSide(color: secondBackground),
+                                    ),
+                                    child: Text(AppLocalizations.of(context)!.generateScramble, style: TextStyle(color: Colors.white),)
+                                ),
                               ),
-                            ),
-                          ]
+                            ]
+                        ),
                       ),
                       SizedBox(
-                        height: 50.0,
+                        height: 25.0,
                       ),
                       Center(
                         child: Text(
@@ -137,31 +323,60 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          prText + "\n" + avgText,
+                          style: TextStyle(
+                            color: Colors.teal.shade100,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ),
                       Text(
-                        AppLocalizations.of(context)!.timer,
+                        timerInstruction,
                         style: TextStyle(
                           color: Colors.teal.shade100,
                           fontWeight: FontWeight.w600,
-                          fontSize: AppSettings().fontSize,
+                          fontSize: 16.0,
                         ),
                       ),
                       Listener(
                         onPointerDown: (event) {
+                          holding = true;
                           if(background == Color(0xFF1C2757)){
-                            Timer.periodic(Duration(milliseconds: 750), (timer) {
-                              background = Colors.green;
-                              secondBackground = Colors.lightGreen;
+                            Timer.periodic(Duration(milliseconds: 1500), (timer) {
+                              setState(() {
+                                if(!started && holding) {
+                                  background = Colors.green;
+                                  secondBackground = Colors.lightGreen;
+                                  timerInstruction = AppLocalizations.of(context)!.timerArmed;
+                                  hideLog = true;
+                                }
+                                timer.cancel();
+                              });
+
                             });
                           }
                           else{
-                            stop();
+                            timer!.cancel();
+                            started = false;
                             background = Color(0xFF1C2757);
                             secondBackground = Color(0xFF323F68);
+                            timerInstruction = AppLocalizations.of(context)!.timerOff;
+
+                            String time = digitMinutes + ":" + digitSeconds + ":" + digitMilliseconds;
+                            String date = DateTime.now().day.toString() + "." + DateTime.now().month.toString() + "." + DateTime.now().year.toString();
+                            logs.add([time, date]);
+                            calculateAverageAndPR();
+                            hideLog = false;
                           }
                         },
                         onPointerUp: (event) {
+                          holding = false;
                           if(background ==  Colors.green){
-                            start();
+                            startTimer();
                           }
                         },
                         child: Container(
@@ -172,100 +387,86 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
+                      Visibility(
+                        maintainAnimation: true,
+                        maintainState: true,
+                        maintainSize: true,
+                        visible: !started || !hideLog,
+                        child: Container(
+                            height: 105,
+                            child:
+                            ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: logs.length,
+                                itemBuilder: (context, index) {
+                                  return Card(
+                                    color: secondBackground,
+                                    child: Padding(
+                                        padding: EdgeInsets.only(top: 2),
+                                        child: Row(
+                                            children: [
+                                              Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding: EdgeInsets.only(left: 15),
+                                                      child: Text(logs[index][0], style: TextStyle(
+                                                        color: Colors.teal.shade100,
+                                                        fontWeight: FontWeight.w600,
+                                                        fontSize: 16.0,
+                                                      ),),
+                                                    )]
+                                              ),
+                                              Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding: EdgeInsets.only(left: 15),
+                                                      child: Text(
+                                                        logs[index][1], style: TextStyle(
+                                                        color: Colors.teal.shade100,
+                                                        fontWeight: FontWeight.w600,
+                                                        fontSize: 16.0,
+                                                      ),
+                                                      ),
+                                                    )]
+                                              ),
+                                              Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding: EdgeInsets.only(left: 20),
+                                                      child:
+                                                      RawMaterialButton(
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            logs.removeAt(index);
+                                                            calculateAverageAndPR();
+                                                          });
+                                                        },
+                                                        child:
+                                                        Text(
+                                                            AppLocalizations.of(context)!.deleteButton,
+                                                            style: TextStyle(
+                                                                color: Colors.teal.shade100,
+                                                                fontWeight: FontWeight.w600,
+                                                                fontSize: 16.0)
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ]
+                                              ),
+                                            ]
+                                        )
+                                    ),
+                                  );
+                                }
+                            )
+                        ),
+
+                      ),
                     ]
                 )
             )
         ),
         bottomNavigationBar: BottomMenu(false, true, true),
-    );
-  }
-}
-
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
