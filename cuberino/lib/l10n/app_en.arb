@@ -1,0 +1,14 @@
+{
+  "settings": "Settings",
+  "@settings": {
+    "description": "Appbar settings title"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Appbar language title"
+  },
+  "timer": "Press and hold to start the timer.",
+  "@timer": {
+    "description": "Press and hold to start the timer."
+  }
+}
