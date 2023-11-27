@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'bottom_app_bar.dart';
-import 'app_settings.dart';
+import 'package:cuberino/components/bottom_app_bar.dart';
+import 'package:cuberino/app_settings.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'app_settings.dart';
-import 'main.dart';
+import 'package:cuberino/app_settings.dart';
+import 'package:cuberino/main.dart';
 
 class LanguageSettings extends StatefulWidget {
   const LanguageSettings({Key? key}) : super(key: key);

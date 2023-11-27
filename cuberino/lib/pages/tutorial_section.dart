@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'bottom_app_bar.dart';
+import 'package:cuberino/components/bottom_app_bar.dart';
 
 class Tutorial extends StatelessWidget {
   const Tutorial({super.key});

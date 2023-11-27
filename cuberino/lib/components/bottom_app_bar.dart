@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
-import 'timer_section.dart';
-import 'tutorial_section.dart';
+import 'package:cuberino/main.dart';
+import 'package:cuberino/pages/timer_section.dart';
+import 'package:cuberino/pages/tutorial_section.dart';
 
 class BottomMenu extends StatelessWidget {
 

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:cuberino/l10n/l10n.dart';
-import 'settings_page.dart';
-import 'bottom_app_bar.dart';
+import 'pages/settings_page.dart';
+import 'components/bottom_app_bar.dart';
 import 'app_settings.dart';
 
 

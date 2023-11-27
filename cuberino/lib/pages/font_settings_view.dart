@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'app_settings.dart';
-import 'main.dart';
+import 'package:cuberino/app_settings.dart';
+import 'package:cuberino/main.dart';
 
 class FontSettingsView extends StatefulWidget {
   @override
