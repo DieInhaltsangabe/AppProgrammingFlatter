@@ -9,6 +9,7 @@ class FontSettingsView extends StatefulWidget {
 
 class _FontSettingsViewState extends State<FontSettingsView> {
   final AppSettings _appSettings = AppSettings();
+  List<String> fonts = ["Arial", "Monospace", "Times New Roman"];
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +19,10 @@ class _FontSettingsViewState extends State<FontSettingsView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Select Font Size',
-                style: TextStyle(fontSize: _appSettings.fontSize),
+                style: TextStyle(fontSize: _appSettings.fontSize, fontFamily: _appSettings.font),
               ),
               CheckboxListTile(
-                title: Text('Small', style: TextStyle(fontSize: _appSettings.fontSize),),
+                title: Text('Small', style: TextStyle(fontSize: _appSettings.fontSize, fontFamily: _appSettings.font),),
                 value: _appSettings.fontSize == 15.0,
                 onChanged: (bool? value) {
                   if (value != null && value) {
@@ -32,7 +33,7 @@ class _FontSettingsViewState extends State<FontSettingsView> {
                 },
               ),
               CheckboxListTile(
-                title: Text('Medium', style: TextStyle(fontSize: _appSettings.fontSize),),
+                title: Text('Medium', style: TextStyle(fontSize: _appSettings.fontSize, fontFamily: _appSettings.font),),
                 value: _appSettings.fontSize == 20.0,
                 onChanged: (bool? value) {
                   if (value != null && value) {
@@ -43,7 +44,7 @@ class _FontSettingsViewState extends State<FontSettingsView> {
                 },
               ),
               CheckboxListTile(
-                title: Text('Large', style: TextStyle(fontSize: _appSettings.fontSize),),
+                title: Text('Large', style: TextStyle(fontSize: _appSettings.fontSize, fontFamily: _appSettings.font),),
                 value: _appSettings.fontSize == 25.0,
                 onChanged: (bool? value) {
                   if (value != null && value) {
@@ -52,6 +53,27 @@ class _FontSettingsViewState extends State<FontSettingsView> {
                     });
                   }
                 },
+              ),
+              Divider(),
+              Text(
+                'Select Font Family',
+                style: TextStyle(fontSize: _appSettings.fontSize, fontFamily: _appSettings.font),
+              ),
+              DropdownButton<String>(
+                value: _appSettings.font,
+                onChanged: (String? value) {
+                  if (value != null) {
+                    setState(() {
+                      _appSettings.font = value;
+                    });
+                  }
+                },
+                items: fonts.map((String fontFamily) {
+                  return DropdownMenuItem<String>(
+                    value: fontFamily,
+                    child: Text('Font: $fontFamily', style: TextStyle(fontFamily: fontFamily)),
+                  );
+                }).toList(),
               ),
             ],
           )
