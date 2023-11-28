@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cuberino/app_settings.dart';
-import 'package:cuberino/main.dart';
+import 'package:cuberino/components/bottom_app_bar.dart';
 
 class FontSettingsView extends StatefulWidget {
   @override
@@ -78,19 +78,7 @@ class _FontSettingsViewState extends State<FontSettingsView> {
             ],
           )
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            IconButton(
-              icon: Image.asset('assets/rubik.png'),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Cuberino()));
-              },
-            ),
-          ],
-        ),
-      ),
+        bottomNavigationBar: BottomMenu(false, true, false)
     );
   }
 }

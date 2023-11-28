@@ -6,5 +6,7 @@
   "deleteButton": "sil",
   "generateScramble": "Karıştırmayi oluştur",
   "best": "En iyi: ",
-  "avg": "Ortalama: "
+  "avg": "Ortalama: ",
+  "backgroundcolor": "Arka plan rengi",
+  "changecolor": "Arka plan rengi değiştir"
 }

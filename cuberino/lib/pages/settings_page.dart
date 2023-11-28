@@ -1,3 +1,4 @@
+import 'package:cuberino/pages/backgound_color.dart';
 import 'package:flutter/material.dart';
 import 'font_settings_view.dart';
 import 'language_settings_view.dart';
@@ -20,7 +21,8 @@ class _SettingsPageState extends State<SettingsPage> {
       ListView(
         children: [
           ListNavigation(AppLocalizations.of(context)!.language, (){Navigator.push(context, MaterialPageRoute(builder: (context) => LanguageSettings()));}),
-          ListNavigation("Font", (){Navigator.push(context, MaterialPageRoute(builder: (context) => FontSettingsView()));})
+          ListNavigation("Font", (){Navigator.push(context, MaterialPageRoute(builder: (context) => FontSettingsView()));}),
+          ListNavigation(AppLocalizations.of(context)!.backgroundcolor, (){Navigator.push(context, MaterialPageRoute(builder: (context) => BackgroundColorSelect()));})
         ],
       ),
     );

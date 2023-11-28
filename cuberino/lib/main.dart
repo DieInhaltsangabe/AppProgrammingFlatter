@@ -6,7 +6,7 @@ import 'pages/settings_page.dart';
 import 'components/bottom_app_bar.dart';
 import 'app_settings.dart';
 
-
+final AppSettings _appSettings = AppSettings();
 
 void main() {
   runApp(Cuberino());
@@ -14,25 +14,31 @@ void main() {
 
 
 class Cuberino extends StatelessWidget {
-  final AppSettings _appSettings = AppSettings();
-
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MyHomePage(),
-      theme: ThemeData.dark(),
-      supportedLocales: L10n.all,
-      locale: Locale(_appSettings.language),
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
+    final Future<void> _loadSettings = _appSettings.loadSettings();
+    return FutureBuilder(
+      future: _loadSettings,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MaterialApp(
+            home: MyHomePage(),
+            theme: ThemeData.dark(),
+            supportedLocales: L10n.all,
+            locale: Locale(_appSettings.language),
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+          );
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
     );
   }
-
   void test(){}
 }
 
@@ -52,8 +58,11 @@ class MyHomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: Text('CUBERINO', style: TextStyle(fontSize: AppSettings().fontSize),
+      body: Container(
+        color: _appSettings.background_color,
+        child: Center(
+          child: Text('CUBERINO', style: TextStyle(fontSize: AppSettings().fontSize),
+          ),
         ),
       ),
       bottomNavigationBar: BottomMenu(true, false, true),

@@ -6,5 +6,7 @@
   "deleteButton": "Löschen",
   "generateScramble": "Generiere Permutation",
   "best": "Bestzeit: ",
-  "avg": "Durchschnitt: "
+  "avg": "Durchschnitt: ",
+  "backgroundcolor": "Hintergrundfarbe",
+  "changecolor": "Hintergrundfarbe ändern"
 }

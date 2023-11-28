@@ -15,5 +15,7 @@
   "generateScramble": "Generate scramble",
   "@timer": {
     "description": "Press and hold to start the timer."
-  }
+  },
+  "backgroundcolor": "Background color",
+   "changecolor": "Change background color"
 }
