@@ -1,0 +1,12 @@
+{
+  "settings": "Ayarlar",
+  "language": "Dil",
+  "timerOff": "Zaman saati başlatmak için basılı tutunuz.",
+  "timerArmed": "Zamanlayıcıyı başlatmak için, tutmayı bırak. \n Zamanlayıcıyı durdurmak için tekrar basın",
+  "deleteButton": "sil",
+  "generateScramble": "Karıştırmayi oluştur",
+  "best": "En iyi: ",
+  "avg": "Ortalama: ",
+  "backgroundcolor": "Arka plan rengi",
+  "changecolor": "Arka plan rengi değiştir"
+}

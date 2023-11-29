@@ -1,0 +1,21 @@
+{
+  "settings": "Settings",
+  "@settings": {
+    "description": "Appbar settings title"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Appbar language title"
+  },
+  "timerOff": "Press and hold to start the timer.",
+  "timerArmed": "Let go to start the timer. \n Press again to stop the timer.",
+  "deleteButton": "Delete",
+  "best": "PR: ",
+  "avg": "Average: ",
+  "generateScramble": "Generate scramble",
+  "@timer": {
+    "description": "Press and hold to start the timer."
+  },
+  "backgroundcolor": "Background color",
+   "changecolor": "Change background color"
+}

@@ -1,0 +1,12 @@
+{
+  "settings": "Einstellungen",
+  "language": "Sprache",
+  "timerOff": "Drücke und halte um die Stoppuhr zu starten.",
+  "timerArmed": "Lassen Sie los um die Stoppuhr zu starten. \n Drücken Sie erneut um die Stoppuhr daraufhin zu stoppen.",
+  "deleteButton": "Löschen",
+  "generateScramble": "Generiere Permutation",
+  "best": "Bestzeit: ",
+  "avg": "Durchschnitt: ",
+  "backgroundcolor": "Hintergrundfarbe",
+  "changecolor": "Hintergrundfarbe ändern"
+}
