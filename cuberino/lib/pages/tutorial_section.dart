@@ -1,3 +1,4 @@
+import 'package:cuberino/components/bottom_app_bar.dart';
 import 'package:cuberino/model/tutorial_card_model.dart';
 import 'package:cuberino/model/tutorial_repository.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class TutorialSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(actions: []),
+      bottomNavigationBar: BottomMenu(true, true, false),
       body: GridView.count(
           crossAxisCount: 2,
           mainAxisSpacing: 5,

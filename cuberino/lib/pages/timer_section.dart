@@ -36,11 +36,10 @@ class TimerApp extends State<TimerSection> {
     return value < 10 ? '0$value' : '$value';
   }
 
-  void calculateAverageAndPR(){
-
+  void calculateAverageAndPR() {
     bool newBest = false;
 
-    if(logs.length == 0){
+    if (logs.length == 0) {
       setState(() {
         started = false;
         prText = "Bestzeit: -";
@@ -50,51 +49,65 @@ class TimerApp extends State<TimerSection> {
     }
     double avgSumMilliseconds = 0.0;
 
-    for(int i = 0; i < logs.length; i++){
+    for (int i = 0; i < logs.length; i++) {
       List<String> current = logs[i][0].split(':');
       // min kleiner
-      if((prMin > int.parse(current[0]) || prMin >= int.parse(current[0]) && prSec > int.parse(current[1]) || prMin >= int.parse(current[0]) && prSec >= int.parse(current[1]) && prMil > int.parse(current[2])) || logs.length == 1){
+      if ((prMin > int.parse(current[0]) ||
+              prMin >= int.parse(current[0]) && prSec > int.parse(current[1]) ||
+              prMin >= int.parse(current[0]) &&
+                  prSec >= int.parse(current[1]) &&
+                  prMil > int.parse(current[2])) ||
+          logs.length == 1) {
         prMin = int.parse(current[0]);
         prSec = int.parse(current[1]);
         prMil = int.parse(current[2]);
-        if(prMil >= 100 && prMil <= 999){
-          prMil = ((prMil/100).round()) % 100;
+        if (prMil >= 100 && prMil <= 999) {
+          prMil = ((prMil / 100).round()) % 100;
         }
         newBest = true;
       }
       double secondToMillisecond = double.parse(current[1]) * 1000;
       double minuteToMillisecond = double.parse(current[0]) * 1000 * 60;
-      avgSumMilliseconds = avgSumMilliseconds + secondToMillisecond + minuteToMillisecond + double.parse(current[2]);
+      avgSumMilliseconds = avgSumMilliseconds +
+          secondToMillisecond +
+          minuteToMillisecond +
+          double.parse(current[2]);
     }
 
     avgSumMilliseconds = avgSumMilliseconds / logs.length;
 
-    int minutes = ( avgSumMilliseconds ~/ (1000 * 60)) % 60;
+    int minutes = (avgSumMilliseconds ~/ (1000 * 60)) % 60;
     avgSumMilliseconds = avgSumMilliseconds - (minutes * (60000));
-    int seconds = ( avgSumMilliseconds ~/ 1000) % 60;
+    int seconds = (avgSumMilliseconds ~/ 1000) % 60;
     avgSumMilliseconds = avgSumMilliseconds - (seconds * 1000);
     int avg = avgSumMilliseconds.round();
     String tempAVG;
-    if(avg >= 100){
-      avg = ((avg/100).round()) % 100;
+    if (avg >= 100) {
+      avg = ((avg / 100).round()) % 100;
       tempAVG = avg.toString();
-    }
-    else if(avg < 100 && avg >= 10){
+    } else if (avg < 100 && avg >= 10) {
       tempAVG = avg.toString();
-    }
-    else{
-      tempAVG = "0"+avg.toString();
+    } else {
+      tempAVG = "0" + avg.toString();
     }
 
     String formattedTimeAVG = '$minutes:${_formatTwoDigits(seconds)}:$tempAVG';
 
     setState(() {
-      if(newBest){
-        prText = "Bestzeit: " + (prMin.toString().length == 2 ? prMin.toString() : "0"+prMin.toString()) + ":" + (prSec.toString().length == 2 ? prSec.toString() : "0"+prSec.toString()) + ":" + _formatTwoDigits(prMil);
+      if (newBest) {
+        prText = "Bestzeit: " +
+            (prMin.toString().length == 2
+                ? prMin.toString()
+                : "0" + prMin.toString()) +
+            ":" +
+            (prSec.toString().length == 2
+                ? prSec.toString()
+                : "0" + prSec.toString()) +
+            ":" +
+            _formatTwoDigits(prMil);
       }
 
       avgText = "Durchschnitt: " + formattedTimeAVG;
-
     });
   }
 
@@ -136,12 +149,11 @@ class TimerApp extends State<TimerSection> {
       int localSeconds = seconds;
       int localMinutes = minutes;
 
-      if(localMilliseconds > 99) {
+      if (localMilliseconds > 99) {
         if (localSeconds > 59) {
           localMinutes++;
           localSeconds = 0;
-        }
-        else{
+        } else {
           localSeconds++;
           localMilliseconds = 0;
         }
@@ -150,35 +162,35 @@ class TimerApp extends State<TimerSection> {
         seconds = localSeconds;
         minutes = localMinutes;
         milliseconds = localMilliseconds;
-        digitSeconds = (seconds >= 10) ? "$seconds":"0$seconds";
-        digitMinutes = (minutes >= 10) ? "$minutes":"0$minutes";
-        digitMilliseconds = (milliseconds >= 10) ? "$milliseconds":"0$milliseconds";
+        digitSeconds = (seconds >= 10) ? "$seconds" : "0$seconds";
+        digitMinutes = (minutes >= 10) ? "$minutes" : "0$minutes";
+        digitMilliseconds =
+            (milliseconds >= 10) ? "$milliseconds" : "0$milliseconds";
       });
-
     });
   }
 
-  void getScramble(){
+  void getScramble() {
     const moves = ["L", "R", "F", "D", "B", "U"];
     Map<String, String> inverts = {
-      "L" : "L'",
-      "R" : "R'",
-      "F" : "F'",
-      "D" : "D'",
-      "B" : "B'",
-      "U" : "U'",
-      "2L" : "2L",
-      "2R" : "2R",
-      "2B" : "2B",
-      "2D" : "2D",
-      "2F" : "2F",
-      "2U" : "2U",
-      "R'" : "R",
-      "L'" : "L",
-      "U'" : "U",
-      "B'" : "B",
-      "F'" : "F",
-      "D'" : "D",
+      "L": "L'",
+      "R": "R'",
+      "F": "F'",
+      "D": "D'",
+      "B": "B'",
+      "U": "U'",
+      "2L": "2L",
+      "2R": "2R",
+      "2B": "2B",
+      "2D": "2D",
+      "2F": "2F",
+      "2U": "2U",
+      "R'": "R",
+      "L'": "L",
+      "U'": "U",
+      "B'": "B",
+      "F'": "F",
+      "D'": "D",
     };
     var random = Random();
     var scramble = [];
@@ -187,53 +199,47 @@ class TimerApp extends State<TimerSection> {
     while (scramble.length < 20) {
       var move = random.nextInt(moves.length);
       var type = random.nextInt(3);
-      switch(type){
+      switch (type) {
         case 0: //single thingie
-          if (scramble.isEmpty){
+          if (scramble.isEmpty) {
             scramble.add(moves[move]);
-          }
-          else if ( scramble[scramble.length-1] == moves[move]){
-            scramble[scramble.length-1] = "2${moves[move]}";
-          }
-          else if ( scramble[scramble.length-1] == inverts[moves[move]]){
+          } else if (scramble[scramble.length - 1] == moves[move]) {
+            scramble[scramble.length - 1] = "2${moves[move]}";
+          } else if (scramble[scramble.length - 1] == inverts[moves[move]]) {
             break;
-          }
-          else if(scramble[scramble.length-1] == "2${moves[move]}"){
+          } else if (scramble[scramble.length - 1] == "2${moves[move]}") {
             break;
-          }
-          else {
+          } else {
             scramble.add(moves[move]);
           }
           break;
         case 1: //double move
-          if (scramble.isEmpty){
+          if (scramble.isEmpty) {
             scramble.add("2${moves[move]}");
-          }
-          else if ((scramble[scramble.length-1] == ("2${moves[move]}"))|| (scramble[scramble.length-1] == inverts["2${moves[move]}"])){
+          } else if ((scramble[scramble.length - 1] == ("2${moves[move]}")) ||
+              (scramble[scramble.length - 1] == inverts["2${moves[move]}"])) {
             break;
-          }
-          else if(scramble[scramble.length-1] == moves[move] || scramble[scramble.length-1] == inverts[move]){
+          } else if (scramble[scramble.length - 1] == moves[move] ||
+              scramble[scramble.length - 1] == inverts[move]) {
             break;
-          }
-          else {
+          } else {
             scramble.add("2${moves[move]}");
           }
           break;
         case 2: //invers
-          if (scramble.isEmpty){
+          if (scramble.isEmpty) {
             scramble.add("${moves[move]}'");
-          }
-          else if(scramble[scramble.length-1] == "${moves[move]}'"){
-            scramble[scramble.length-1] = "2${moves[move]}";
-          }
-          else if(scramble[scramble.length-1] == moves[move] || scramble[scramble.length-1] == "2${moves[move]}"){
+          } else if (scramble[scramble.length - 1] == "${moves[move]}'") {
+            scramble[scramble.length - 1] = "2${moves[move]}";
+          } else if (scramble[scramble.length - 1] == moves[move] ||
+              scramble[scramble.length - 1] == "2${moves[move]}") {
             break;
-          }
-          else {
+          } else {
             scramble.add("${moves[move]}'");
           }
           break;
-        default:break;
+        default:
+          break;
       }
     }
     setState(() {
@@ -241,232 +247,234 @@ class TimerApp extends State<TimerSection> {
     });
   }
 
-  String getFormattedDate(String date){
+  String getFormattedDate(String date) {
     List<String> data = date.split("-");
     return "${data[2]}.${data[1]}.${data[0]}";
   }
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-        backgroundColor: background,
-        body: SafeArea(
-            child: Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Visibility(
-                        maintainAnimation: true,
-                        maintainState: true,
-                        maintainSize: true,
-                        visible: !started,
-                        child: Container(
-                          height: 200.0,
-                          width: double.infinity,
-                          padding: EdgeInsetsDirectional.zero,
-                          decoration: BoxDecoration(
-                            color: secondBackground,
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 11, left: 15),
-                                  child: Text(
-                                    currentScramble,
-                                    style: const TextStyle(
-                                      fontSize: 35,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      height: 2.5,
-                                    ),
+      backgroundColor: colorScheme.background,
+      body: SafeArea(
+          child: Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Visibility(
+                      maintainAnimation: true,
+                      maintainState: true,
+                      maintainSize: true,
+                      visible: !started,
+                      child: Container(
+                        height: 200.0,
+                        width: double.infinity,
+                        padding: EdgeInsetsDirectional.zero,
+                        decoration: BoxDecoration(
+                          color: secondBackground,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 11, left: 15),
+                                child: Text(
+                                  currentScramble,
+                                  style: const TextStyle(
+                                    fontSize: 35,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    height: 2.5,
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                      Visibility(
-                        maintainAnimation: true,
-                        maintainState: true,
-                        maintainSize: true,
-                        visible: !started,
-                        child:  Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: RawMaterialButton(
-                                    onPressed: () {
-                                      getScramble();
-                                    },
-                                    shape: StadiumBorder(side: BorderSide(color: secondBackground),
-                                    ),
-                                    child: Text(AppLocalizations.of(context)!.generateScramble, style: TextStyle(color: Colors.white),)
-                                ),
-                              ),
-                            ]
+                    ),
+                    Visibility(
+                      maintainAnimation: true,
+                      maintainState: true,
+                      maintainSize: true,
+                      visible: !started,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: RawMaterialButton(
+                                  onPressed: () {
+                                    getScramble();
+                                  },
+                                  shape: StadiumBorder(
+                                    side: BorderSide(color: secondBackground),
+                                  ),
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .generateScramble,
+                                    style: TextStyle(color: Colors.white),
+                                  )),
+                            ),
+                          ]),
+                    ),
+                    SizedBox(
+                      height: 25.0,
+                    ),
+                    Center(
+                      child: Text(
+                        "$digitMinutes:$digitSeconds:$digitMilliseconds",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 82.0,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                        height: 25.0,
-                      ),
-                      Center(
-                        child: Text(
-                          "$digitMinutes:$digitSeconds:$digitMilliseconds",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 82.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          prText + "\n" + avgText,
-                          style: TextStyle(
-                            color: Colors.teal.shade100,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        timerInstruction,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        prText + "\n" + avgText,
                         style: TextStyle(
                           color: Colors.teal.shade100,
                           fontWeight: FontWeight.w600,
                           fontSize: 16.0,
                         ),
                       ),
-                      Listener(
-                        onPointerDown: (event) {
-                          holding = true;
-                          if(background == Color(0xFF1C2757)){
-                            Timer.periodic(Duration(milliseconds: 1500), (timer) {
-                              setState(() {
-                                if(!started && holding) {
-                                  background = Colors.green;
-                                  secondBackground = Colors.lightGreen;
-                                  timerInstruction = AppLocalizations.of(context)!.timerArmed;
-                                  hideLog = true;
-                                }
-                                timer.cancel();
-                              });
-
+                    ),
+                    Text(
+                      timerInstruction,
+                      style: TextStyle(
+                        color: Colors.teal.shade100,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                    Listener(
+                      onPointerDown: (event) {
+                        holding = true;
+                        if (background == Color(0xFF1C2757)) {
+                          Timer.periodic(Duration(milliseconds: 1500), (timer) {
+                            setState(() {
+                              if (!started && holding) {
+                                background = Colors.green;
+                                secondBackground = Colors.lightGreen;
+                                timerInstruction =
+                                    AppLocalizations.of(context)!.timerArmed;
+                                hideLog = true;
+                              }
+                              timer.cancel();
                             });
-                          }
-                          else{
-                            timer!.cancel();
-                            started = false;
-                            background = Color(0xFF1C2757);
-                            secondBackground = Color(0xFF323F68);
-                            timerInstruction = AppLocalizations.of(context)!.timerOff;
+                          });
+                        } else {
+                          timer!.cancel();
+                          started = false;
+                          background = Color(0xFF1C2757);
+                          secondBackground = Color(0xFF323F68);
+                          timerInstruction =
+                              AppLocalizations.of(context)!.timerOff;
 
-                            String time = digitMinutes + ":" + digitSeconds + ":" + digitMilliseconds;
-                            String date = DateTime.now().day.toString() + "." + DateTime.now().month.toString() + "." + DateTime.now().year.toString();
-                            logs.add([time, date]);
-                            calculateAverageAndPR();
-                            hideLog = false;
-                          }
-                        },
-                        onPointerUp: (event) {
-                          holding = false;
-                          if(background ==  Colors.green){
-                            startTimer();
-                          }
-                        },
-                        child: Container(
-                          height: 150.0,
-                          decoration: BoxDecoration(
-                            color: secondBackground,
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
+                          String time = digitMinutes +
+                              ":" +
+                              digitSeconds +
+                              ":" +
+                              digitMilliseconds;
+                          String date = DateTime.now().day.toString() +
+                              "." +
+                              DateTime.now().month.toString() +
+                              "." +
+                              DateTime.now().year.toString();
+                          logs.add([time, date]);
+                          calculateAverageAndPR();
+                          hideLog = false;
+                        }
+                      },
+                      onPointerUp: (event) {
+                        holding = false;
+                        if (background == Colors.green) {
+                          startTimer();
+                        }
+                      },
+                      child: Container(
+                        height: 150.0,
+                        decoration: BoxDecoration(
+                          color: secondBackground,
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
-                      Visibility(
-                        maintainAnimation: true,
-                        maintainState: true,
-                        maintainSize: true,
-                        visible: !started || !hideLog,
-                        child: Container(
-                            height: 105,
-                            child:
-                            ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: logs.length,
-                                itemBuilder: (context, index) {
-                                  return Card(
-                                    color: secondBackground,
-                                    child: Padding(
-                                        padding: EdgeInsets.only(top: 2),
-                                        child: Row(
-                                            children: [
-                                              Column(
-                                                  children: [
-                                                    Padding(
-                                                      padding: EdgeInsets.only(left: 15),
-                                                      child: Text(logs[index][0], style: TextStyle(
-                                                        color: Colors.teal.shade100,
-                                                        fontWeight: FontWeight.w600,
-                                                        fontSize: 16.0,
-                                                      ),),
-                                                    )]
+                    ),
+                    Visibility(
+                      maintainAnimation: true,
+                      maintainState: true,
+                      maintainSize: true,
+                      visible: !started || !hideLog,
+                      child: Container(
+                          height: 105,
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: logs.length,
+                              itemBuilder: (context, index) {
+                                return Card(
+                                  color: secondBackground,
+                                  child: Padding(
+                                      padding: EdgeInsets.only(top: 2),
+                                      child: Row(children: [
+                                        Column(children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(left: 15),
+                                            child: Text(
+                                              logs[index][0],
+                                              style: TextStyle(
+                                                color: Colors.teal.shade100,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16.0,
                                               ),
-                                              Column(
-                                                  children: [
-                                                    Padding(
-                                                      padding: EdgeInsets.only(left: 15),
-                                                      child: Text(
-                                                        logs[index][1], style: TextStyle(
-                                                        color: Colors.teal.shade100,
-                                                        fontWeight: FontWeight.w600,
-                                                        fontSize: 16.0,
-                                                      ),
-                                                      ),
-                                                    )]
+                                            ),
+                                          )
+                                        ]),
+                                        Column(children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(left: 15),
+                                            child: Text(
+                                              logs[index][1],
+                                              style: TextStyle(
+                                                color: Colors.teal.shade100,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16.0,
                                               ),
-                                              Column(
-                                                  children: [
-                                                    Padding(
-                                                      padding: EdgeInsets.only(left: 20),
-                                                      child:
-                                                      RawMaterialButton(
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            logs.removeAt(index);
-                                                            calculateAverageAndPR();
-                                                          });
-                                                        },
-                                                        child:
-                                                        Text(
-                                                            AppLocalizations.of(context)!.deleteButton,
-                                                            style: TextStyle(
-                                                                color: Colors.teal.shade100,
-                                                                fontWeight: FontWeight.w600,
-                                                                fontSize: 16.0)
-                                                        ),
-                                                      ),
-                                                    )
-                                                  ]
-                                              ),
-                                            ]
-                                        )
-                                    ),
-                                  );
-                                }
-                            )
-                        ),
-
-                      ),
-                    ]
-                )
-            )
-        ),
-        bottomNavigationBar: BottomMenu(false, true, true),
+                                            ),
+                                          )
+                                        ]),
+                                        Column(children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(left: 20),
+                                            child: RawMaterialButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  logs.removeAt(index);
+                                                  calculateAverageAndPR();
+                                                });
+                                              },
+                                              child: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .deleteButton,
+                                                  style: TextStyle(
+                                                      color:
+                                                          Colors.teal.shade100,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 16.0)),
+                                            ),
+                                          )
+                                        ]),
+                                      ])),
+                                );
+                              })),
+                    ),
+                  ]))),
+      bottomNavigationBar: BottomMenu(false, true, true),
     );
   }
 }

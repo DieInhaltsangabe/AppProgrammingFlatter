@@ -70,6 +70,7 @@ flutter:
     - assets/expert.jpeg
     - assets/genius.jpg
     - assets/tutorialwhitecross.jpeg
+    - assets/rubik.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

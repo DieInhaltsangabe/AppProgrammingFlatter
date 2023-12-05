@@ -12,18 +12,31 @@ void main() {
   runApp(Cuberino());
 }
 
-
 class Cuberino extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Future<void> _loadSettings = _appSettings.loadSettings();
+    
     return FutureBuilder(
       future: _loadSettings,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
             home: MyHomePage(),
-            theme: ThemeData.dark(),
+            theme: ThemeData(
+                useMaterial3: true,
+                colorScheme: ColorScheme(
+                    brightness: Brightness.dark,
+                    primary: Color.fromARGB(255, 0, 128, 102),
+                    onPrimary: Color.fromARGB(255, 100, 128, 0),
+                    secondary: Color.fromARGB(255, 60, 0, 55),
+                    onSecondary: Color.fromARGB(255, 60, 100, 55),
+                    error: Color.fromARGB(255, 155, 108, 100),
+                    onError: Color.fromARGB(255, 0, 255, 255),
+                    background: Color(0xFF252A29),
+                    onBackground: Color(0xFFFFFEFE),
+                    surface: Color(0xFF42494E),
+                    onSurface: Color(0xFFE8E7D8))),
             supportedLocales: L10n.all,
             locale: Locale(_appSettings.language),
             localizationsDelegates: [
@@ -39,7 +52,8 @@ class Cuberino extends StatelessWidget {
       },
     );
   }
-  void test(){}
+
+  void test() {}
 }
 
 class MyHomePage extends StatelessWidget {
@@ -53,7 +67,8 @@ class MyHomePage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SettingsPage()));
             },
           ),
         ],
@@ -61,7 +76,9 @@ class MyHomePage extends StatelessWidget {
       body: Container(
         color: _appSettings.background_color,
         child: Center(
-          child: Text('CUBERINO', style: TextStyle(fontSize: AppSettings().fontSize),
+          child: Text(
+            'CUBERINO',
+            style: TextStyle(fontSize: AppSettings().fontSize),
           ),
         ),
       ),
