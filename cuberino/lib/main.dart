@@ -1,3 +1,4 @@
+import 'package:cuberino/pages/input_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -16,19 +17,19 @@ class Cuberino extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Future<void> _loadSettings = _appSettings.loadSettings();
-    
+
     return FutureBuilder(
       future: _loadSettings,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
-            home: MyHomePage(),
+            home: Cube(),
             theme: ThemeData(
                 useMaterial3: true,
                 colorScheme: ColorScheme(
                     brightness: Brightness.dark,
-                    primary: Color.fromARGB(255, 0, 128, 102),
-                    onPrimary: Color.fromARGB(255, 100, 128, 0),
+                    primary: Color(0xFF252A29),
+                    onPrimary: Color(0xFFFFFEFE),
                     secondary: Color.fromARGB(255, 60, 0, 55),
                     onSecondary: Color.fromARGB(255, 60, 100, 55),
                     error: Color.fromARGB(255, 155, 108, 100),
@@ -56,7 +57,16 @@ class Cuberino extends StatelessWidget {
   void test() {}
 }
 
-class MyHomePage extends StatelessWidget {
+class Cube extends StatefulWidget {
+  const Cube({super.key});
+
+  @override
+  CubeState createState() => CubeState();
+}
+
+class CubeState extends State<Cube> {
+  String cube = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,11 +86,31 @@ class MyHomePage extends StatelessWidget {
       body: Container(
         color: _appSettings.background_color,
         child: Center(
-          child: Text(
-            'CUBERINO',
-            style: TextStyle(fontSize: AppSettings().fontSize),
-          ),
-        ),
+            child: Column(
+          children: [
+            Text(
+              'CUBERINO',
+              style: TextStyle(
+                  fontSize: AppSettings().fontSize,
+                  color: Theme.of(context).colorScheme.onSurface),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                var inputedCube = Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => InputSection()));
+                setState(() {
+                  cube = inputedCube as String;
+                });
+              },
+              child: Text(
+                'Input',
+                style: TextStyle(
+                    fontSize: AppSettings().fontSize,
+                    color: Theme.of(context).colorScheme.onSurface),
+              ),
+            )
+          ],
+        )),
       ),
       bottomNavigationBar: BottomMenu(true, false, true),
     );
