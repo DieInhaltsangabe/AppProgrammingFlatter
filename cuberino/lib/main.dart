@@ -112,7 +112,7 @@ class CubeState extends State<Cube> {
           ],
         )),
       ),
-      bottomNavigationBar: BottomMenu(true, false, true),
+      bottomNavigationBar: BottomMenu(true, false, true, true),
     );
   }
 }

@@ -4,15 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:cuberino/main.dart';
 import 'package:cuberino/pages/timer_section.dart';
 
+import 'package:cuberino/pages/challange_section.dart';
+
 class BottomMenu extends StatelessWidget {
   bool _timerSection = false;
   bool _mainScreen = false;
   bool _tutorialSection = false;
+  bool _challanges = false;
 
-  BottomMenu(bool timerSection, bool mainScreen, bool tutorialSection) {
+  BottomMenu(bool timerSection, bool mainScreen, bool tutorialSection, bool challanges) {
     _timerSection = timerSection;
     _mainScreen = mainScreen;
     _tutorialSection = tutorialSection;
+    _challanges = challanges;
   }
 
   @override
@@ -45,6 +49,14 @@ class BottomMenu extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => TutorialSection()));
               },
             ),
+          if (_challanges)
+            IconButton(
+              icon: Icon(Icons.attractions),
+              onPressed: () {
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ChallangesSection()));
+              }
+            )
         ],
       ),
     );

@@ -8,5 +8,7 @@
   "best": "En iyi: ",
   "avg": "Ortalama: ",
   "backgroundcolor": "Arka plan rengi",
+  "emptyLogs": "Bulunamadi.",
+  "showLogs": "Log göster",
   "changecolor": "Arka plan rengi değiştir"
 }

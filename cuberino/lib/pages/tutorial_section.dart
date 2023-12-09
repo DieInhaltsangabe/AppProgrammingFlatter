@@ -12,7 +12,7 @@ class TutorialSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomMenu(true, true, false),
+      bottomNavigationBar: BottomMenu(true, true, false, true),
       body: GridView.count(
           crossAxisCount: 2,
           mainAxisSpacing: 5,
