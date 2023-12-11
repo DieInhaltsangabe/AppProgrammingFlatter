@@ -89,7 +89,7 @@ class CubeState extends State<Cube> {
             child: Column(
           children: [
             Text(
-              'CUBERINO',
+              "Cuberino",
               style: TextStyle(
                   fontSize: AppSettings().fontSize,
                   color: Theme.of(context).colorScheme.onSurface),
@@ -108,7 +108,7 @@ class CubeState extends State<Cube> {
                     fontSize: AppSettings().fontSize,
                     color: Theme.of(context).colorScheme.onSurface),
               ),
-            )
+            ),
           ],
         )),
       ),
