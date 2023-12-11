@@ -41,17 +41,17 @@ class TimerApp extends State<TimerSection> {
   }
 
   Future<void> loadLogs() async {
-    print("LOADING");
     final prefs = await SharedPreferences.getInstance();
-    logs = json.decode(prefs.getString(_logKey)!);
-    print("LOADED");
-    setState((){});
+    var temp = json.decode(prefs.getString(_logKey)!);
+    setState((){
+      logs = temp;
+    });
   }
 
   Future<void> saveLogs() async {
     final prefs = await SharedPreferences.getInstance();
     var s = json.encode(logs);
-    prefs.setString(_logKey, s);
+    await prefs.setString(_logKey, s);
   }
 
   void calculateAverageAndPR() {
@@ -112,7 +112,7 @@ class TimerApp extends State<TimerSection> {
     String formattedTimeAVG = '$minutes:${_formatTwoDigits(seconds)}:$tempAVG';
 
     setState(() {
-      if (newBest) {
+      if (newBest || prText == " -") {
         prText = " " +
             (prMin.toString().length == 2
                 ? prMin.toString()
@@ -285,6 +285,8 @@ class TimerApp extends State<TimerSection> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
+    loadLogs();
+    calculateAverageAndPR();
     return Scaffold(
       backgroundColor: colorScheme.background,
       body: SafeArea(
@@ -310,7 +312,7 @@ class TimerApp extends State<TimerSection> {
                           children: [
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsets.only(top: 11, left: 15),
+                                padding: EdgeInsets.only(top: 0, left: 15),
                                 child: Text(
                                   currentScramble,
                                   style: const TextStyle(
@@ -425,6 +427,9 @@ class TimerApp extends State<TimerSection> {
                         holding = false;
                         if (background == Colors.green) {
                           startTimer();
+                        }
+                        else{
+                          saveLogs();
                         }
                       },
                       child: Container(
