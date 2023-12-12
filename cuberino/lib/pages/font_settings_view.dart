@@ -78,7 +78,7 @@ class _FontSettingsViewState extends State<FontSettingsView> {
             ],
           )
       ),
-        bottomNavigationBar: BottomMenu(false, true, false)
+        bottomNavigationBar: BottomMenu(false, true, false, true)
     );
   }
 }

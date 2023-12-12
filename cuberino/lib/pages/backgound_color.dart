@@ -27,7 +27,7 @@ class _BackgroundColorSelectState extends State<BackgroundColorSelect> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomMenu(false, true, false)
+      bottomNavigationBar: BottomMenu(false, true, false, true)
     );
   }
 

@@ -148,7 +148,7 @@ class InputSectionState extends State<InputSection> {
       var cleanGrid = grid.getRange(0, 3).toList();
       for (var i = 0; i < cleanGrid.length; i++) {
         var row = cleanGrid[i];
-        for (var k = 0; k < row.length; i++) {
+        for (var k = 0; k < row.length; k++) {
           var field = row[k];
           String value = "";
           switch (field) {
@@ -186,19 +186,19 @@ class InputSectionState extends State<InputSection> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center, // Add this line
             children: [
-              const Text('Würfel hier Eingeben'),
+              const Text(''),
               const Text(
-                  'Mittlerer Stein ist vorgeben'), //Vielleicht ein Never show this again screen mit hint davor
+                  'Die mittlere Farbe gibt die jeweilige Seite an.'), //Vielleicht ein Never show this again screen mit hint davor
               const SizedBox(height: 10),
-              const Text('In diese Richtung'),
               Container(
-                width: 60,
-                height: 60,
+                width: 50,
+                height: 50,
                 color: grids[currentGridIndex][3][0],
+                child: Align(alignment: Alignment.center, child: Text("N", style: TextStyle(fontSize: 20))),
               ),
               const SizedBox(height: 15),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Left field
                   GestureDetector(
@@ -208,11 +208,12 @@ class InputSectionState extends State<InputSection> {
                       });
                     },
                     child: Container(
-                      width: 100,
-                      height: 100,
+                      width: 70,
+                      height: 70,
                       color: grids[currentGridIndex][0][0],
                     ),
                   ),
+                  SizedBox(width: 10),
                   // Center field
                   GestureDetector(
                     onTap: () {
@@ -221,11 +222,12 @@ class InputSectionState extends State<InputSection> {
                       });
                     },
                     child: Container(
-                      width: 100,
-                      height: 100,
+                      width: 70,
+                      height: 70,
                       color: grids[currentGridIndex][0][1],
                     ),
                   ),
+                  SizedBox(width: 10),
                   // Right field
                   GestureDetector(
                     onTap: () {
@@ -234,16 +236,16 @@ class InputSectionState extends State<InputSection> {
                       });
                     },
                     child: Container(
-                      width: 100,
-                      height: 100,
+                      width: 70,
+                      height: 70,
                       color: grids[currentGridIndex][0][2],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
                     onTap: () {
@@ -254,17 +256,19 @@ class InputSectionState extends State<InputSection> {
                     child:
                         // Left field
                         Container(
-                      width: 100,
-                      height: 100,
+                      width: 70,
+                      height: 70,
                       color: grids[currentGridIndex][1][0],
                     ),
                   ),
+                  SizedBox(width: 10),
                   // Center field
                   Container(
-                    width: 100,
-                    height: 100,
+                    width: 70,
+                    height: 70,
                     color: grids[currentGridIndex][1][1],
                   ),
+                  SizedBox(width: 10),
                   GestureDetector(
                     onTap: () {
                       setState(() {
@@ -274,16 +278,16 @@ class InputSectionState extends State<InputSection> {
                     child:
                         // Right field
                         Container(
-                      width: 100,
-                      height: 100,
+                      width: 70,
+                      height: 70,
                       color: grids[currentGridIndex][1][2],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
                     onTap: () {
@@ -294,11 +298,12 @@ class InputSectionState extends State<InputSection> {
                     child:
                         // Left field
                         Container(
-                      width: 100,
-                      height: 100,
+                      width: 70,
+                      height: 70,
                       color: grids[currentGridIndex][2][0],
                     ),
                   ),
+                  SizedBox(width: 10),
                   GestureDetector(
                     onTap: () {
                       setState(() {
@@ -308,11 +313,12 @@ class InputSectionState extends State<InputSection> {
                     child:
                         // Center field
                         Container(
-                      width: 100,
-                      height: 100,
+                      width: 70,
+                      height: 70,
                       color: grids[currentGridIndex][2][1],
                     ),
                   ),
+                  SizedBox(width: 10),
                   GestureDetector(
                     onTap: () {
                       setState(() {
@@ -322,19 +328,19 @@ class InputSectionState extends State<InputSection> {
                     child:
                         // Right field
                         Container(
-                      width: 100,
-                      height: 100,
+                      width: 70,
+                      height: 70,
                       color: grids[currentGridIndex][2][2],
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 15),
-              const Text('In diese Richtung'),
               Container(
-                width: 60,
-                height: 60,
+                width: 50,
+                height: 50,
                 color: grids[currentGridIndex][3][1],
+                  child: Align(alignment: Alignment.center, child: Text("S", style: TextStyle(fontSize: 20)))
               ),
               const SizedBox(height: 15),
               Row(

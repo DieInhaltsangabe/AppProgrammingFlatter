@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:cuberino/components/bottom_app_bar.dart';
 import 'package:cuberino/app_settings.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TimerSection extends StatefulWidget {
   const TimerSection({super.key});
@@ -13,13 +16,14 @@ class TimerSection extends StatefulWidget {
 }
 
 class TimerApp extends State<TimerSection> {
+  static const String _logKey = "timeLogs";
   List logs = [];
 
   Color background = Color(0xFF1C2757);
   Color secondBackground = Color(0xFF323F68);
-  String timerInstruction = "Press and hold to start the timer.";
-  String prText = "Bestzeit: -";
-  String avgText = "Durchschnitt: -";
+  String timerInstruction = "";
+  String prText = " -";
+  String avgText = " -";
 
   int seconds = 0, minutes = 0, milliseconds = 0;
   String digitSeconds = "00", digitMinutes = "00", digitMilliseconds = "00";
@@ -36,14 +40,28 @@ class TimerApp extends State<TimerSection> {
     return value < 10 ? '0$value' : '$value';
   }
 
+  Future<void> loadLogs() async {
+    final prefs = await SharedPreferences.getInstance();
+    var temp = json.decode(prefs.getString(_logKey)!);
+    setState((){
+      logs = temp;
+    });
+  }
+
+  Future<void> saveLogs() async {
+    final prefs = await SharedPreferences.getInstance();
+    var s = json.encode(logs);
+    await prefs.setString(_logKey, s);
+  }
+
   void calculateAverageAndPR() {
     bool newBest = false;
 
     if (logs.length == 0) {
       setState(() {
         started = false;
-        prText = "Bestzeit: -";
-        avgText = "Durchschnitt: -";
+        prText = " -";
+        avgText = " -";
       });
       return;
     }
@@ -94,8 +112,8 @@ class TimerApp extends State<TimerSection> {
     String formattedTimeAVG = '$minutes:${_formatTwoDigits(seconds)}:$tempAVG';
 
     setState(() {
-      if (newBest) {
-        prText = "Bestzeit: " +
+      if (newBest || prText == " -") {
+        prText = " " +
             (prMin.toString().length == 2
                 ? prMin.toString()
                 : "0" + prMin.toString()) +
@@ -107,14 +125,14 @@ class TimerApp extends State<TimerSection> {
             _formatTwoDigits(prMil);
       }
 
-      avgText = "Durchschnitt: " + formattedTimeAVG;
+      avgText = " " + formattedTimeAVG;
     });
   }
 
   // stop timer func
   void stopTimer() {
     timer!.cancel();
-
+    saveLogs();
     setState(() {
       started = false;
     });
@@ -247,6 +265,18 @@ class TimerApp extends State<TimerSection> {
     });
   }
 
+  double getHeight() {
+    if(logs.length == 0){
+      return 75;
+    }
+    else if(logs.length < 10){
+      return (75+50*(logs.length-1)).toDouble();
+    }
+    else{
+      return 300;
+    }
+  }
+
   String getFormattedDate(String date) {
     List<String> data = date.split("-");
     return "${data[2]}.${data[1]}.${data[0]}";
@@ -255,6 +285,8 @@ class TimerApp extends State<TimerSection> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
+    //loadLogs();
+    //calculateAverageAndPR();
     return Scaffold(
       backgroundColor: colorScheme.background,
       body: SafeArea(
@@ -269,7 +301,7 @@ class TimerApp extends State<TimerSection> {
                       maintainSize: true,
                       visible: !started,
                       child: Container(
-                        height: 200.0,
+                        height: 150.0,
                         width: double.infinity,
                         padding: EdgeInsetsDirectional.zero,
                         decoration: BoxDecoration(
@@ -280,7 +312,7 @@ class TimerApp extends State<TimerSection> {
                           children: [
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsets.only(top: 11, left: 15),
+                                padding: EdgeInsets.only(top: 0, left: 15),
                                 child: Text(
                                   currentScramble,
                                   style: const TextStyle(
@@ -321,7 +353,7 @@ class TimerApp extends State<TimerSection> {
                           ]),
                     ),
                     SizedBox(
-                      height: 25.0,
+                      height: 20.0,
                     ),
                     Center(
                       child: Text(
@@ -336,7 +368,7 @@ class TimerApp extends State<TimerSection> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        prText + "\n" + avgText,
+                        AppLocalizations.of(context)!.best + prText + "\n" + AppLocalizations.of(context)!.avg + avgText,
                         style: TextStyle(
                           color: Colors.teal.shade100,
                           fontWeight: FontWeight.w600,
@@ -345,7 +377,7 @@ class TimerApp extends State<TimerSection> {
                       ),
                     ),
                     Text(
-                      timerInstruction,
+                      timerInstruction.length == 0 ? AppLocalizations.of(context)!.timerOff : timerInstruction,
                       style: TextStyle(
                         color: Colors.teal.shade100,
                         fontWeight: FontWeight.w600,
@@ -396,6 +428,9 @@ class TimerApp extends State<TimerSection> {
                         if (background == Colors.green) {
                           startTimer();
                         }
+                        else{
+                          saveLogs();
+                        }
                       },
                       child: Container(
                         height: 150.0,
@@ -410,71 +445,98 @@ class TimerApp extends State<TimerSection> {
                       maintainState: true,
                       maintainSize: true,
                       visible: !started || !hideLog,
-                      child: Container(
-                          height: 105,
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: logs.length,
-                              itemBuilder: (context, index) {
-                                return Card(
-                                  color: secondBackground,
-                                  child: Padding(
-                                      padding: EdgeInsets.only(top: 2),
-                                      child: Row(children: [
-                                        Column(children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(left: 15),
-                                            child: Text(
-                                              logs[index][0],
-                                              style: TextStyle(
-                                                color: Colors.teal.shade100,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 16.0,
-                                              ),
-                                            ),
-                                          )
-                                        ]),
-                                        Column(children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(left: 15),
-                                            child: Text(
-                                              logs[index][1],
-                                              style: TextStyle(
-                                                color: Colors.teal.shade100,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 16.0,
-                                              ),
-                                            ),
-                                          )
-                                        ]),
-                                        Column(children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(left: 20),
-                                            child: RawMaterialButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  logs.removeAt(index);
-                                                  calculateAverageAndPR();
-                                                });
-                                              },
-                                              child: Text(
-                                                  AppLocalizations.of(context)!
-                                                      .deleteButton,
-                                                  style: TextStyle(
-                                                      color:
-                                                          Colors.teal.shade100,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 16.0)),
-                                            ),
-                                          )
-                                        ]),
-                                      ])),
-                                );
-                              })),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child : RawMaterialButton(
+                            child: Text(AppLocalizations.of(context)!.showLogs),
+                            shape: StadiumBorder(
+                              side: BorderSide(color: secondBackground),
+                            ),
+                            onPressed: () {
+                              showDialog(context: context,
+                                  builder: (context) => StatefulBuilder(
+                                    builder: (context, setState) {
+                                      return SimpleDialog(
+                                        title: const Text("Logs"),
+                                        contentPadding: const EdgeInsets.all(10.0),
+                                        children: [
+                                          SizedBox(
+                                              height: logs.length < 9 ? null : 500,
+                                              width: double.maxFinite,
+                                              child: logs.isNotEmpty ? ListView.builder(
+                                                  shrinkWrap: true,
+                                                  itemCount: logs.length,
+                                                  itemBuilder: (context, index) {
+                                                    return Card(
+                                                      color: secondBackground,
+                                                      child: Padding(
+                                                          padding: EdgeInsets.only(top: 2),
+                                                          child: Row(children: [
+                                                            Column(children: [
+                                                              Padding(
+                                                                padding: EdgeInsets.only(left: 15),
+                                                                child: Text(
+                                                                  logs[index][0],
+                                                                  style: TextStyle(
+                                                                    color: Colors.teal.shade100,
+                                                                    fontWeight: FontWeight.w600,
+                                                                    fontSize: 16.0,
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            ]),
+                                                            Column(children: [
+                                                              Padding(
+                                                                padding: EdgeInsets.only(left: 15),
+                                                                child: Text(
+                                                                  logs[index][1],
+                                                                  style: TextStyle(
+                                                                    color: Colors.teal.shade100,
+                                                                    fontWeight: FontWeight.w600,
+                                                                    fontSize: 16.0,
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            ]),
+                                                            Column(children: [
+                                                              Padding(
+                                                                padding: EdgeInsets.only(left: 15),
+                                                                child: RawMaterialButton(
+                                                                  onPressed: () {
+                                                                    setState(() {
+                                                                      logs.removeAt(index);
+                                                                      calculateAverageAndPR();
+                                                                    });
+                                                                  },
+                                                                  child: Text(
+                                                                      AppLocalizations.of(context)!
+                                                                          .deleteButton,
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                          Colors.teal.shade100,
+                                                                          fontWeight:
+                                                                          FontWeight.w600,
+                                                                          fontSize: 16.0)),
+                                                                ),
+                                                              )
+                                                            ]),
+                                                          ])),
+                                                    );
+                                                  }) : Center(child: Text(AppLocalizations.of(context)!.emptyLogs))),
+                                        ]
+                                      );
+                                    }
+                                  ));
+                            },
+                          ),
+                          ),
+                        ],
+                      ),
                     ),
                   ]))),
-      bottomNavigationBar: BottomMenu(false, true, true),
+      bottomNavigationBar: BottomMenu(false, true, true, true),
     );
   }
 }

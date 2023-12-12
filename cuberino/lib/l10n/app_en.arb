@@ -7,9 +7,11 @@
   "@language": {
     "description": "Appbar language title"
   },
+  "emptyLogs": "No logs have been found.",
   "timerOff": "Press and hold to start the timer.",
   "timerArmed": "Let go to start the timer. \n Press again to stop the timer.",
   "deleteButton": "Delete",
+  "showLogs": "Show Log",
   "best": "PR: ",
   "avg": "Average: ",
   "generateScramble": "Generate scramble",
