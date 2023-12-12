@@ -66,6 +66,63 @@ class Cube extends StatefulWidget {
 
 class CubeState extends State<Cube> {
   String cube = "";
+  bool showNetwork = true;
+
+  var grids = [
+    [
+      [Colors.grey, Colors.grey, Colors.grey],
+      [Colors.grey, Colors.white, Colors.grey],
+      [Colors.grey, Colors.grey, Colors.grey],
+      [Colors.red, Colors.orange]
+    ],
+    [
+      [Colors.grey, Colors.grey, Colors.grey],
+      [Colors.grey, Colors.green, Colors.grey],
+      [Colors.grey, Colors.grey, Colors.grey],
+      [Colors.red, Colors.orange]
+    ],
+    [
+      [Colors.grey, Colors.grey, Colors.grey],
+      [Colors.grey, Colors.yellow, Colors.grey],
+      [Colors.grey, Colors.grey, Colors.grey],
+      [Colors.red, Colors.orange]
+    ],
+    [
+      [Colors.grey, Colors.grey, Colors.grey],
+      [Colors.grey, Colors.blue, Colors.grey],
+      [Colors.grey, Colors.grey, Colors.grey],
+      [Colors.red, Colors.orange]
+    ],
+    [
+      [Colors.grey, Colors.grey, Colors.grey],
+      [Colors.grey, Colors.red, Colors.grey],
+      [Colors.grey, Colors.grey, Colors.grey],
+      [Colors.blue, Colors.green]
+    ],
+    [
+      [Colors.grey, Colors.grey, Colors.grey],
+      [Colors.grey, Colors.orange, Colors.grey],
+      [Colors.grey, Colors.grey, Colors.grey],
+      [Colors.blue, Colors.green]
+    ],
+  ];
+
+  int currentGridIndex = 0;
+  int currentColor = 0;
+  var colors = [
+    Colors.red,
+    Colors.orange,
+    Colors.yellow,
+    Colors.green,
+    Colors.blue,
+    Colors.white
+  ];
+
+  void switchGrid(int newIndex) {
+    setState(() {
+      currentGridIndex = newIndex;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +150,196 @@ class CubeState extends State<Cube> {
               style: TextStyle(
                   fontSize: AppSettings().fontSize,
                   color: Theme.of(context).colorScheme.onSurface),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  showNetwork = !showNetwork;
+                });
+              },
+              child: showNetwork ? Text("Switch Cube View") : Text("Switch to Network View"),
+            ),
+            SizedBox(
+              height: 5
+            ),
+            Container(
+              child: showNetwork ?
+                  Column(
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        color: grids[currentGridIndex][3][0],
+                        child: Align(alignment: Alignment.center, child: Text("N", style: TextStyle(fontSize: 20))),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // Left field
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                grids[currentGridIndex][0][0] = colors[currentColor];
+                              });
+                            },
+                            child: Container(
+                              width: 70,
+                              height: 70,
+                              color: grids[currentGridIndex][0][0],
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          // Center field
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                grids[currentGridIndex][0][1] = colors[currentColor];
+                              });
+                            },
+                            child: Container(
+                              width: 70,
+                              height: 70,
+                              color: grids[currentGridIndex][0][1],
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          // Right field
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                grids[currentGridIndex][0][2] = colors[currentColor];
+                              });
+                            },
+                            child: Container(
+                              width: 70,
+                              height: 70,
+                              color: grids[currentGridIndex][0][2],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                grids[currentGridIndex][1][0] = colors[currentColor];
+                              });
+                            },
+                            child:
+                            // Left field
+                            Container(
+                              width: 70,
+                              height: 70,
+                              color: grids[currentGridIndex][1][0],
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          // Center field
+                          Container(
+                            width: 70,
+                            height: 70,
+                            color: grids[currentGridIndex][1][1],
+                          ),
+                          SizedBox(width: 10),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                grids[currentGridIndex][1][2] = colors[currentColor];
+                              });
+                            },
+                            child:
+                            // Right field
+                            Container(
+                              width: 70,
+                              height: 70,
+                              color: grids[currentGridIndex][1][2],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                grids[currentGridIndex][2][0] = colors[currentColor];
+                              });
+                            },
+                            child:
+                            // Left field
+                            Container(
+                              width: 70,
+                              height: 70,
+                              color: grids[currentGridIndex][2][0],
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                grids[currentGridIndex][2][1] = colors[currentColor];
+                              });
+                            },
+                            child:
+                            // Center field
+                            Container(
+                              width: 70,
+                              height: 70,
+                              color: grids[currentGridIndex][2][1],
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                grids[currentGridIndex][2][2] = colors[currentColor];
+                              });
+                            },
+                            child:
+                            // Right field
+                            Container(
+                              width: 70,
+                              height: 70,
+                              color: grids[currentGridIndex][2][2],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Container(
+                          width: 50,
+                          height: 50,
+                          color: grids[currentGridIndex][3][1],
+                          child: Align(alignment: Alignment.center, child: Text("S", style: TextStyle(fontSize: 20)))
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              switchGrid((currentGridIndex - 1) % grids.length);
+                            },
+                            icon: const Icon(Icons.arrow_left),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              switchGrid((currentGridIndex + 1) % grids.length);
+                            },
+                            icon: const Icon(Icons.arrow_right),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ) : Row()
             ),
             ElevatedButton(
               onPressed: () {
