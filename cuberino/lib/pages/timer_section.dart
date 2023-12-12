@@ -285,8 +285,8 @@ class TimerApp extends State<TimerSection> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    loadLogs();
-    calculateAverageAndPR();
+    //loadLogs();
+    //calculateAverageAndPR();
     return Scaffold(
       backgroundColor: colorScheme.background,
       body: SafeArea(
