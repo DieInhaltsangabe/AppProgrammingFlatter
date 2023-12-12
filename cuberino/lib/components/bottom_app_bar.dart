@@ -7,10 +7,36 @@ import 'package:cuberino/pages/timer_section.dart';
 import 'package:cuberino/pages/challange_section.dart';
 
 class BottomMenu extends StatefulWidget {
+
   bool _timerSection = false;
   bool _mainScreen = false;
   bool _tutorialSection = false;
   bool _challanges = false;
+
+  BottomMenu(bool timerSection, bool mainScreen, bool tutorialSection, bool challanges) {
+    _timerSection = timerSection;
+    _mainScreen = mainScreen;
+    _tutorialSection = tutorialSection;
+    _challanges = challanges;
+  }
+
+  @override
+  State<StatefulWidget> createState() => _BottomMenuWidget(_timerSection, _mainScreen, _tutorialSection, _challanges);
+}
+
+class _BottomMenuWidget extends State<BottomMenu> {
+
+  bool _timerSection = false;
+  bool _mainScreen = false;
+  bool _tutorialSection = false;
+  bool _challanges = false;
+
+  _BottomMenuWidget(bool timerSection, bool mainScreen, bool tutorialSection, bool challanges) {
+    _timerSection = timerSection;
+    _mainScreen = mainScreen;
+    _tutorialSection = tutorialSection;
+    _challanges = challanges;
+  }
 
   Widget timer = Icon(Icons.alarm);
   Widget mainCube = Image.asset('assets/rubik.png');
@@ -24,70 +50,77 @@ class BottomMenu extends StatefulWidget {
     challange = Icon(Icons.attractions);
   }
 
-  BottomMenu(bool timerSection, bool mainScreen, bool tutorialSection, bool challanges) {
-    _timerSection = timerSection;
-    _mainScreen = mainScreen;
-    _tutorialSection = tutorialSection;
-    _challanges = challanges;
-  }
-
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(50)),
+              color: !_timerSection ? Colors.grey : null,
+            ),
+            child:
             IconButton(
               icon: timer,
               onPressed: () {
                 if(_timerSection) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => TimerSection()));
-                  resetIcons();
-                  setState(() {
-                    timer = Icon(Icons.alarm_on);
+                }
+              },
+            ),
+          ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(50)),
+                color: !_mainScreen ? Colors.grey : null,
+              ),
+              child: IconButton(
+                icon: mainCube,
+                onPressed: () {
+                  if(_mainScreen) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cuberino()));
                   }
-                  });
-
-              },
+                },
+              ),
             ),
-            IconButton(
-              icon: mainCube,
-              onPressed: () {
-                if(_mainScreen) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Cuberino()));
-                }
-              },
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(50)),
+                color: !_tutorialSection ? Colors.grey : null,
+              ),
+              child: IconButton(
+                icon: tutorial,
+                onPressed: () {
+                  if(_tutorialSection) {
+                    Navigator.push(context,
+                        MaterialPageRoute(
+                            builder: (context) => TutorialSection()));
+                  }
+                },
+              ),
             ),
-            IconButton(
-              icon: tutorial,
-              onPressed: () {
-                if(_tutorialSection) {
-                  Navigator.push(context,
-                      MaterialPageRoute(
-                          builder: (context) => TutorialSection()));
+            Container(
+              decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(50)),
+              color: !_challanges ? Colors.grey : null,
+              ),
+              child: IconButton(
+                icon: challange,
+                onPressed: () {
+                  if(_challanges) {
+                    Navigator.push(context,
+                        MaterialPageRoute(
+                            builder: (context) => ChallangesSection()));
+                  }
                 }
-              },
-            ),
-            IconButton(
-              icon: challange,
-              onPressed: () {
-                if(_challanges) {
-                  Navigator.push(context,
-                      MaterialPageRoute(
-                          builder: (context) => ChallangesSection()));
-                }
-              }
+              ),
             )
         ],
       ),
     );
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    createState() => CubeState();
   }
 }
