@@ -168,7 +168,9 @@ class CubeState extends State<Cube> {
 
   @override
   Widget build(BuildContext context) {
-    notateToGrid(C.Cube.tetris.definition);
+    if(cube.length == 54){
+      notateToGrid(cube);
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -784,11 +786,12 @@ class CubeState extends State<Cube> {
               )
             ),
             ElevatedButton(
-              onPressed: () {
-                var inputedCube = Navigator.push(context,
+              onPressed: () async {
+                var inputedCube = await Navigator.push(context,
                     MaterialPageRoute(builder: (context) => InputSection()));
                 setState(() {
                   cube = inputedCube as String;
+                  print(cube);
                 });
               },
               child: Text(
