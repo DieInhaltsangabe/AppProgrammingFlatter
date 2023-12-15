@@ -66,6 +66,28 @@ class InputSectionState extends State<InputSection> {
     });
   }
 
+  void rotateCube(List<List<Color>> grid) {
+    int N = grid.length - 1;
+
+    // Transponieren der Matrix
+    for (int i = 0; i < N; i++) {
+      for (int j = i; j < N; j++) {
+        Color temp = grid[j][i];
+        grid[j][i] = grid[i][j];
+        grid[i][j] = temp;
+      }
+    }
+
+    // Umkehren der Zeilen
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N / 2; j++) {
+        Color temp = grid[i][j];
+        grid[i][j] = grid[i][N - j - 1];
+        grid[i][N - j - 1] = temp;
+      }
+    }
+  }
+
   void submitCube() {
     var numberOfColors = {for (var color in colors) color: 0};
     for (var grid in grids) {
@@ -134,6 +156,12 @@ class InputSectionState extends State<InputSection> {
   }
 
   String buildCubeString() {
+    rotateCube(grids[4]);
+    rotateCube(grids[4]);
+    rotateCube(grids[4]);
+    rotateCube(grids[5]);
+    rotateCube(grids[5]);
+    rotateCube(grids[5]);
     var stringArray = [];
     var counter = 0;
     var sortedGrid = [
@@ -194,7 +222,9 @@ class InputSectionState extends State<InputSection> {
                 width: 50,
                 height: 50,
                 color: grids[currentGridIndex][3][0],
-                child: Align(alignment: Alignment.center, child: Text("N", style: TextStyle(fontSize: 20))),
+                child: Align(
+                    alignment: Alignment.center,
+                    child: Text("N", style: TextStyle(fontSize: 20))),
               ),
               const SizedBox(height: 15),
               Row(
@@ -337,11 +367,12 @@ class InputSectionState extends State<InputSection> {
               ),
               const SizedBox(height: 15),
               Container(
-                width: 50,
-                height: 50,
-                color: grids[currentGridIndex][3][1],
-                  child: Align(alignment: Alignment.center, child: Text("S", style: TextStyle(fontSize: 20)))
-              ),
+                  width: 50,
+                  height: 50,
+                  color: grids[currentGridIndex][3][1],
+                  child: Align(
+                      alignment: Alignment.center,
+                      child: Text("S", style: TextStyle(fontSize: 20)))),
               const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
