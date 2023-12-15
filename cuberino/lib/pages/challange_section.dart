@@ -24,11 +24,16 @@ class Challanges extends State<ChallangesSection> {
   @override
   void initState() {
     super.initState();
+
+    _loadData();
     _generateString();
+
   }
 
   List logs = [];
+
   int challangeId = 0;
+  var challangeIdDay = [0, ""];
   int currentGridIndex = 0;
   var colors = [
     Colors.red,
@@ -56,8 +61,6 @@ class Challanges extends State<ChallangesSection> {
 
   String solution = "";
   String inversedSolution = "";
-
-  List challangeSave = [[""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""]];
 
   var grids = [
     [
@@ -149,32 +152,25 @@ class Challanges extends State<ChallangesSection> {
   _loadData() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String challangeString = prefs.getString("challanges") ?? "";
-    if (challangeString != ""){
-      List temp = json.decode(challangeString);
-      for(int i = 0; i < temp.length; i++){
-        if(temp[i] != ""){
-          temp[i] = DateTime.parse(temp[i]);
-        }
-      }
-      challangeSave = temp;
+    var parsed = json.decode(challangeString);
+    parsed[1] = DateTime.parse(parsed[1]);
+
+    if(DateTime.now().isAfter(parsed[1])){
+      parsed[0] = parsed[0] + 1;
     }
-    int cID = 0;
-    for(int i = 0; i < challangeSave.length; i++){
-      if(challangeSave[i] == ""){
-        cID = i;
-        break;
-      }
-      else if(challangeSave[i].day == DateTime.now().day && challangeSave[i].month == DateTime.now().month && challangeSave[i].year == DateTime.now().year){
-        cID = i;
-        break;
-      }
-    }
+    print(parsed);
+    setState(() {
+      challangeId = parsed[0];
+    });
+    print(parsed);
+    _saveData();
   }
 
   _saveData() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    challangeSave[challangeId] = DateTime.now().toString();
-    String saveListJSON = json.encode(challangeSave);
+    var today = DateTime.now();
+    challangeIdDay[1] = DateTime(today.year, today.month, today.day);
+    String saveListJSON = json.encode(challangeIdDay);
     prefs.setString("challanges", saveListJSON);
   }
 
@@ -866,10 +862,7 @@ class Challanges extends State<ChallangesSection> {
 
           ),
       ),
-      bottomNavigationBar: GestureDetector(
-        child: BottomMenu(true, true, true, false),
-        onTap: () => _saveData(),
-      )
+      bottomNavigationBar: BottomMenu(true, true, true, false)
     );
   }
 }
