@@ -55,6 +55,7 @@ class TimerApp extends State<TimerSection> {
   }
 
   void calculateAverageAndPR() {
+    saveLogs();
     bool newBest = false;
 
     if (logs.length == 0) {
@@ -283,15 +284,15 @@ class TimerApp extends State<TimerSection> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    //loadLogs();
-    //calculateAverageAndPR();
+    loadLogs();
+    calculateAverageAndPR();
     return Scaffold(
       backgroundColor: colorScheme.background,
       body: SafeArea(
           child: Padding(
-              padding: const EdgeInsets.all(14.0),
+              padding: const EdgeInsets.all(5.0),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -301,7 +302,7 @@ class TimerApp extends State<TimerSection> {
                       maintainSize: true,
                       visible: !started,
                       child: Container(
-                        height: 150.0,
+                        height: 165.0,
                         width: double.infinity,
                         padding: EdgeInsetsDirectional.zero,
                         decoration: BoxDecoration(
@@ -312,7 +313,7 @@ class TimerApp extends State<TimerSection> {
                           children: [
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsets.only(top: 0, left: 15),
+                                padding: EdgeInsets.only(top: 0, left: 10),
                                 child: Text(
                                   currentScramble,
                                   style: const TextStyle(

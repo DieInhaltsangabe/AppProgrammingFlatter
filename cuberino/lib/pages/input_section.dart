@@ -156,12 +156,14 @@ class InputSectionState extends State<InputSection> {
   }
 
   String buildCubeString() {
+
     rotateCube(grids[4]);
     rotateCube(grids[4]);
     rotateCube(grids[4]);
     rotateCube(grids[5]);
     rotateCube(grids[5]);
     rotateCube(grids[5]);
+
     var stringArray = [];
     var counter = 0;
     var sortedGrid = [
@@ -234,7 +236,9 @@ class InputSectionState extends State<InputSection> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        grids[currentGridIndex][0][0] = colors[currentColor];
+
+                          grids[currentGridIndex][0][0] = colors[currentColor];
+
                       });
                     },
                     child: Container(
@@ -248,7 +252,9 @@ class InputSectionState extends State<InputSection> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        grids[currentGridIndex][0][1] = colors[currentColor];
+
+                          grids[currentGridIndex][0][1] = colors[currentColor];
+
                       });
                     },
                     child: Container(
@@ -262,7 +268,9 @@ class InputSectionState extends State<InputSection> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        grids[currentGridIndex][0][2] = colors[currentColor];
+
+                          grids[currentGridIndex][0][2] = colors[currentColor];
+
                       });
                     },
                     child: Container(
@@ -280,7 +288,9 @@ class InputSectionState extends State<InputSection> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
+
                         grids[currentGridIndex][1][0] = colors[currentColor];
+
                       });
                     },
                     child:
