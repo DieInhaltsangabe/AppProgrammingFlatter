@@ -66,8 +66,17 @@ class Cube extends StatefulWidget {
 }
 
 class CubeState extends State<Cube> {
-  String cube = "";
+  final temp = C.Cube.solved;
+  String cube = "UUFUUFUUFRRRRRRRRRFFDFFDFFDDDBDDBDDBLLLLLLLLLBBUBBUBBU";
   bool showNetwork = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final newCube = C.Cube.checkerboard;
+    cube = newCube.definition;
+    print(cube);
+  }
 
   var grids = [
     [
@@ -256,6 +265,7 @@ class CubeState extends State<Cube> {
                             width: 70,
                             height: 70,
                             color: grids[currentGridIndex][1][1],
+                            //child: Text("F", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800, fontSize: 20.0)),
                           ),
                           SizedBox(width: 10),
                             // Right field
@@ -328,22 +338,22 @@ class CubeState extends State<Cube> {
                           children: [
                             // Left field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[4][0][0],
                             ),
                             SizedBox(width: 5),
                             // Center field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[4][0][1],
                             ),
                             SizedBox(width: 5),
                             // Right field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[4][0][2],
                             ),
                           ],
@@ -357,22 +367,23 @@ class CubeState extends State<Cube> {
                           children: [
                             // Left field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[4][1][0],
                             ),
                             SizedBox(width: 5),
                             // Center field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[4][1][1],
+                              child: Center(child: Text("U", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800))),
                             ),
                             SizedBox(width: 5),
                             // Right field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[4][1][2],
                             ),
                           ],
@@ -386,22 +397,22 @@ class CubeState extends State<Cube> {
                           children: [
                             // Left field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[4][2][0],
                             ),
                             SizedBox(width: 5),
                             // Center field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[4][2][1],
                             ),
                             SizedBox(width: 5),
                             // Right field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[4][2][2],
                             ),
                           ],
@@ -414,62 +425,62 @@ class CubeState extends State<Cube> {
                           children: [
                             // Left field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[3][0][0],
                             ),
                             SizedBox(width: 5),
                             // Center field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[3][0][1],
                             ),
                             SizedBox(width: 5),
                             // Right field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[3][0][2],
                             ),
                             SizedBox(width: 10),
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[0][0][0],
                             ),
                             SizedBox(width: 5),
                             // Center field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[0][0][1],
                             ),
                             SizedBox(width: 5),
                             // Right field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[0][0][2],
                             ),
                             SizedBox(width: 10),
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[1][0][0],
                             ),
                             SizedBox(width: 5),
                             // Center field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[1][0][1],
                             ),
                             SizedBox(width: 5),
                             // Right field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[1][0][2],
                             ),
                           ],
@@ -482,62 +493,66 @@ class CubeState extends State<Cube> {
                           children: [
                             // Left field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[3][1][0],
                             ),
                             SizedBox(width: 5),
                             // Center field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[3][1][1],
+                              child: Center(child: Text("L", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800))),
                             ),
                             SizedBox(width: 5),
                             // Right field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[3][1][2],
                             ),
                             SizedBox(width: 10),
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[0][1][0],
                             ),
                             SizedBox(width: 5),
                             // Center field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[0][1][1],
+                              child: Center(child: Text("F", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800))),
                             ),
                             SizedBox(width: 5),
                             // Right field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[0][1][2],
                             ),
                             SizedBox(width: 10),
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[1][1][0],
+
                             ),
                             SizedBox(width: 5),
                             // Center field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[1][1][1],
+                              child: Center(child: Text("R", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800))),
                             ),
                             SizedBox(width: 5),
                             // Right field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[1][1][2],
                             ),
                           ],
@@ -550,62 +565,62 @@ class CubeState extends State<Cube> {
                           children: [
                             // Left field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[3][2][0],
                             ),
                             SizedBox(width: 5),
                             // Center field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[3][2][1],
                             ),
                             SizedBox(width: 5),
                             // Right field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[3][2][2],
                             ),
                             SizedBox(width: 10),
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[0][2][0],
                             ),
                             SizedBox(width: 5),
                             // Center field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[0][2][1],
                             ),
                             SizedBox(width: 5),
                             // Right field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[0][2][2],
                             ),
                             SizedBox(width: 10),
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[1][2][0],
                             ),
                             SizedBox(width: 5),
                             // Center field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[1][2][1],
                             ),
                             SizedBox(width: 5),
                             // Right field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[1][2][2],
                             ),
                           ],
@@ -618,22 +633,22 @@ class CubeState extends State<Cube> {
                           children: [
                             // Left field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[5][0][0],
                             ),
                             SizedBox(width: 5),
                             // Center field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[5][0][1],
                             ),
                             SizedBox(width: 5),
                             // Right field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[5][0][2],
                             ),
                           ],
@@ -646,22 +661,23 @@ class CubeState extends State<Cube> {
                           children: [
                             // Left field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[5][1][0],
                             ),
                             SizedBox(width: 5),
                             // Center field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[5][1][1],
+                              child: Center(child: Text("D", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800))),
                             ),
                             SizedBox(width: 5),
                             // Right field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[5][1][2],
                             ),
                           ],
@@ -674,22 +690,22 @@ class CubeState extends State<Cube> {
                           children: [
                             // Left field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[5][2][0],
                             ),
                             SizedBox(width: 5),
                             // Center field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[5][2][1],
                             ),
                             SizedBox(width: 5),
                             // Right field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[5][2][2],
                             ),
                           ],
@@ -702,22 +718,22 @@ class CubeState extends State<Cube> {
                           children: [
                             // Left field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[2][0][0],
                             ),
                             SizedBox(width: 5),
                             // Center field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[2][0][1],
                             ),
                             SizedBox(width: 5),
                             // Right field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[2][0][2],
                             ),
                           ],
@@ -730,22 +746,23 @@ class CubeState extends State<Cube> {
                           children: [
                             // Left field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[2][1][0],
                             ),
                             SizedBox(width: 5),
                             // Center field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[2][1][1],
+                              child: Center(child: Text("B", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800))),
                             ),
                             SizedBox(width: 5),
                             // Right field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[2][1][2],
                             ),
                           ],
@@ -758,22 +775,22 @@ class CubeState extends State<Cube> {
                           children: [
                             // Left field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[2][2][0],
                             ),
                             SizedBox(width: 5),
                             // Center field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[2][2][1],
                             ),
                             SizedBox(width: 5),
                             // Right field
                             Container(
-                              width: 15,
-                              height: 15,
+                              width: 25,
+                              height: 25,
                               color: grids[2][2][2],
                             ),
                           ],
@@ -796,6 +813,23 @@ class CubeState extends State<Cube> {
               },
               child: Text(
                 'Input',
+                style: TextStyle(
+                    fontSize: AppSettings().fontSize,
+                    color: Theme.of(context).colorScheme.onSurface),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final cube1 = C.Cube.from(cube);
+                print(cube1.definition);
+                final solution = await cube1.solve(maxDepth: 25, timeout: Duration(seconds: 20));
+                print(solution);
+                setState(() {
+                  print(solution);
+                });
+              },
+              child: Text(
+                'Solve',
                 style: TextStyle(
                     fontSize: AppSettings().fontSize,
                     color: Theme.of(context).colorScheme.onSurface),
