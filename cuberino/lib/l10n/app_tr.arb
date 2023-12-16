@@ -10,5 +10,15 @@
   "backgroundcolor": "Arka plan rengi",
   "emptyLogs": "Bulunamadi.",
   "showLogs": "Log göster",
-  "changecolor": "Arka plan rengi değiştir"
+  "todaysChallenge": "Bügünün Challangesi",
+  "changecolor": "Arka plan rengi değiştir",
+  "challengeSolutionToPattern": "Çözülmüş bir Küpten desene ulaşmak için bu algoritmayı kullanın",
+  "challengePatternToSolved": "Küpü normale döndürmek için bu algoritmayı kullanın",
+  "challangeInstruction": "Bu modeli elde etmeye çalışın",
+  "input": "Küp girişi",
+  "solve": "Küpü çöz",
+  "solution": "Çözüm",
+  "switchToCubeNet": "Küp ağı görüntüle",
+  "showSolutions": "Çözümleri göster",
+  "switchToFaceView": "Küp yüz görünümüne geç"
 }

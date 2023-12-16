@@ -10,5 +10,15 @@
   "emptyLogs": "Es wurden keine Logs gefunden.",
   "backgroundcolor": "Hintergrundfarbe",
   "showLogs": "Zeige Logs",
+  "todaysChallenge": "Heutige Challenge",
+  "challangeInstruction": "Versuche dieses Pattern zu bekommen",
+  "challengeSolutionToPattern": "Um den gelösten Cube zu dem Pattern zu bekommen",
+  "challengePatternToSolved": "Um vom Pattern den Cube zu lösen",
+  "showSolutions": "Zeige Lösungen",
+  "input": "Würfel eingeben",
+  "solve": "Löse Würfel",
+  "solution": "Lösung",
+  "switchToCubeNet": "Zu Würfelnetzansicht wechseln",
+  "switchToFaceView": "Zu Seitenansicht wechseln",
   "changecolor": "Hintergrundfarbe ändern"
 }
