@@ -18,6 +18,8 @@
   "switchToFaceView": "Switch to cube face view",
   "challengeSolutionToPattern": "To get from a solved Cube to the pattern use this algorithm",
   "challengePatternToSolved": "To solve the cube back to normal, use this algorithm",
+  "input": "Input",
+  "solve": "Solve Cube",
   "solution": "Solution",
   "showSolutions": "Show Solutions",
   "best": "PR: ",

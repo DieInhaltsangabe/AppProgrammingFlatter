@@ -241,8 +241,8 @@ class CubeState extends State<Cube> {
                             }
                           });
                         },
-                        child: showNetwork ? Text("Switch Cube View", style: TextStyle(fontSize: AppSettings().fontSize,
-                            color: Theme.of(context).colorScheme.onSurface)) : Text("Switch to Network View", style: TextStyle(fontSize: AppSettings().fontSize,
+                        child: showNetwork ? Text(AppLocalizations.of(context)!.switchToCubeNet, style: TextStyle(fontSize: AppSettings().fontSize,
+                            color: Theme.of(context).colorScheme.onSurface)) : Text(AppLocalizations.of(context)!.switchToFaceView, style: TextStyle(fontSize: AppSettings().fontSize,
                             color: Theme.of(context).colorScheme.onSurface)),
                       ),
                       SizedBox(
@@ -829,66 +829,54 @@ class CubeState extends State<Cube> {
                                     ),
                                   ),
                                   SizedBox(height: 5),
+                                  Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        var inputedCube = await Navigator.push(context,
+                                            MaterialPageRoute(builder: (context) => InputSection()));
+                                        setState(() {
+                                          if(inputedCube != Null){
+                                            cube = inputedCube as String;
+                                          }
+                                        });
+                                      },
+                                      child: Text(
+                                        AppLocalizations.of(context)!.input,
+                                        style: TextStyle(
+                                            fontSize: AppSettings().fontSize,
+                                            color: Theme.of(context).colorScheme.onSurface),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        final cube1 = C.Cube.from(cube);
+                                        print(cube1.definition);
+                                        final solution = await cube1.solve(maxDepth: 25, timeout: Duration(seconds: 20));
+                                        print(solution);
+                                        setState(() {
+                                          print(solution);
+                                        });
+                                      },
+                                      child: Text(
+                                        AppLocalizations.of(context)!.solve,
+                                        style: TextStyle(
+                                            fontSize: AppSettings().fontSize,
+                                            color: Theme.of(context).colorScheme.onSurface),
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               )
                             ],
                           )
                       ),
-
-
                     ],
                   )),
-            )
-            ,
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          var inputedCube = await Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => InputSection()));
-                          setState(() {
-                            if(inputedCube != Null){
-                              cube = inputedCube as String;
-                            }
-                          });
-                        },
-                        child: Text(
-                          'Input',
-                          style: TextStyle(
-                              fontSize: AppSettings().fontSize,
-                              color: Theme.of(context).colorScheme.onSurface),
-                        ),
-                      ),
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          final cube1 = C.Cube.from(cube);
-                          print(cube1.definition);
-                          final solution = await cube1.solve(maxDepth: 25, timeout: Duration(seconds: 20));
-                          print(solution);
-                          setState(() {
-                            print(solution);
-                          });
-                        },
-                        child: Text(
-                          'Solve',
-                          style: TextStyle(
-                              fontSize: AppSettings().fontSize,
-                              color: Theme.of(context).colorScheme.onSurface),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),],
+            )],
         )),
       ),
       bottomNavigationBar: BottomMenu(true, false, true, true),
