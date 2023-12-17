@@ -61,6 +61,7 @@ class Challanges extends State<ChallangesSection> {
 
   String solution = "";
   String inversedSolution = "";
+  String zoom = _appSettings.cubeZoom;
 
   var grids = [
     [
@@ -217,6 +218,8 @@ class Challanges extends State<ChallangesSection> {
 
   @override
   Widget build(BuildContext context) {
+    double cubeDimFace = zoom == "Small" ? 50.0 : zoom == "Middle" ? 60.0 : 70.0;
+    double cubeNetDim = zoom == "Small" ? 15.0 : zoom == "Middle" ? 20.0 : 25.0;
     Cuber.Cube currentChallange = challanges[challangeId][0];
     notateToGrid(currentChallange.definition);
     _generateString();
@@ -262,8 +265,8 @@ class Challanges extends State<ChallangesSection> {
                               Column(
                                 children: [
                                   Container(
-                                    width: 50,
-                                    height: 50,
+                                    width: zoom == "Small" ? 30 : zoom == "Middle" ? 40 : 50,
+                                    height: zoom == "Small" ? 30 : zoom == "Middle" ? 40 : 50,
                                     color: grids[currentGridIndex][3][0],
                                     child: Align(alignment: Alignment.center, child: Text("N", style: TextStyle(fontSize: 20))),
                                   ),
@@ -273,22 +276,22 @@ class Challanges extends State<ChallangesSection> {
                                     children: [
                                       // Left field
                                       Container(
-                                        width: 70,
-                                        height: 70,
+                                        width: cubeDimFace,
+                                        height: cubeDimFace,
                                         color: grids[currentGridIndex][0][0],
                                       ),
                                       SizedBox(width: 10),
                                       // Center field
                                       Container(
-                                        width: 70,
-                                        height: 70,
+                                        width: cubeDimFace,
+                                        height: cubeDimFace,
                                         color: grids[currentGridIndex][0][1],
                                       ),
                                       SizedBox(width: 10),
                                       // Right field
                                       Container(
-                                        width: 70,
-                                        height: 70,
+                                        width: cubeDimFace,
+                                        height: cubeDimFace,
                                         color: grids[currentGridIndex][0][2],
                                       ),
                                     ],
@@ -299,23 +302,23 @@ class Challanges extends State<ChallangesSection> {
                                     children: [
                                       // Left field
                                       Container(
-                                        width: 70,
-                                        height: 70,
+                                        width: cubeDimFace,
+                                        height: cubeDimFace,
                                         color: grids[currentGridIndex][1][0],
                                       ),
                                       SizedBox(width: 10),
                                       // Center field
                                       Container(
-                                        width: 70,
-                                        height: 70,
+                                        width: cubeDimFace,
+                                        height: cubeDimFace,
                                         color: grids[currentGridIndex][1][1],
                                         //child: Text("F", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800, fontSize: 20.0)),
                                       ),
                                       SizedBox(width: 10),
                                       // Right field
                                       Container(
-                                        width: 70,
-                                        height: 70,
+                                        width: cubeDimFace,
+                                        height: cubeDimFace,
                                         color: grids[currentGridIndex][1][2],
                                       ),
                                     ],
@@ -326,30 +329,30 @@ class Challanges extends State<ChallangesSection> {
                                     children: [
                                       // Left field
                                       Container(
-                                        width: 70,
-                                        height: 70,
+                                        width: cubeDimFace,
+                                        height: cubeDimFace,
                                         color: grids[currentGridIndex][2][0],
                                       ),
                                       SizedBox(width: 10),
                                       // Center field
                                       Container(
-                                        width: 70,
-                                        height: 70,
+                                        width: cubeDimFace,
+                                        height: cubeDimFace,
                                         color: grids[currentGridIndex][2][1],
                                       ),
                                       SizedBox(width: 10),
                                       // Right field
                                       Container(
-                                        width: 70,
-                                        height: 70,
+                                        width: cubeDimFace,
+                                        height: cubeDimFace,
                                         color: grids[currentGridIndex][2][2],
                                       ),
                                     ],
                                   ),
                                   const SizedBox(height: 10),
                                   Container(
-                                      width: 50,
-                                      height: 50,
+                                      width: zoom == "Small" ? 30 : zoom == "Middle" ? 40 : 50,
+                                      height: zoom == "Small" ? 30 : zoom == "Middle" ? 40 : 50,
                                       color: grids[currentGridIndex][3][1],
                                       child: Align(alignment: Alignment.center, child: Text("S", style: TextStyle(fontSize: 20)))
                                   ),
@@ -381,22 +384,22 @@ class Challanges extends State<ChallangesSection> {
                                           children: [
                                             // Left field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[4][0][0],
                                             ),
                                             SizedBox(width: 5),
                                             // Center field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[4][0][1],
                                             ),
                                             SizedBox(width: 5),
                                             // Right field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[4][0][2],
                                             ),
                                           ],
@@ -409,23 +412,23 @@ class Challanges extends State<ChallangesSection> {
                                           children: [
                                             // Left field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[4][1][0],
                                             ),
                                             SizedBox(width: 5),
                                             // Center field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[4][1][1],
                                               child: Center(child: Text("U", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800))),
                                             ),
                                             SizedBox(width: 5),
                                             // Right field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[4][1][2],
                                             ),
                                           ],
@@ -438,22 +441,22 @@ class Challanges extends State<ChallangesSection> {
                                           children: [
                                             // Left field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[4][2][0],
                                             ),
                                             SizedBox(width: 5),
                                             // Center field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[4][2][1],
                                             ),
                                             SizedBox(width: 5),
                                             // Right field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[4][2][2],
                                             ),
                                           ],
@@ -466,62 +469,62 @@ class Challanges extends State<ChallangesSection> {
                                           children: [
                                             // Left field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[3][0][0],
                                             ),
                                             SizedBox(width: 5),
                                             // Center field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[3][0][1],
                                             ),
                                             SizedBox(width: 5),
                                             // Right field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[3][0][2],
                                             ),
                                             SizedBox(width: 10),
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[0][0][0],
                                             ),
                                             SizedBox(width: 5),
                                             // Center field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[0][0][1],
                                             ),
                                             SizedBox(width: 5),
                                             // Right field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[0][0][2],
                                             ),
                                             SizedBox(width: 10),
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[1][0][0],
                                             ),
                                             SizedBox(width: 5),
                                             // Center field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[1][0][1],
                                             ),
                                             SizedBox(width: 5),
                                             // Right field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[1][0][2],
                                             ),
                                           ],
@@ -534,66 +537,66 @@ class Challanges extends State<ChallangesSection> {
                                           children: [
                                             // Left field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[3][1][0],
                                             ),
                                             SizedBox(width: 5),
                                             // Center field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[3][1][1],
                                               child: Center(child: Text("L", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800))),
                                             ),
                                             SizedBox(width: 5),
                                             // Right field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[3][1][2],
                                             ),
                                             SizedBox(width: 10),
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[0][1][0],
                                             ),
                                             SizedBox(width: 5),
                                             // Center field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[0][1][1],
                                               child: Center(child: Text("F", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800))),
                                             ),
                                             SizedBox(width: 5),
                                             // Right field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[0][1][2],
                                             ),
                                             SizedBox(width: 10),
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[1][1][0],
 
                                             ),
                                             SizedBox(width: 5),
                                             // Center field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[1][1][1],
                                               child: Center(child: Text("R", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800))),
                                             ),
                                             SizedBox(width: 5),
                                             // Right field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[1][1][2],
                                             ),
                                           ],
@@ -606,62 +609,62 @@ class Challanges extends State<ChallangesSection> {
                                           children: [
                                             // Left field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[3][2][0],
                                             ),
                                             SizedBox(width: 5),
                                             // Center field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[3][2][1],
                                             ),
                                             SizedBox(width: 5),
                                             // Right field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[3][2][2],
                                             ),
                                             SizedBox(width: 10),
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[0][2][0],
                                             ),
                                             SizedBox(width: 5),
                                             // Center field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[0][2][1],
                                             ),
                                             SizedBox(width: 5),
                                             // Right field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[0][2][2],
                                             ),
                                             SizedBox(width: 10),
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[1][2][0],
                                             ),
                                             SizedBox(width: 5),
                                             // Center field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[1][2][1],
                                             ),
                                             SizedBox(width: 5),
                                             // Right field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[1][2][2],
                                             ),
                                           ],
@@ -674,22 +677,22 @@ class Challanges extends State<ChallangesSection> {
                                           children: [
                                             // Left field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[5][0][0],
                                             ),
                                             SizedBox(width: 5),
                                             // Center field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[5][0][1],
                                             ),
                                             SizedBox(width: 5),
                                             // Right field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[5][0][2],
                                             ),
                                           ],
@@ -702,23 +705,23 @@ class Challanges extends State<ChallangesSection> {
                                           children: [
                                             // Left field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[5][1][0],
                                             ),
                                             SizedBox(width: 5),
                                             // Center field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[5][1][1],
                                               child: Center(child: Text("D", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800))),
                                             ),
                                             SizedBox(width: 5),
                                             // Right field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[5][1][2],
                                             ),
                                           ],
@@ -731,22 +734,22 @@ class Challanges extends State<ChallangesSection> {
                                           children: [
                                             // Left field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[5][2][0],
                                             ),
                                             SizedBox(width: 5),
                                             // Center field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[5][2][1],
                                             ),
                                             SizedBox(width: 5),
                                             // Right field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[5][2][2],
                                             ),
                                           ],
@@ -759,22 +762,22 @@ class Challanges extends State<ChallangesSection> {
                                           children: [
                                             // Left field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[2][2][2],
                                             ),
                                             SizedBox(width: 5),
                                             // Center field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[2][2][1],
                                             ),
                                             SizedBox(width: 5),
                                             // Right field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[2][2][0],
                                             ),
                                           ],
@@ -787,23 +790,23 @@ class Challanges extends State<ChallangesSection> {
                                           children: [
                                             // Left field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[2][1][2],
                                             ),
                                             SizedBox(width: 5),
                                             // Center field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[2][1][1],
                                               child: Center(child: Text("B", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800))),
                                             ),
                                             SizedBox(width: 5),
                                             // Right field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[2][1][0],
                                             ),
                                           ],
@@ -816,22 +819,22 @@ class Challanges extends State<ChallangesSection> {
                                           children: [
                                             // Left field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[2][0][2],
                                             ),
                                             SizedBox(width: 5),
                                             // Center field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[2][0][1],
                                             ),
                                             SizedBox(width: 5),
                                             // Right field
                                             Container(
-                                              width: 25,
-                                              height: 25,
+                                              width: cubeNetDim,
+                                              height: cubeNetDim,
                                               color: grids[2][0][0],
                                             ),
                                           ],
