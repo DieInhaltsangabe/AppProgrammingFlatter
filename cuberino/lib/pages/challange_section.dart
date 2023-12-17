@@ -229,10 +229,10 @@ class Challanges extends State<ChallangesSection> {
           child: Center(
             child: Column(
               children: [
-                Text(AppLocalizations.of(context)!.todaysChallenge, style: TextStyle(fontSize: AppSettings().fontSize)),
+                Text(AppLocalizations.of(context)!.todaysChallenge, style: TextStyle(fontSize: AppSettings().fontSize, fontFamily: AppSettings().font)),
                 const SizedBox(height: 4),
-                Text(challanges[challangeId][2], style: TextStyle(fontSize: 50)),
-                Center(child: Text(AppLocalizations.of(context)!.challangeInstruction, style: TextStyle(fontSize: AppSettings().fontSize ), textAlign: TextAlign.center,)),
+                Text(challanges[challangeId][2], style: TextStyle(fontSize: 50, fontFamily: AppSettings().font)),
+                Center(child: Text(AppLocalizations.of(context)!.challangeInstruction, style: TextStyle(fontSize: AppSettings().fontSize, fontFamily: AppSettings().font ), textAlign: TextAlign.center,)),
                 const SizedBox(height: 10),
                 Container(
                   child: Center(
@@ -253,8 +253,8 @@ class Challanges extends State<ChallangesSection> {
                                 }
                               });
                             },
-                            child: showNetwork ? Text(AppLocalizations.of(context)!.switchToCubeNet, style: TextStyle(fontSize: AppSettings().fontSize,
-                                color: Theme.of(context).colorScheme.onSurface)) : Text(AppLocalizations.of(context)!.switchToFaceView, style: TextStyle(fontSize: AppSettings().fontSize,
+                            child: showNetwork ? Text(AppLocalizations.of(context)!.switchToCubeNet, style: TextStyle(fontSize: AppSettings().fontSize,fontFamily: AppSettings().font,
+                                color: Theme.of(context).colorScheme.onSurface)) : Text(AppLocalizations.of(context)!.switchToFaceView, style: TextStyle(fontSize: AppSettings().fontSize, fontFamily: AppSettings().font,
                                 color: Theme.of(context).colorScheme.onSurface)),
                           ),
                           SizedBox(
@@ -853,7 +853,7 @@ class Challanges extends State<ChallangesSection> {
                 ),
                 ElevatedButton(
                   child: Text(AppLocalizations.of(context)!.showSolutions,
-                      style: TextStyle(fontSize: AppSettings().fontSize,
+                      style: TextStyle(fontSize: AppSettings().fontSize, fontFamily: AppSettings().font,
                           color: Theme.of(context).colorScheme.onSurface)),
                   onPressed: () {
                     _showDialog(context, solution, inversedSolution);
@@ -877,7 +877,8 @@ void _showDialog(BuildContext context, String sol, String invers){
         title: Text(AppLocalizations.of(context)!.solution,
             style: TextStyle(fontWeight: FontWeight.w600,
           color: Theme.of(context).colorScheme.onSurface,
-          fontSize: AppSettings().fontSize)),
+          fontSize: AppSettings().fontSize,
+          fontFamily: AppSettings().font)),
         children: [
           Padding(
             padding: EdgeInsets.all(15),
@@ -886,7 +887,8 @@ void _showDialog(BuildContext context, String sol, String invers){
                     color: Colors.teal.shade100,
                     fontWeight:
                     FontWeight.w600,
-                    fontSize: _appSettings.fontSize
+                    fontSize: _appSettings.fontSize,
+                    fontFamily: AppSettings().font
                 )
             ),
           ),
@@ -899,7 +901,8 @@ void _showDialog(BuildContext context, String sol, String invers){
                   Colors.teal.shade100,
                   fontWeight:
                   FontWeight.w600,
-                  fontSize: _appSettings.fontSize
+                  fontSize: _appSettings.fontSize,
+                  fontFamily: AppSettings().font,
                 )
             ),
           )

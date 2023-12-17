@@ -246,8 +246,8 @@ class CubeState extends State<Cube> {
                             }
                           });
                         },
-                        child: showNetwork ? Text(AppLocalizations.of(context)!.switchToCubeNet, style: TextStyle(fontSize: AppSettings().fontSize,
-                            color: Theme.of(context).colorScheme.onSurface)) : Text(AppLocalizations.of(context)!.switchToFaceView, style: TextStyle(fontSize: AppSettings().fontSize,
+                        child: showNetwork ? Text(AppLocalizations.of(context)!.switchToCubeNet, style: TextStyle(fontSize: AppSettings().fontSize, fontFamily: AppSettings().font,
+                            color: Theme.of(context).colorScheme.onSurface)) : Text(AppLocalizations.of(context)!.switchToFaceView, style: TextStyle(fontSize: AppSettings().fontSize, fontFamily: AppSettings().font,
                             color: Theme.of(context).colorScheme.onSurface)),
                       ),
                       SizedBox(
@@ -855,6 +855,7 @@ class CubeState extends State<Cube> {
                             AppLocalizations.of(context)!.input,
                             style: TextStyle(
                                 fontSize: AppSettings().fontSize,
+                                fontFamily: AppSettings().font,
                                 color: Theme.of(context).colorScheme.onSurface),
                           ),
                         ),
@@ -875,6 +876,7 @@ class CubeState extends State<Cube> {
                             AppLocalizations.of(context)!.solve,
                             style: TextStyle(
                                 fontSize: AppSettings().fontSize,
+                                fontFamily: AppSettings().font,
                                 color: Theme.of(context).colorScheme.onSurface),
                           ),
                         ),

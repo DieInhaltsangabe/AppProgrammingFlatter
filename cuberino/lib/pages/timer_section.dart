@@ -347,7 +347,7 @@ class TimerApp extends State<TimerSection> {
                                   child: Text(
                                     AppLocalizations.of(context)!
                                         .generateScramble,
-                                    style: TextStyle(color: Colors.white, fontSize: AppSettings().fontSize),
+                                    style: TextStyle(color: Colors.white, fontSize: AppSettings().fontSize, fontFamily: AppSettings().font),
                                   )),
                             ),
                           ]),
@@ -373,6 +373,7 @@ class TimerApp extends State<TimerSection> {
                           color: Colors.teal.shade100,
                           fontWeight: FontWeight.w600,
                           fontSize: AppSettings().fontSize,
+                          fontFamily: AppSettings().font,
                         ),
                       ),
                     ),
@@ -381,7 +382,8 @@ class TimerApp extends State<TimerSection> {
                       style: TextStyle(
                         color: Colors.teal.shade100,
                         fontWeight: FontWeight.w600,
-                          fontSize: AppSettings().fontSize,
+                        fontSize: AppSettings().fontSize,
+                        fontFamily: AppSettings().font,
                       ),
                     ),
                     Listener(
@@ -450,7 +452,7 @@ class TimerApp extends State<TimerSection> {
                         children: [
                           Expanded(
                             child : ElevatedButton(
-                            child: Text(AppLocalizations.of(context)!.showLogs, style: TextStyle(fontSize: AppSettings().fontSize)),
+                            child: Text(AppLocalizations.of(context)!.showLogs, style: TextStyle(color: Colors.white, fontSize: AppSettings().fontSize, fontFamily: AppSettings().font)),
                             onPressed: () {
                               showDialog(context: context,
                                   builder: (context) => StatefulBuilder(
@@ -519,6 +521,7 @@ class TimerApp extends State<TimerSection> {
                                                   }) : Center(child: Text(AppLocalizations.of(context)!.emptyLogs,
                                                   style: TextStyle(
                                                     fontSize: AppSettings().fontSize,
+                                                    fontFamily: AppSettings().font,
                                               )))),
                                         ]
                                       );
