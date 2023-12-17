@@ -14,14 +14,14 @@ class Tutorial extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 4.0),
-            child: Text(TutorialRepository.loadCaptionText(parentId)),
+            child: Text(TutorialRepository.loadCaptionText(parentId, context)),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
             child: AspectRatio(
               aspectRatio: 16 / 9,
               child: Image.asset(
-                TutorialRepository.loadTutorial(parentId).pathToImage,
+                TutorialRepository.loadTutorial(parentId, context).pathToImage,
                 fit: BoxFit.fill,
               ),
             ),
@@ -29,7 +29,7 @@ class Tutorial extends StatelessWidget {
           Expanded(
               child: Padding(
                   padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 4.0),
-                  child: Text(TutorialRepository.loadTutorial(parentId)
+                  child: Text(TutorialRepository.loadTutorial(parentId, context)
                       .subsectionText))),
         ],
       ),

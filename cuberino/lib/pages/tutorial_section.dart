@@ -7,10 +7,11 @@ import '../components/tutorialcard.dart';
 
 class TutorialSection extends StatelessWidget {
   TutorialSection({super.key});
-  final List<TutorialCardModel> tutorials = TutorialRepository.loadDataParent();
+  
 
   @override
   Widget build(BuildContext context) {
+    final List<TutorialCardModel> tutorials = TutorialRepository.loadDataParent(context);
     return Scaffold(
       bottomNavigationBar: BottomMenu(true, true, false, true),
       body: GridView.count(

@@ -78,7 +78,12 @@ flutter:
     - assets/genius.jpg
     - assets/tutorialwhitecross.jpeg
     - assets/rubik.png
-
+    - assets/whiteSide.png
+    - assets/middleLayer.png
+    - assets/topCross.png
+    - assets/changeEdges.png
+    - assets/changeCorners.png
+    - assets/turnCorners.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

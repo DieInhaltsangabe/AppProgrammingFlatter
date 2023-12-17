@@ -1,40 +1,78 @@
 import 'package:cuberino/model/tutorial_card_model.dart';
 import 'package:cuberino/model/tutorial_model.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TutorialRepository {
-  static loadDataParent() {
+  static loadDataParent(BuildContext context) {
     return [
-      const TutorialCardModel(
+      TutorialCardModel(
           id: 1,
           pathToImage: 'assets/starter.jpeg',
-          captionText: 'Anfänger',
-          subsectionText: 'Erstes mal lösen'),
-      const TutorialCardModel(
+          captionText: AppLocalizations.of(context)!.starterLevel,
+          subsectionText: AppLocalizations.of(context)!.starterLevelText),
+      TutorialCardModel(
           id: 2,
           pathToImage: 'assets/advanced.jpeg',
-          captionText: 'Fortgeschritten',
-          subsectionText: 'Tricks zum schneller lösen'),
-      const TutorialCardModel(
+          captionText: AppLocalizations.of(context)!.advancedLevel,
+          subsectionText: AppLocalizations.of(context)!.advancedLevelText),
+      TutorialCardModel(
           id: 3,
           pathToImage: 'assets/expert.jpeg',
-          captionText: 'Experte',
-          subsectionText: 'Einhändig Lösen'),
-      const TutorialCardModel(
+          captionText: AppLocalizations.of(context)!.expertLevel,
+          subsectionText: AppLocalizations.of(context)!.expertLevelText),
+      TutorialCardModel(
           id: 4,
           pathToImage: 'assets/genius.jpg',
-          captionText: 'Genius',
-          subsectionText: 'Lass dich überraschen'),
+          captionText: AppLocalizations.of(context)!.geniusLevel,
+          subsectionText: AppLocalizations.of(context)!.geniusLevelText),
     ];
   }
 
-  static loadDataChild(int id) {
+  static loadDataChild(int id, BuildContext context) {
     var tutorials = [
-      const TutorialCardModel(
+      TutorialCardModel(
           id: 5,
           pathToImage: 'assets/tutorialwhitecross.jpeg',
-          captionText: 'Weißes Kreuz',
-          subsectionText: 'Erster Schritt',
-          parentId: 1)
+          captionText: AppLocalizations.of(context)!.whiteCross,
+          subsectionText: AppLocalizations.of(context)!.firstStep,
+          parentId: 1),
+      TutorialCardModel(
+          id: 7,
+          pathToImage: 'assets/whiteSide.png',
+          captionText: AppLocalizations.of(context)!.whiteSide,
+          subsectionText: AppLocalizations.of(context)!.secondStep,
+          parentId: 1),
+      TutorialCardModel(
+          id: 8,
+          pathToImage: 'assets/middleLayer.png',
+          captionText: AppLocalizations.of(context)!.middleLayer,
+          subsectionText: AppLocalizations.of(context)!.thirdStep,
+          parentId: 1),
+      TutorialCardModel(
+          id: 9,
+          pathToImage: 'assets/topCross.png',
+          captionText: AppLocalizations.of(context)!.topCross,
+          subsectionText: AppLocalizations.of(context)!.fourthStep,
+          parentId: 1),
+      TutorialCardModel(
+          id: 11,
+          pathToImage: 'assets/changeEdges.png',
+          captionText: AppLocalizations.of(context)!.changeEdges,
+          subsectionText: AppLocalizations.of(context)!.fifthStep,
+          parentId: 1),
+      TutorialCardModel(
+          id: 12,
+          pathToImage: 'assets/changeCorners.png',
+          captionText: AppLocalizations.of(context)!.changeCorners,
+          subsectionText: AppLocalizations.of(context)!.sixthStep,
+          parentId: 1),
+      TutorialCardModel(
+          id: 13,
+          pathToImage: 'assets/turnCorners.png',
+          captionText: AppLocalizations.of(context)!.turnCorners,
+          subsectionText: AppLocalizations.of(context)!.seventhStep,
+          parentId: 1),
     ];
     List<TutorialCardModel> result = [];
     for (var tutorial in tutorials) {
@@ -45,14 +83,43 @@ class TutorialRepository {
     return result;
   }
 
-  static loadTutorial(int id) {
+  static loadTutorial(int id, BuildContext context) {
     var tutorials = [
-      const TutorialModel(
+      TutorialModel(
           id: 6,
           pathToImage: 'assets/tutorialwhitecross.jpeg',
-          subsectionText:
-              'Wir starten mit dem Lösen der weißen Kanten. Du kannst natürlich auch mit jeder anderen Farbe beginnen, doch in diesem Tutorial nehmen wir die weiße Seite als Beispiel. Wir wissen ja bereits, dass die mittleren Steine immer am gleichen Platz bleiben. Deshalb müssen wir darauf aufpassen, dass auch die zweite Farbe der Kanten mit den mittleren Steine der mittleren Seite übereinstimmt. Dieser Schritt ist intuitiv und relativ einfach, da es noch nicht so viele gelöste Steine gibt, auf die man achten muss. In vielen Fällen muss man die Kanten nur in ihren gelösten Zustand drehen. Hier sind noch ein paar Beispiele, die etwas spezieller sind.',
-          parentId: 5)
+          subsectionText: AppLocalizations.of(context)!.firstStepText,
+          parentId: 5),
+      TutorialModel(
+          id: 10,
+          pathToImage: 'assets/whiteSide.png',
+          subsectionText: AppLocalizations.of(context)!.secondStepText,
+          parentId: 7),
+      TutorialModel(
+          id: 14,
+          pathToImage: 'assets/middleLayer.png',
+          subsectionText: AppLocalizations.of(context)!.thirdStepText,
+          parentId: 8),
+      TutorialModel(
+          id: 15,
+          pathToImage: 'assets/topCross.png',
+          subsectionText: AppLocalizations.of(context)!.fourthStepText,
+          parentId: 9),
+      TutorialModel(
+          id: 16,
+          pathToImage: 'assets/changeEdges.png',
+          subsectionText: AppLocalizations.of(context)!.fifthStepText,
+          parentId: 11),
+      TutorialModel(
+          id: 17,
+          pathToImage: 'assets/changeCorners.png',
+          subsectionText: AppLocalizations.of(context)!.sixthStepText,
+          parentId: 12),
+      TutorialModel(
+          id: 18,
+          pathToImage: 'assets/turnCorners.png',
+          subsectionText: AppLocalizations.of(context)!.seventhStepText,
+          parentId: 13),
     ];
     for (var tutorial in tutorials) {
       if (tutorial.parentId == id) {
@@ -61,14 +128,50 @@ class TutorialRepository {
     }
   }
 
-  static loadCaptionText(int id) {
+  static loadCaptionText(int id, BuildContext context) {
     var tutorials = [
-      const TutorialCardModel(
+      TutorialCardModel(
           id: 5,
           pathToImage: 'assets/tutorialwhitecross.jpeg',
-          captionText: 'Weißes Kreuz',
-          subsectionText: 'Erster Schritt',
-          parentId: 1)
+          captionText: AppLocalizations.of(context)!.whiteCross,
+          subsectionText: AppLocalizations.of(context)!.firstStep,
+          parentId: 1),
+      TutorialCardModel(
+          id: 7,
+          pathToImage: 'assets/whiteSide.png',
+          captionText: AppLocalizations.of(context)!.whiteSide,
+          subsectionText: AppLocalizations.of(context)!.secondStep,
+          parentId: 1),
+      TutorialCardModel(
+          id: 8,
+          pathToImage: 'assets/middleLayer.png',
+          captionText: AppLocalizations.of(context)!.middleLayer,
+          subsectionText: AppLocalizations.of(context)!.thirdStep,
+          parentId: 1),
+      TutorialCardModel(
+          id: 9,
+          pathToImage: 'assets/topCross.png',
+          captionText: AppLocalizations.of(context)!.topCross,
+          subsectionText: AppLocalizations.of(context)!.fourthStep,
+          parentId: 1),
+      TutorialCardModel(
+          id: 11,
+          pathToImage: 'assets/changeEdges.png',
+          captionText: AppLocalizations.of(context)!.changeEdges,
+          subsectionText: AppLocalizations.of(context)!.fifthStep,
+          parentId: 1),
+      TutorialCardModel(
+          id: 12,
+          pathToImage: 'assets/changeCorners.png',
+          captionText: AppLocalizations.of(context)!.changeCorners,
+          subsectionText: AppLocalizations.of(context)!.sixthStep,
+          parentId: 1),
+      TutorialCardModel(
+          id: 13,
+          pathToImage: 'assets/turnCorners.png',
+          captionText: AppLocalizations.of(context)!.turnCorners,
+          subsectionText: AppLocalizations.of(context)!.seventhStep,
+          parentId: 1),
     ];
     for (var tutorial in tutorials) {
       if (tutorial.id == id) {

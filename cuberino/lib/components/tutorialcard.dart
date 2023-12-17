@@ -23,7 +23,6 @@ class TutorialCard extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () {
-          print('Taped Card');
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) {

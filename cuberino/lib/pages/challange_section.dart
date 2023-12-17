@@ -20,14 +20,12 @@ class ChallangesSection extends StatefulWidget {
 }
 
 class Challanges extends State<ChallangesSection> {
-
   @override
   void initState() {
     super.initState();
 
     _loadData();
     _generateString();
-
   }
 
   List logs = [];
@@ -118,13 +116,13 @@ class Challanges extends State<ChallangesSection> {
     inverter["D'"] = "D";
   }
 
-  String invertAlgorithm(Cuber.Solution sol){
+  String invertAlgorithm(Cuber.Solution sol) {
     String temp = sol.toString();
     List<String> moves = temp.split(' ');
     List<String> inversed = List.from(moves.reversed);
     fillHashMap();
-    for(int i = 0; i < inversed.length; i++){
-      if(inverter.keys.contains(inversed[i])){
+    for (int i = 0; i < inversed.length; i++) {
+      if (inverter.keys.contains(inversed[i])) {
         inversed[i] = inverter[inversed[i]] ?? inversed[i];
       }
     }
@@ -149,13 +147,13 @@ class Challanges extends State<ChallangesSection> {
 
   int currentColor = 0;
 
-  _loadData() async{
+  _loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String challangeString = prefs.getString("challanges") ?? "";
     var parsed = json.decode(challangeString);
     parsed[1] = DateTime.parse(parsed[1]);
 
-    if(DateTime.now().isAfter(parsed[1])){
+    if (DateTime.now().isAfter(parsed[1])) {
       parsed[0] = parsed[0] + 1;
     }
     print(parsed);
@@ -166,7 +164,7 @@ class Challanges extends State<ChallangesSection> {
     _saveData();
   }
 
-  _saveData() async{
+  _saveData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var today = DateTime.now();
     challangeIdDay[1] = DateTime(today.year, today.month, today.day);
@@ -174,11 +172,18 @@ class Challanges extends State<ChallangesSection> {
     prefs.setString("challanges", saveListJSON);
   }
 
-  void notateToGrid(String notation){
+  void notateToGrid(String notation) {
     int notationIndex = 0;
-    var sortedGrid = [ grids[4], grids[1], grids[0], grids[5], grids[3], grids[2]];
-    for (int i = 0; i < 6; i++){
-      for(int k = 0; k < 3; k++) {
+    var sortedGrid = [
+      grids[4],
+      grids[1],
+      grids[0],
+      grids[5],
+      grids[3],
+      grids[2]
+    ];
+    for (int i = 0; i < 6; i++) {
+      for (int k = 0; k < 3; k++) {
         for (int j = 0; j < 3; j++) {
           var newColor;
           switch (notation[notationIndex]) {
@@ -210,9 +215,15 @@ class Challanges extends State<ChallangesSection> {
       }
     }
     setState(() {
-      grids = [sortedGrid[2],  sortedGrid[1], sortedGrid[5], sortedGrid[4], sortedGrid[0], sortedGrid[3]];
+      grids = [
+        sortedGrid[2],
+        sortedGrid[1],
+        sortedGrid[5],
+        sortedGrid[4],
+        sortedGrid[0],
+        sortedGrid[3]
+      ];
     });
-
   }
 
   @override
@@ -221,688 +232,760 @@ class Challanges extends State<ChallangesSection> {
     Cuber.Cube currentChallange = challanges[challangeId][0];
     notateToGrid(currentChallange.definition);
     return Scaffold(
-      backgroundColor: colorScheme.background,
-      body: SafeArea(
+        backgroundColor: colorScheme.background,
+        body: SafeArea(
           child: Center(
             child: Column(
               children: [
-                Text(AppLocalizations.of(context)!.todaysChallenge, style: TextStyle(fontSize: 20)),
+                Text(AppLocalizations.of(context)!.todaysChallenge,
+                    style: TextStyle(fontSize: 20)),
                 const SizedBox(height: 4),
-                Text(challanges[challangeId][2], style: TextStyle(fontSize: 50)),
-                Center(child: Text(AppLocalizations.of(context)!.challangeInstruction, style: TextStyle(fontSize: 20, ), textAlign: TextAlign.center,)),
+                Text(challanges[challangeId][2],
+                    style: TextStyle(fontSize: 50)),
+                Center(
+                    child: Text(
+                  AppLocalizations.of(context)!.challangeInstruction,
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                  textAlign: TextAlign.center,
+                )),
                 const SizedBox(height: 10),
                 Container(
                   child: Center(
                       child: Column(
-                        children: [
-                          SizedBox(
-                            height: 5,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
+                    children: [
+                      SizedBox(
+                        height: 5,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            showNetwork = !showNetwork;
+                            if (showNetwork) {
                               setState(() {
-                                showNetwork = !showNetwork;
-                                if(showNetwork){
-                                  setState(() {
-                                    grids[4][3] = [Colors.yellow, Colors.white];
-                                    grids[5][3] = [Colors.white,Colors.yellow];
-                                  });
-                                }
+                                grids[4][3] = [Colors.yellow, Colors.white];
+                                grids[5][3] = [Colors.white, Colors.yellow];
                               });
-                            },
-                            child: showNetwork ? Text(AppLocalizations.of(context)!.switchToCubeNet, style: TextStyle(fontSize: AppSettings().fontSize,
-                                color: Theme.of(context).colorScheme.onSurface)) : Text(AppLocalizations.of(context)!.switchToFaceView, style: TextStyle(fontSize: AppSettings().fontSize,
-                                color: Theme.of(context).colorScheme.onSurface)),
-                          ),
-                          SizedBox(
-                              height: 5
-                          ),
-                          Container(
-                              child: showNetwork ?
-                              Column(
-                                children: [
-                                  Container(
-                                    width: 50,
-                                    height: 50,
-                                    color: grids[currentGridIndex][3][0],
-                                    child: Align(alignment: Alignment.center, child: Text("N", style: TextStyle(fontSize: 20))),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      // Left field
-                                      Container(
-                                        width: 70,
-                                        height: 70,
-                                        color: grids[currentGridIndex][0][0],
-                                      ),
-                                      SizedBox(width: 10),
-                                      // Center field
-                                      Container(
-                                        width: 70,
-                                        height: 70,
-                                        color: grids[currentGridIndex][0][1],
-                                      ),
-                                      SizedBox(width: 10),
-                                      // Right field
-                                      Container(
-                                        width: 70,
-                                        height: 70,
-                                        color: grids[currentGridIndex][0][2],
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      // Left field
-                                      Container(
-                                        width: 70,
-                                        height: 70,
-                                        color: grids[currentGridIndex][1][0],
-                                      ),
-                                      SizedBox(width: 10),
-                                      // Center field
-                                      Container(
-                                        width: 70,
-                                        height: 70,
-                                        color: grids[currentGridIndex][1][1],
-                                        //child: Text("F", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800, fontSize: 20.0)),
-                                      ),
-                                      SizedBox(width: 10),
-                                      // Right field
-                                      Container(
-                                        width: 70,
-                                        height: 70,
-                                        color: grids[currentGridIndex][1][2],
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      // Left field
-                                      Container(
-                                        width: 70,
-                                        height: 70,
-                                        color: grids[currentGridIndex][2][0],
-                                      ),
-                                      SizedBox(width: 10),
-                                      // Center field
-                                      Container(
-                                        width: 70,
-                                        height: 70,
-                                        color: grids[currentGridIndex][2][1],
-                                      ),
-                                      SizedBox(width: 10),
-                                      // Right field
-                                      Container(
-                                        width: 70,
-                                        height: 70,
-                                        color: grids[currentGridIndex][2][2],
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Container(
+                            }
+                          });
+                        },
+                        child: showNetwork
+                            ? Text(
+                                AppLocalizations.of(context)!.switchToCubeNet,
+                                style: TextStyle(
+                                    fontSize: AppSettings().fontSize,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface))
+                            : Text(
+                                AppLocalizations.of(context)!.switchToFaceView,
+                                style: TextStyle(
+                                    fontSize: AppSettings().fontSize,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface)),
+                      ),
+                      SizedBox(height: 5),
+                      Container(
+                          child: showNetwork
+                              ? Column(
+                                  children: [
+                                    Container(
                                       width: 50,
                                       height: 50,
-                                      color: grids[currentGridIndex][3][1],
-                                      child: Align(alignment: Alignment.center, child: Text("S", style: TextStyle(fontSize: 20)))
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {
-                                          switchGrid((currentGridIndex - 1) % grids.length);
-                                        },
-                                        icon: const Icon(Icons.arrow_left),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          switchGrid((currentGridIndex + 1) % grids.length);
-                                        },
-                                        icon: const Icon(Icons.arrow_right),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ) : Column(
-                                children: [
-                                  Column(
-                                    children: [
-                                      Center(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            // Left field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[4][0][0],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Center field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[4][0][1],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Right field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[4][0][2],
-                                            ),
-                                          ],
+                                      color: grids[currentGridIndex][3][0],
+                                      child: Align(
+                                          alignment: Alignment.center,
+                                          child: Text("N",
+                                              style: TextStyle(fontSize: 20))),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        // Left field
+                                        Container(
+                                          width: 70,
+                                          height: 70,
+                                          color: grids[currentGridIndex][0][0],
                                         ),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Center(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            // Left field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[4][1][0],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Center field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[4][1][1],
-                                              child: Center(child: Text("U", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800))),
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Right field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[4][1][2],
-                                            ),
-                                          ],
+                                        SizedBox(width: 10),
+                                        // Center field
+                                        Container(
+                                          width: 70,
+                                          height: 70,
+                                          color: grids[currentGridIndex][0][1],
                                         ),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Center(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            // Left field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[4][2][0],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Center field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[4][2][1],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Right field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[4][2][2],
-                                            ),
-                                          ],
+                                        SizedBox(width: 10),
+                                        // Right field
+                                        Container(
+                                          width: 70,
+                                          height: 70,
+                                          color: grids[currentGridIndex][0][2],
                                         ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      Center(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            // Left field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[3][0][0],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Center field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[3][0][1],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Right field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[3][0][2],
-                                            ),
-                                            SizedBox(width: 10),
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[0][0][0],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Center field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[0][0][1],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Right field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[0][0][2],
-                                            ),
-                                            SizedBox(width: 10),
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[1][0][0],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Center field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[1][0][1],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Right field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[1][0][2],
-                                            ),
-                                          ],
+                                      ],
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        // Left field
+                                        Container(
+                                          width: 70,
+                                          height: 70,
+                                          color: grids[currentGridIndex][1][0],
                                         ),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Center(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            // Left field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[3][1][0],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Center field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[3][1][1],
-                                              child: Center(child: Text("L", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800))),
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Right field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[3][1][2],
-                                            ),
-                                            SizedBox(width: 10),
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[0][1][0],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Center field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[0][1][1],
-                                              child: Center(child: Text("F", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800))),
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Right field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[0][1][2],
-                                            ),
-                                            SizedBox(width: 10),
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[1][1][0],
-
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Center field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[1][1][1],
-                                              child: Center(child: Text("R", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800))),
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Right field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[1][1][2],
-                                            ),
-                                          ],
+                                        SizedBox(width: 10),
+                                        // Center field
+                                        Container(
+                                          width: 70,
+                                          height: 70,
+                                          color: grids[currentGridIndex][1][1],
+                                          //child: Text("F", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800, fontSize: 20.0)),
                                         ),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Center(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            // Left field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[3][2][0],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Center field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[3][2][1],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Right field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[3][2][2],
-                                            ),
-                                            SizedBox(width: 10),
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[0][2][0],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Center field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[0][2][1],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Right field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[0][2][2],
-                                            ),
-                                            SizedBox(width: 10),
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[1][2][0],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Center field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[1][2][1],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Right field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[1][2][2],
-                                            ),
-                                          ],
+                                        SizedBox(width: 10),
+                                        // Right field
+                                        Container(
+                                          width: 70,
+                                          height: 70,
+                                          color: grids[currentGridIndex][1][2],
                                         ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      Center(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            // Left field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[5][0][0],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Center field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[5][0][1],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Right field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[5][0][2],
-                                            ),
-                                          ],
+                                      ],
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        // Left field
+                                        Container(
+                                          width: 70,
+                                          height: 70,
+                                          color: grids[currentGridIndex][2][0],
                                         ),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Center(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            // Left field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[5][1][0],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Center field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[5][1][1],
-                                              child: Center(child: Text("D", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800))),
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Right field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[5][1][2],
-                                            ),
-                                          ],
+                                        SizedBox(width: 10),
+                                        // Center field
+                                        Container(
+                                          width: 70,
+                                          height: 70,
+                                          color: grids[currentGridIndex][2][1],
                                         ),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Center(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            // Left field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[5][2][0],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Center field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[5][2][1],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Right field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[5][2][2],
-                                            ),
-                                          ],
+                                        SizedBox(width: 10),
+                                        // Right field
+                                        Container(
+                                          width: 70,
+                                          height: 70,
+                                          color: grids[currentGridIndex][2][2],
                                         ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      Center(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            // Left field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[2][2][2],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Center field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[2][2][1],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Right field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[2][2][0],
-                                            ),
-                                          ],
+                                      ],
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Container(
+                                        width: 50,
+                                        height: 50,
+                                        color: grids[currentGridIndex][3][1],
+                                        child: Align(
+                                            alignment: Alignment.center,
+                                            child: Text("S",
+                                                style:
+                                                    TextStyle(fontSize: 20)))),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            switchGrid((currentGridIndex - 1) %
+                                                grids.length);
+                                          },
+                                          icon: const Icon(Icons.arrow_left),
                                         ),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Center(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            // Left field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[2][1][2],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Center field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[2][1][1],
-                                              child: Center(child: Text("B", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800))),
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Right field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[2][1][0],
-                                            ),
-                                          ],
+                                        IconButton(
+                                          onPressed: () {
+                                            switchGrid((currentGridIndex + 1) %
+                                                grids.length);
+                                          },
+                                          icon: const Icon(Icons.arrow_right),
                                         ),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Center(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            // Left field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[2][0][2],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Center field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[2][0][1],
-                                            ),
-                                            SizedBox(width: 5),
-                                            // Right field
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              color: grids[2][0][0],
-                                            ),
-                                          ],
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              : Column(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              // Left field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[4][0][0],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Center field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[4][0][1],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Right field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[4][0][2],
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(height: 5),
-                                    ],
-                                  )
-                                ],
-                              )
-                          ),
-
-
-                        ],
-                      )),
+                                        SizedBox(height: 5),
+                                        Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              // Left field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[4][1][0],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Center field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[4][1][1],
+                                                child: Center(
+                                                    child: Text("U",
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w800))),
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Right field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[4][1][2],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 5),
+                                        Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              // Left field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[4][2][0],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Center field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[4][2][1],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Right field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[4][2][2],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              // Left field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[3][0][0],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Center field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[3][0][1],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Right field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[3][0][2],
+                                              ),
+                                              SizedBox(width: 10),
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[0][0][0],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Center field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[0][0][1],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Right field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[0][0][2],
+                                              ),
+                                              SizedBox(width: 10),
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[1][0][0],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Center field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[1][0][1],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Right field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[1][0][2],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 5),
+                                        Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              // Left field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[3][1][0],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Center field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[3][1][1],
+                                                child: Center(
+                                                    child: Text("L",
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w800))),
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Right field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[3][1][2],
+                                              ),
+                                              SizedBox(width: 10),
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[0][1][0],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Center field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[0][1][1],
+                                                child: Center(
+                                                    child: Text("F",
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w800))),
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Right field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[0][1][2],
+                                              ),
+                                              SizedBox(width: 10),
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[1][1][0],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Center field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[1][1][1],
+                                                child: Center(
+                                                    child: Text("R",
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w800))),
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Right field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[1][1][2],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 5),
+                                        Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              // Left field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[3][2][0],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Center field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[3][2][1],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Right field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[3][2][2],
+                                              ),
+                                              SizedBox(width: 10),
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[0][2][0],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Center field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[0][2][1],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Right field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[0][2][2],
+                                              ),
+                                              SizedBox(width: 10),
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[1][2][0],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Center field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[1][2][1],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Right field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[1][2][2],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              // Left field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[5][0][0],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Center field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[5][0][1],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Right field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[5][0][2],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 5),
+                                        Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              // Left field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[5][1][0],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Center field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[5][1][1],
+                                                child: Center(
+                                                    child: Text("D",
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w800))),
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Right field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[5][1][2],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 5),
+                                        Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              // Left field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[5][2][0],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Center field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[5][2][1],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Right field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[5][2][2],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              // Left field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[2][2][2],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Center field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[2][2][1],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Right field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[2][2][0],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 5),
+                                        Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              // Left field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[2][1][2],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Center field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[2][1][1],
+                                                child: Center(
+                                                    child: Text("B",
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w800))),
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Right field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[2][1][0],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 5),
+                                        Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              // Left field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[2][0][2],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Center field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[2][0][1],
+                                              ),
+                                              SizedBox(width: 5),
+                                              // Right field
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                color: grids[2][0][0],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 5),
+                                      ],
+                                    )
+                                  ],
+                                )),
+                    ],
+                  )),
                 ),
                 ElevatedButton(
                   child: Text(AppLocalizations.of(context)!.showSolutions,
-                      style: TextStyle(fontSize: AppSettings().fontSize,
+                      style: TextStyle(
+                          fontSize: AppSettings().fontSize,
                           color: Theme.of(context).colorScheme.onSurface)),
-
                   onPressed: () {
                     _showDialog(context, solution, inversedSolution);
                   },
                 ),
               ],
             ),
-
           ),
-      ),
-      bottomNavigationBar: BottomMenu(true, true, true, false)
-    );
+        ),
+        bottomNavigationBar: BottomMenu(true, true, true, false));
   }
 }
 
-void _showDialog(BuildContext context, String sol, String invers){
+void _showDialog(BuildContext context, String sol, String invers) {
   showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return SimpleDialog(
-        title: Text(AppLocalizations.of(context)!.solution,
-            style: TextStyle(fontWeight: FontWeight.w600,
-          color: Theme.of(context).colorScheme.onSurface,
-          fontSize: AppSettings().fontSize)),
-        children: [
-          Padding(
-            padding: EdgeInsets.all(15),
-            child: Text( AppLocalizations.of(context)!.challengeSolutionToPattern + ": " + sol,
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+            title: Text(AppLocalizations.of(context)!.solution,
                 style: TextStyle(
-                    color: Colors.teal.shade100,
-                    fontWeight:
-                    FontWeight.w600,
-                    fontSize: 20.0
-                )
-            ),
-          ),
-          SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.all(15),
-            child: Text(AppLocalizations.of(context)!.challengeSolutionToPattern + ": \n" + invers,
-                style: TextStyle(
-                  color:
-                  Colors.teal.shade100,
-                  fontWeight:
-                  FontWeight.w600,
-                  fontSize: 20.0
-                )
-            ),
-          )
-        ]
-      );
-    }
-  );
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontSize: AppSettings().fontSize)),
+            children: [
+              Padding(
+                padding: EdgeInsets.all(15),
+                child: Text(
+                    AppLocalizations.of(context)!.challengeSolutionToPattern +
+                        ": " +
+                        sol,
+                    style: TextStyle(
+                        color: Colors.teal.shade100,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20.0)),
+              ),
+              SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: Text(
+                    AppLocalizations.of(context)!.challengeSolutionToPattern +
+                        ": \n" +
+                        invers,
+                    style: TextStyle(
+                        color: Colors.teal.shade100,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20.0)),
+              )
+            ]);
+      });
 }

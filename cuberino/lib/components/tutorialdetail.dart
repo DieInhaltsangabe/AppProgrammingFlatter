@@ -19,7 +19,7 @@ class TutorialDetail extends StatelessWidget {
           crossAxisCount: 2,
           mainAxisSpacing: 5,
           crossAxisSpacing: 5,
-          children: TutorialRepository.loadDataChild(parentId)
+          children: TutorialRepository.loadDataChild(parentId,context)
               .map<Widget>((tutorial) {
             return TutorialCard(
                 pathToImage: tutorial.pathToImage,
