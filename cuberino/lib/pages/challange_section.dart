@@ -217,19 +217,19 @@ class Challanges extends State<ChallangesSection> {
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme colorScheme = Theme.of(context).colorScheme;
     Cuber.Cube currentChallange = challanges[challangeId][0];
     notateToGrid(currentChallange.definition);
+    _generateString();
     return Scaffold(
-      backgroundColor: colorScheme.background,
+      backgroundColor: _appSettings.background_color,
       body: SafeArea(
           child: Center(
             child: Column(
               children: [
-                Text(AppLocalizations.of(context)!.todaysChallenge, style: TextStyle(fontSize: 20)),
+                Text(AppLocalizations.of(context)!.todaysChallenge, style: TextStyle(fontSize: AppSettings().fontSize)),
                 const SizedBox(height: 4),
                 Text(challanges[challangeId][2], style: TextStyle(fontSize: 50)),
-                Center(child: Text(AppLocalizations.of(context)!.challangeInstruction, style: TextStyle(fontSize: 20, ), textAlign: TextAlign.center,)),
+                Center(child: Text(AppLocalizations.of(context)!.challangeInstruction, style: TextStyle(fontSize: AppSettings().fontSize ), textAlign: TextAlign.center,)),
                 const SizedBox(height: 10),
                 Container(
                   child: Center(
@@ -852,7 +852,6 @@ class Challanges extends State<ChallangesSection> {
                   child: Text(AppLocalizations.of(context)!.showSolutions,
                       style: TextStyle(fontSize: AppSettings().fontSize,
                           color: Theme.of(context).colorScheme.onSurface)),
-
                   onPressed: () {
                     _showDialog(context, solution, inversedSolution);
                   },
@@ -884,7 +883,7 @@ void _showDialog(BuildContext context, String sol, String invers){
                     color: Colors.teal.shade100,
                     fontWeight:
                     FontWeight.w600,
-                    fontSize: 20.0
+                    fontSize: _appSettings.fontSize
                 )
             ),
           ),
@@ -897,7 +896,7 @@ void _showDialog(BuildContext context, String sol, String invers){
                   Colors.teal.shade100,
                   fontWeight:
                   FontWeight.w600,
-                  fontSize: 20.0
+                  fontSize: _appSettings.fontSize
                 )
             ),
           )
