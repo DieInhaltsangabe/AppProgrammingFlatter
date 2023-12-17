@@ -61,7 +61,19 @@ class _CubeZoomSettingsState extends State<CubeZoom> {
               ],
             )
         ),
-        bottomNavigationBar: BottomMenu(false, true, false, true)
+        bottomNavigationBar: BottomAppBar(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(
+                icon: Image.asset('assets/rubik.png'),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Cuberino()));
+                },
+              ),
+            ],
+          ),
+        )
     );
   }
 }
