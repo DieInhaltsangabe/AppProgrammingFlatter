@@ -1,6 +1,8 @@
 import 'package:cuberino/model/tutorial_repository.dart';
 import 'package:flutter/material.dart';
 
+import '../app_settings.dart';
+
 class Tutorial extends StatelessWidget {
   const Tutorial({super.key, required this.parentId});
 
@@ -9,6 +11,7 @@ class Tutorial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppSettings().background_color,
       appBar: AppBar(actions: []),
       body: Column(
         children: [

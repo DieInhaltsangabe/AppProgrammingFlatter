@@ -4,6 +4,8 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:cuberino/components/bottom_app_bar.dart';
 
+import '../main.dart';
+
 
 class BackgroundColorSelect extends StatefulWidget {
   @override
@@ -27,7 +29,19 @@ class _BackgroundColorSelectState extends State<BackgroundColorSelect> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomMenu(false, true, false, true)
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              icon: Image.asset('assets/rubik.png'),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Cuberino()));
+              },
+            ),
+          ],
+        ),
+      )
     );
   }
 

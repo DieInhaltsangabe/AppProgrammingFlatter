@@ -1,5 +1,6 @@
 import 'package:cuberino/pages/backgound_color.dart';
 import 'package:flutter/material.dart';
+import 'cube_zoom_settings_view.dart';
 import 'font_settings_view.dart';
 import 'language_settings_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -22,7 +23,8 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           ListNavigation(AppLocalizations.of(context)!.language, (){Navigator.push(context, MaterialPageRoute(builder: (context) => LanguageSettings()));}),
           ListNavigation("Font", (){Navigator.push(context, MaterialPageRoute(builder: (context) => FontSettingsView()));}),
-          ListNavigation(AppLocalizations.of(context)!.backgroundcolor, (){Navigator.push(context, MaterialPageRoute(builder: (context) => BackgroundColorSelect()));})
+          ListNavigation(AppLocalizations.of(context)!.backgroundcolor, (){Navigator.push(context, MaterialPageRoute(builder: (context) => BackgroundColorSelect()));}),
+          ListNavigation(AppLocalizations.of(context)!.cubeZoomSettings, (){Navigator.push(context, MaterialPageRoute(builder: (context) => CubeZoom()));})
         ],
       ),
     );

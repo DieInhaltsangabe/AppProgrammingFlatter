@@ -109,6 +109,7 @@ class InputSectionState extends State<InputSection> {
                         'OK',
                         style: TextStyle(
                             fontSize: AppSettings().fontSize,
+                            fontFamily: AppSettings().font,
                             color: Theme.of(context).colorScheme.onSurface),
                       ),
                       onPressed: () {
@@ -139,6 +140,7 @@ class InputSectionState extends State<InputSection> {
                     'OK',
                     style: TextStyle(
                         fontSize: AppSettings().fontSize,
+                        fontFamily: AppSettings().font,
                         color: Theme.of(context).colorScheme.onSurface),
                   ),
                   onPressed: () {
@@ -421,6 +423,7 @@ class InputSectionState extends State<InputSection> {
                   'Solve',
                   style: TextStyle(
                       fontSize: AppSettings().fontSize,
+                      fontFamily: AppSettings().font,
                       color: Theme.of(context).colorScheme.onSurface),
                 ),
               ),

@@ -10,6 +10,7 @@
   "emptyLogs": "Es wurden keine Logs gefunden.",
   "backgroundcolor": "Hintergrundfarbe",
   "showLogs": "Zeige Logs",
+  "cubeZoomSettings": "Cube Zoom",
   "todaysChallenge": "Heutige Challenge",
   "challangeInstruction": "Versuche dieses Pattern zu bekommen",
   "challengeSolutionToPattern": "Um den gelösten Cube zu dem Pattern zu bekommen",

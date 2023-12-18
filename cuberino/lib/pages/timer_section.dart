@@ -17,6 +17,7 @@ class TimerSection extends StatefulWidget {
 
 class TimerApp extends State<TimerSection> {
   static const String _logKey = "timeLogs";
+  final _appSettings = AppSettings();
   List logs = [];
 
   Color background = Color(0xFF1C2757);
@@ -289,7 +290,7 @@ class TimerApp extends State<TimerSection> {
     loadLogs();
     calculateAverageAndPR();
     return Scaffold(
-      backgroundColor: colorScheme.background,
+      backgroundColor: _appSettings.background_color,
       body: SafeArea(
           child: Padding(
               padding: const EdgeInsets.all(5.0),
@@ -338,17 +339,15 @@ class TimerApp extends State<TimerSection> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
-                              child: RawMaterialButton(
+                              child: ElevatedButton(
                                   onPressed: () {
                                     getScramble();
                                   },
-                                  shape: StadiumBorder(
-                                    side: BorderSide(color: secondBackground),
-                                  ),
+
                                   child: Text(
                                     AppLocalizations.of(context)!
                                         .generateScramble,
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(color: Colors.white, fontSize: AppSettings().fontSize, fontFamily: AppSettings().font),
                                   )),
                             ),
                           ]),
@@ -373,7 +372,8 @@ class TimerApp extends State<TimerSection> {
                         style: TextStyle(
                           color: Colors.teal.shade100,
                           fontWeight: FontWeight.w600,
-                          fontSize: 16.0,
+                          fontSize: AppSettings().fontSize,
+                          fontFamily: AppSettings().font,
                         ),
                       ),
                     ),
@@ -382,7 +382,8 @@ class TimerApp extends State<TimerSection> {
                       style: TextStyle(
                         color: Colors.teal.shade100,
                         fontWeight: FontWeight.w600,
-                        fontSize: 16.0,
+                        fontSize: AppSettings().fontSize,
+                        fontFamily: AppSettings().font,
                       ),
                     ),
                     Listener(
@@ -450,11 +451,8 @@ class TimerApp extends State<TimerSection> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
-                            child : RawMaterialButton(
-                            child: Text(AppLocalizations.of(context)!.showLogs),
-                            shape: StadiumBorder(
-                              side: BorderSide(color: secondBackground),
-                            ),
+                            child : ElevatedButton(
+                            child: Text(AppLocalizations.of(context)!.showLogs, style: TextStyle(color: Colors.white, fontSize: AppSettings().fontSize, fontFamily: AppSettings().font)),
                             onPressed: () {
                               showDialog(context: context,
                                   builder: (context) => StatefulBuilder(
@@ -477,34 +475,32 @@ class TimerApp extends State<TimerSection> {
                                                           child: Row(children: [
                                                             Column(children: [
                                                               Padding(
-                                                                padding: EdgeInsets.only(left: 15),
+                                                                padding: EdgeInsets.only(left: 5),
                                                                 child: Text(
-                                                                  logs[index][0],
+                                                                  logs[index][0]+" |",
                                                                   style: TextStyle(
                                                                     color: Colors.teal.shade100,
                                                                     fontWeight: FontWeight.w600,
-                                                                    fontSize: 16.0,
+                                                                    fontSize: (15),
                                                                   ),
                                                                 ),
                                                               )
                                                             ]),
                                                             Column(children: [
                                                               Padding(
-                                                                padding: EdgeInsets.only(left: 15),
+                                                                padding: EdgeInsets.only(left: 2),
                                                                 child: Text(
-                                                                  logs[index][1],
+                                                                  logs[index][1]+" |",
                                                                   style: TextStyle(
                                                                     color: Colors.teal.shade100,
                                                                     fontWeight: FontWeight.w600,
-                                                                    fontSize: 16.0,
+                                                                    fontSize: (15),
                                                                   ),
                                                                 ),
                                                               )
                                                             ]),
                                                             Column(children: [
-                                                              Padding(
-                                                                padding: EdgeInsets.only(left: 15),
-                                                                child: RawMaterialButton(
+                                                              RawMaterialButton(
                                                                   onPressed: () {
                                                                     setState(() {
                                                                       logs.removeAt(index);
@@ -512,20 +508,21 @@ class TimerApp extends State<TimerSection> {
                                                                     });
                                                                   },
                                                                   child: Text(
-                                                                      AppLocalizations.of(context)!
-                                                                          .deleteButton,
+                                                                      "X",
                                                                       style: TextStyle(
-                                                                          color:
-                                                                          Colors.teal.shade100,
-                                                                          fontWeight:
-                                                                          FontWeight.w600,
-                                                                          fontSize: 16.0)),
+                                                                          color: Colors.teal.shade100,
+                                                                          fontWeight: FontWeight.w600,
+                                                                          fontSize: 15)),
                                                                 ),
-                                                              )
+
                                                             ]),
                                                           ])),
                                                     );
-                                                  }) : Center(child: Text(AppLocalizations.of(context)!.emptyLogs))),
+                                                  }) : Center(child: Text(AppLocalizations.of(context)!.emptyLogs,
+                                                  style: TextStyle(
+                                                    fontSize: AppSettings().fontSize,
+                                                    fontFamily: AppSettings().font,
+                                              )))),
                                         ]
                                       );
                                     }

@@ -12,6 +12,7 @@
   "timerArmed": "Let go to start the timer. \n Press again to stop the timer.",
   "deleteButton": "Delete",
   "showLogs": "Show Log",
+  "cubeZoomSettings": "Cube Zoom",
   "todaysChallenge": "Todays Challenge",
   "challangeInstruction": "Try to scramble your cube to get this pattern",
   "switchToCubeNet": "Switch to cube net view",
