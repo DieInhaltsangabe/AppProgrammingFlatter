@@ -59,5 +59,14 @@
   "sixthStepText": "We're almost there. Only the yellow corners are left to solve the cube. We also solve the corners in two steps. First, we will bring the corners to the right position, and then we will orient them in the next step. U R U' L' U R' U' L This algorithm swaps three corners counterclockwise. The Front-Right-Top corner remains in place. When you reach this point in the solution, look for a corner in the correct position. If you find one, hold it Front-Right. Now, execute the algorithm, and if the corners are not in the right position yet, execute it again. If none of the corners is in the correct position, you need to execute the algorithm once. After that, at least one corner is definitely in the right position.",
   "turnCorners": "Corner Orientation",
   "seventhStep": "Last Step",
-  "seventhStepText": "In the final step, every piece is in the position it should be, but the yellow corners are still oriented incorrectly. To solve the cube, we need to use the same algorithm we used to solve the corners of the first layer. At the beginning, hold a twisted corner in the Front-Right-Top position. Now, repeat the R' D' R D algorithm until the yellow color is facing up. Then, turn the top layer until another unsolved corner is in the marked area and repeat the R' D' R D algorithm again until the corner is solved. Repeat this process with all the remaining corners until all corners are solved."
+  "seventhStepText": "In the final step, every piece is in the position it should be, but the yellow corners are still oriented incorrectly. To solve the cube, we need to use the same algorithm we used to solve the corners of the first layer. At the beginning, hold a twisted corner in the Front-Right-Top position. Now, repeat the R' D' R D algorithm until the yellow color is facing up. Then, turn the top layer until another unsolved corner is in the marked area and repeat the R' D' R D algorithm again until the corner is solved. Repeat this process with all the remaining corners until all corners are solved.",
+  "notation": "Notation",
+  "understanding": "Understanding",
+  "notationText": "To start with the notation, let's take the cube from a reference face (for example, white, green, red); we will see that we have six turns: right, left, up, down, front, and finally back face. If you find the letter alone, the turn is clockwise, and if it carries an apostrophe, the turn is counterclockwise. Each letter refers to a layer, and they are in English. U (up): Upper layer (white face) D (down): Lower layer (yellow side) R (right): Right layer (red face) L (left): Left layer (orange face) F (front): Front layer (green face) B (back): Back layer (blue face) With these acronyms, we have already referenced all the basic layers. Now we need to consider that all layers can have different turns; for example, the top layer can have the following turns. Clockwise: U, Counterclockwise: U', Double turn: U2",
+  "unknown": "Coming Soon",
+  "unknownText": "New tutorials will be coming soon.",
+  "north":"N",
+  "south":"S",
+  "middleSide": "The middle color indicates the respective side.",
+  "import": "Import/Export"
 }

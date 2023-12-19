@@ -50,5 +50,14 @@
   "sixthStepText": "Neredeyse bitti. Küpü çözmek için sadece sarı köşeler kaldı. Köşeleri de iki adımda çözeceğiz. İlk olarak, köşeleri doğru konuma getireceğiz ve sonra onları bir sonraki adımda yönlendireceğiz. U R U' L' U R' U' L Bu algoritma üç köşeyi saat yönünde değiştirir. Front-Sağ-Yukarı köşesi yerinde kalır. Çözümde bu noktaya ulaştığınızda, doğru pozisyondaki bir köşeyi arayın. Bir tane bulursanız, onu Front-Sağ olarak tutun. Şimdi algoritmayı çalıştırın ve köşeler henüz doğru pozisyonda değilse, tekrar çalıştırın. Eğer köşelerin hiçbiri doğru pozisyonda değilse, algoritmayı bir kez çalıştırmalısınız. Bundan sonra en azından bir köşe kesinlikle doğru pozisyonda olacaktır.",
   "turnCorners": "Köşe Yönlendirmesi",
   "seventhStep": "Son Adım",
-  "seventhStepText": "Son adımda, her parça olması gereken yerde, ancak sarı köşeler hala yanlış yönlendirilmiş durumda. Küpü çözmek için, bir önceki adımda kullandığımız aynı algoritmayı kullanmamız gerekiyor. Başlangıçta, Front-Sağ-Yukarı pozisyonunda bir çapraz köşe tutun. Şimdi sarı rengin yukarı bakmasını sağlayana kadar R' D' R D algoritmasını tekrarlayın. Sonra üst katmanı çevirin, başka bir çözülmeyen köşe makineli alan içindeyse ve köşe çözülünceye kadar tekrar R' D' R D algoritmasını tekrarlayın. Bu işlemi diğer tüm köşelerle tekrarlayarak tüm köşeler çözülünceye kadar devam edin."
+  "seventhStepText": "Son adımda, her parça olması gereken yerde, ancak sarı köşeler hala yanlış yönlendirilmiş durumda. Küpü çözmek için, bir önceki adımda kullandığımız aynı algoritmayı kullanmamız gerekiyor. Başlangıçta, Front-Sağ-Yukarı pozisyonunda bir çapraz köşe tutun. Şimdi sarı rengin yukarı bakmasını sağlayana kadar R' D' R D algoritmasını tekrarlayın. Sonra üst katmanı çevirin, başka bir çözülmeyen köşe makineli alan içindeyse ve köşe çözülünceye kadar tekrar R' D' R D algoritmasını tekrarlayın. Bu işlemi diğer tüm köşelerle tekrarlayarak tüm köşeler çözülünceye kadar devam edin.",
+  "notation": "Notasyon",
+  "understanding": "Anlama",
+  "notationText": "Notasyonla başlamak için küpü bir referans yüzünden (örneğin beyaz, yeşil, kırmızı) alalım; göreceğimiz altı dönüş: sağ, sol, üst, alt, ön ve nihayet arkadır. Harfi yalnız bulursanız, dönüş saat yönündedir ve eğer apostrof taşıyorsa, dönüş saat yönünün tersindedir. Her harf bir katmana atıfta bulunur ve bunlar İngilizce'dir. U (üst): Üst katman (beyaz yüz) D (alt): Alt katman (sarı taraf) R (sağ): Sağ katman (kırmızı yüz) L (sol): Sol katman (turuncu yüz) F (ön): Ön katman (yeşil yüz) B (arka): Arka katman (mavi yüz) Bu akronimlerle, tüm temel katmanlara zaten atıfta bulunduk. Şimdi ise tüm katmanların farklı dönüşlere sahip olabileceğini düşünmemiz gerekiyor; örneğin, en üst katman şu dönüşlere sahip olabilir. Saat yönünde: U, Saat yönünün tersinde: U', Çift dönüş: U2",
+  "unknown": "Yakında Gelecek",
+  "unknownText": "Yakında yeni öğreticiler gelecek.",
+  "north":"K",
+  "south":"G",
+  "middleSide": "Orta renk, ilgili tarafı belirtir.",
+  "import": "İçe Aktar/Dışa Aktar"
   }

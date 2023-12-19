@@ -73,6 +73,30 @@ class TutorialRepository {
           captionText: AppLocalizations.of(context)!.turnCorners,
           subsectionText: AppLocalizations.of(context)!.seventhStep,
           parentId: 1),
+      TutorialCardModel(
+          id: 19,
+          pathToImage: 'assets/notation.png',
+          captionText: AppLocalizations.of(context)!.notation,
+          subsectionText: AppLocalizations.of(context)!.understanding,
+          parentId: 1),
+      TutorialCardModel(
+          id: 21,
+          pathToImage: 'assets/unknow.jpg',
+          captionText: AppLocalizations.of(context)!.unknown,
+          subsectionText: AppLocalizations.of(context)!.unknown,
+          parentId: 2),
+      TutorialCardModel(
+          id: 22,
+          pathToImage: 'assets/unknow.jpg',
+          captionText: AppLocalizations.of(context)!.unknown,
+          subsectionText: AppLocalizations.of(context)!.unknown,
+          parentId: 3),
+      TutorialCardModel(
+          id: 23,
+          pathToImage: 'assets/unknow.jpg',
+          captionText: AppLocalizations.of(context)!.unknown,
+          subsectionText: AppLocalizations.of(context)!.unknown,
+          parentId: 4),
     ];
     List<TutorialCardModel> result = [];
     for (var tutorial in tutorials) {
@@ -120,6 +144,26 @@ class TutorialRepository {
           pathToImage: 'assets/turnCorners.png',
           subsectionText: AppLocalizations.of(context)!.seventhStepText,
           parentId: 13),
+      TutorialModel(
+          id: 20,
+          pathToImage: 'assets/notation.png',
+          subsectionText: AppLocalizations.of(context)!.notationText,
+          parentId: 19),
+      TutorialModel(
+          id: 24,
+          pathToImage: 'assets/unknow.jpg',
+          subsectionText: AppLocalizations.of(context)!.unknownText,
+          parentId: 21),
+      TutorialModel(
+          id: 25,
+          pathToImage: 'assets/unknow.jpg',
+          subsectionText: AppLocalizations.of(context)!.unknownText,
+          parentId: 22),
+      TutorialModel(
+          id: 26,
+          pathToImage: 'assets/unknow.jpg',
+          subsectionText: AppLocalizations.of(context)!.unknownText,
+          parentId: 23),
     ];
     for (var tutorial in tutorials) {
       if (tutorial.parentId == id) {
@@ -172,6 +216,30 @@ class TutorialRepository {
           captionText: AppLocalizations.of(context)!.turnCorners,
           subsectionText: AppLocalizations.of(context)!.seventhStep,
           parentId: 1),
+      TutorialCardModel(
+          id: 19,
+          pathToImage: 'assets/notation.png',
+          captionText: AppLocalizations.of(context)!.notation,
+          subsectionText: AppLocalizations.of(context)!.understanding,
+          parentId: 1),
+      TutorialCardModel(
+          id: 21,
+          pathToImage: 'assets/unknow.jpg',
+          captionText: AppLocalizations.of(context)!.unknown,
+          subsectionText: AppLocalizations.of(context)!.unknown,
+          parentId: 2),
+      TutorialCardModel(
+          id: 22,
+          pathToImage: 'assets/unknow.jpg',
+          captionText: AppLocalizations.of(context)!.unknown,
+          subsectionText: AppLocalizations.of(context)!.unknown,
+          parentId: 3),
+      TutorialCardModel(
+          id: 23,
+          pathToImage: 'assets/unknow.jpg',
+          captionText: AppLocalizations.of(context)!.unknown,
+          subsectionText: AppLocalizations.of(context)!.unknown,
+          parentId: 4),
     ];
     for (var tutorial in tutorials) {
       if (tutorial.id == id) {

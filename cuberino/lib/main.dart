@@ -66,6 +66,7 @@ class Cube extends StatefulWidget {
 class CubeState extends State<Cube> {
   final temp = C.Cube.solved;
   String cube = "UUFUUFUUFRRRRRRRRRFFDFFDFFDDDBDDBDDBLLLLLLLLLBBUBBUBBU";
+  String solution = "";
   bool showNetwork = false;
   String zoom = _appSettings.cubeZoom;
 
@@ -938,11 +939,71 @@ class CubeState extends State<Cube> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => InputSection()));
-                        setState(() {
-                          if (inputedCube != Null) {
-                            cube = inputedCube as String;
+                        if (inputedCube != null && inputedCube != "") {
+                          try{
+                            var cubeToVerfiy = C.Cube.from(inputedCube as String);
+                          if (cubeToVerfiy.verify() == C.CubeStatus.ok) {
+                            setState(() {
+                              cube = inputedCube;
+                            });
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Fehler'),
+                                  content: Text(
+                                      'Der Würfel ist leider nicht korrekt.'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text(
+                                        'OK',
+                                        style: TextStyle(
+                                            fontSize: AppSettings().fontSize,
+                                            fontFamily: AppSettings().font,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurface),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           }
-                        });
+                          } catch(e){
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Fehler'),
+                                  content: Text(
+                                      'Der Würfel ist leider nicht korrekt.'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text(
+                                        'OK',
+                                        style: TextStyle(
+                                            fontSize: AppSettings().fontSize,
+                                            fontFamily: AppSettings().font,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurface),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                          
+                        }
                       },
                       child: Text(
                         AppLocalizations.of(context)!.input,
@@ -959,11 +1020,11 @@ class CubeState extends State<Cube> {
                       onPressed: () async {
                         final cube1 = C.Cube.from(cube);
                         print(cube1.definition);
-                        final solution = await cube1.solve(
+                        final cubesolved = await cube1.solve(
                             maxDepth: 25, timeout: Duration(seconds: 20));
-                        print(solution);
+                        print(cubesolved);
                         setState(() {
-                          print(solution);
+                          solution = cubesolved.toString();
                         });
                       },
                       child: Text(
@@ -973,6 +1034,21 @@ class CubeState extends State<Cube> {
                             fontFamily: AppSettings().font,
                             color: Theme.of(context).colorScheme.onSurface),
                       ),
+                    ),
+                  ),
+                  TextField(
+                    controller: TextEditingController(text: solution),
+                    style: TextStyle(
+                        fontSize: AppSettings().fontSize,
+                        fontFamily: AppSettings().font,
+                        color: Theme.of(context).colorScheme.onSurface,
+                        letterSpacing:
+                            2), // Maximum of 10 characters per line * 3 lines
+                    maxLines: 2, // Maximum of 2 lines
+                    readOnly: true, // Make the TextField read-only
+                    decoration: InputDecoration(
+                      border:
+                          OutlineInputBorder(), // Add a border around the TextField
                     ),
                   ),
                 ],
