@@ -7,13 +7,17 @@ import 'package:cuberino/pages/timer_section.dart';
 import 'package:cuberino/pages/challange_section.dart';
 
 class BottomMenu extends StatefulWidget {
-
+  /**
+   * Flags which will indicate, which Section we are currently in-.
+   */
   bool _timerSection = false;
   bool _mainScreen = false;
   bool _tutorialSection = false;
   bool _challanges = false;
 
-  BottomMenu(bool timerSection, bool mainScreen, bool tutorialSection, bool challanges) {
+  // constructor to initalize the attributes.
+  BottomMenu(bool timerSection, bool mainScreen, bool tutorialSection,
+      bool challanges) {
     _timerSection = timerSection;
     _mainScreen = mainScreen;
     _tutorialSection = tutorialSection;
@@ -21,17 +25,19 @@ class BottomMenu extends StatefulWidget {
   }
 
   @override
-  State<StatefulWidget> createState() => _BottomMenuWidget(_timerSection, _mainScreen, _tutorialSection, _challanges);
+  State<StatefulWidget> createState() => _BottomMenuWidget(
+      _timerSection, _mainScreen, _tutorialSection, _challanges);
 }
 
 class _BottomMenuWidget extends State<BottomMenu> {
-
   bool _timerSection = false;
   bool _mainScreen = false;
   bool _tutorialSection = false;
   bool _challanges = false;
 
-  _BottomMenuWidget(bool timerSection, bool mainScreen, bool tutorialSection, bool challanges) {
+  // constructor
+  _BottomMenuWidget(bool timerSection, bool mainScreen, bool tutorialSection,
+      bool challanges) {
     _timerSection = timerSection;
     _mainScreen = mainScreen;
     _tutorialSection = tutorialSection;
@@ -61,64 +67,64 @@ class _BottomMenuWidget extends State<BottomMenu> {
               borderRadius: BorderRadius.all(Radius.circular(50)),
               color: !_timerSection ? Colors.grey : null,
             ),
-            child:
-            IconButton(
+            child: IconButton(
               icon: timer,
               onPressed: () {
-                if(_timerSection) {
+                if (_timerSection) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => TimerSection()));
                 }
               },
             ),
           ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(50)),
-                color: !_mainScreen ? Colors.grey : null,
-              ),
-              child: IconButton(
-                icon: mainCube,
-                onPressed: () {
-                  if(_mainScreen) {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Cuberino()));
-                  }
-                },
-              ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(50)),
+              color: !_mainScreen ? Colors.grey : null,
             ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(50)),
-                color: !_tutorialSection ? Colors.grey : null,
-              ),
-              child: IconButton(
-                icon: tutorial,
-                onPressed: () {
-                  if(_tutorialSection) {
-                    Navigator.push(context,
-                        MaterialPageRoute(
-                            builder: (context) => TutorialSection()));
-                  }
-                },
-              ),
+            child: IconButton(
+              icon: mainCube,
+              onPressed: () {
+                if (_mainScreen) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Cuberino()));
+                }
+              },
             ),
-            Container(
-              decoration: BoxDecoration(
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(50)),
+              color: !_tutorialSection ? Colors.grey : null,
+            ),
+            child: IconButton(
+              icon: tutorial,
+              onPressed: () {
+                if (_tutorialSection) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TutorialSection()));
+                }
+              },
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(50)),
               color: !_challanges ? Colors.grey : null,
-              ),
-              child: IconButton(
+            ),
+            child: IconButton(
                 icon: challange,
                 onPressed: () {
-                  if(_challanges) {
-                    Navigator.push(context,
+                  if (_challanges) {
+                    Navigator.push(
+                        context,
                         MaterialPageRoute(
                             builder: (context) => ChallangesSection()));
                   }
-                }
-              ),
-            )
+                }),
+          )
         ],
       ),
     );

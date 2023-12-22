@@ -64,11 +64,15 @@ class Cube extends StatefulWidget {
 }
 
 class CubeState extends State<Cube> {
-  final temp = C.Cube.solved;
-  String cube = "UUFUUFUUFRRRRRRRRRFFDFFDFFDDDBDDBDDBLLLLLLLLLBBUBBUBBU";
-  String solution = "";
-  bool showNetwork = false;
-  String zoom = _appSettings.cubeZoom;
+  final temp = C.Cube.solved; // A temporary Cube Instance for testing purposes.
+  String cube =
+      "UUFUUFUUFRRRRRRRRRFFDFFDFFDDDBDDBDDBLLLLLLLLLBBUBBUBBU"; // Curent cube, which is displayed
+  String solution =
+      ""; // solution to solve the current cube. Only fulled after clicking on solve.
+  bool showNetwork =
+      false; // Variable which indicates, which cube view should be rendered.
+  String zoom =
+      _appSettings.cubeZoom; // to check what the zoom level of the cubeView is
 
   @override
   void initState() {
@@ -77,6 +81,10 @@ class CubeState extends State<Cube> {
     cube = newCube.definition;
   }
 
+  /**
+   * The method takes a cube face (white, red, blue, green, orange or yellow)
+   * and rotates the face by 90 degrees.
+   */
   void rotateCube(List<List<Color>> grid) {
     int N = grid.length - 1;
 
@@ -99,6 +107,10 @@ class CubeState extends State<Cube> {
     }
   }
 
+  /**
+   * the grids object containes all the cube face orientations as colors.
+   * The last array of each grid face, indicates, which face is north from the face and which one is south (orientation purposes)
+   */
   var grids = [
     [
       [Colors.grey, Colors.grey, Colors.grey],
@@ -138,8 +150,11 @@ class CubeState extends State<Cube> {
     ],
   ];
 
-  int currentGridIndex = 0;
-  int currentColor = 0;
+  int currentGridIndex =
+      0; // For one of the cube views, that indicates, which grid is shown at the moment
+  int currentColor = 0; // deprecated ? -> pls check in re-work
+
+  // all possible colors
   var colors = [
     Colors.red,
     Colors.orange,
@@ -149,12 +164,18 @@ class CubeState extends State<Cube> {
     Colors.white
   ];
 
+  /**
+   * This method changes the currently rendered grid to another on, in Cube Face View
+   */
   void switchGrid(int newIndex) {
     setState(() {
       currentGridIndex = newIndex;
     });
   }
 
+  /**
+   * This method will receive a Cube Notation String and will generate each grid array and fitting color.
+   */
   void notateToGrid(String notation) {
     int notationIndex = 0;
     var sortedGrid = [
@@ -211,17 +232,18 @@ class CubeState extends State<Cube> {
 
   @override
   Widget build(BuildContext context) {
+    // only try to parse the cube notation string to grids, if the length is correct
     if (cube.length == 54) {
       notateToGrid(cube);
-      //rotateCube(grids[2]);
-      //rotateCube(grids[2]);
     }
-    print(zoom);
+
+    // depending on the Zoom Setting, this will adjust the cubicle sizes (only for Cube Face View)
     double cubeDimFace = zoom == "Small"
         ? 50.0
         : zoom == "Middle"
             ? 60.0
             : 70.0;
+    // depending on the Zoom Setting, this will adjust the cubicle sizes (only for Cube Net View)
     double cubeNetDim = zoom == "Small"
         ? 15.0
         : zoom == "Middle"
@@ -266,6 +288,7 @@ class CubeState extends State<Cube> {
                         }
                       });
                     },
+                    // Depending on which Cube View is shown, the button Text will adjust
                     child: showNetwork
                         ? Text(AppLocalizations.of(context)!.switchToCubeNet,
                             style: TextStyle(
@@ -940,13 +963,42 @@ class CubeState extends State<Cube> {
                             MaterialPageRoute(
                                 builder: (context) => InputSection()));
                         if (inputedCube != null && inputedCube != "") {
-                          try{
-                            var cubeToVerfiy = C.Cube.from(inputedCube as String);
-                          if (cubeToVerfiy.verify() == C.CubeStatus.ok) {
-                            setState(() {
-                              cube = inputedCube;
-                            });
-                          } else {
+                          try {
+                            var cubeToVerfiy =
+                                C.Cube.from(inputedCube as String);
+                            if (cubeToVerfiy.verify() == C.CubeStatus.ok) {
+                              setState(() {
+                                cube = inputedCube;
+                              });
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Fehler'),
+                                    content: Text(
+                                        'Der Würfel ist leider nicht korrekt.'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: Text(
+                                          'OK',
+                                          style: TextStyle(
+                                              fontSize: AppSettings().fontSize,
+                                              fontFamily: AppSettings().font,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSurface),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          } catch (e) {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -974,35 +1026,6 @@ class CubeState extends State<Cube> {
                               },
                             );
                           }
-                          } catch(e){
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('Fehler'),
-                                  content: Text(
-                                      'Der Würfel ist leider nicht korrekt.'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      child: Text(
-                                        'OK',
-                                        style: TextStyle(
-                                            fontSize: AppSettings().fontSize,
-                                            fontFamily: AppSettings().font,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onSurface),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          }
-                          
                         }
                       },
                       child: Text(
@@ -1037,6 +1060,7 @@ class CubeState extends State<Cube> {
                     ),
                   ),
                   TextField(
+                    // Shows the cube solution if there is one
                     controller: TextEditingController(text: solution),
                     style: TextStyle(
                         fontSize: AppSettings().fontSize,

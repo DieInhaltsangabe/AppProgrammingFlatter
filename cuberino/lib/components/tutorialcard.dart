@@ -1,4 +1,3 @@
-
 import 'package:cuberino/components/tutorialdetail.dart';
 import 'package:cuberino/pages/tutorial.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +33,7 @@ class TutorialCard extends StatelessWidget {
               return TutorialDetail(
                 parentId: id,
               );
-            }), 
+            }),
           );
         },
         child: Column(

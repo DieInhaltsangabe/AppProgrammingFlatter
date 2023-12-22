@@ -22,39 +22,63 @@ class TimerApp extends State<TimerSection> {
 
   Color background = Color(0xFF1C2757);
   Color secondBackground = Color(0xFF323F68);
-  String timerInstruction = "";
-  String prText = " -";
-  String avgText = " -";
+  String timerInstruction =
+      ""; // The holder of the message, to tell the user how to proceed to start and stop the timer.
+  String prText = " -"; // PLaceholder for the Personal Best time
+  String avgText = " -"; // Place holder for current average time.
 
-  int seconds = 0, minutes = 0, milliseconds = 0;
-  String digitSeconds = "00", digitMinutes = "00", digitMilliseconds = "00";
-  int prMin = 0, prSec = 0, prMil = 0;
+  int seconds = 0,
+      minutes = 0,
+      milliseconds = 0; // Integer representations of seconds, minutes and ms
+  String digitSeconds = "00",
+      digitMinutes = "00",
+      digitMilliseconds =
+          "00"; // String representation of seconds, minutes, and ms.
+  int prMin = 0,
+      prSec = 0,
+      prMil =
+          0; // integer representation of personal best time in minutes, seconds and ms.
   Timer? timer;
-  bool started = false;
-  bool hideLog = false;
+  bool started =
+      false; // A flag, which indicates, if the timer has been started or not
+  bool hideLog =
+      false; // A flag which indicates, if the timer log button should be hidden. (Hides when timer started)
 
-  String currentScramble = "";
+  String currentScramble = ""; // deprecated?
 
-  bool holding = false;
+  bool holding =
+      false; // A flag which indicates, if the user is holding down on the timer start area.
 
+  /**
+   * Format two digit integer and one digit integers into stanardized two digit string. 
+   */
   String _formatTwoDigits(int value) {
     return value < 10 ? '0$value' : '$value';
   }
 
+  /**
+   * A method will will access the shared prefernces of the mobile phone, to check if there were already any time logs saved.
+   */
   Future<void> loadLogs() async {
     final prefs = await SharedPreferences.getInstance();
     var temp = json.decode(prefs.getString(_logKey)!);
-    setState((){
+    setState(() {
       logs = temp;
     });
   }
 
+  /**
+   * A method which will save the current time logs, if it has changed at all.
+   */
   Future<void> saveLogs() async {
     final prefs = await SharedPreferences.getInstance();
     var s = json.encode(logs);
     await prefs.setString(_logKey, s);
   }
 
+  /**
+   * A method which will calulcate the average time and the best time so far with the help of the logs. 
+   */
   void calculateAverageAndPR() {
     saveLogs();
     bool newBest = false;
@@ -131,7 +155,7 @@ class TimerApp extends State<TimerSection> {
     });
   }
 
-  // stop timer func
+  // Stop Timer Method
   void stopTimer() {
     timer!.cancel();
     saveLogs();
@@ -140,7 +164,7 @@ class TimerApp extends State<TimerSection> {
     });
   }
 
-  // reset
+  // Reset Timer Method
   void resetTimer() {
     timer!.cancel();
     setState(() {
@@ -156,6 +180,7 @@ class TimerApp extends State<TimerSection> {
     });
   }
 
+  // Start timer method
   void startTimer() {
     started = true;
     digitSeconds = "00";
@@ -190,6 +215,9 @@ class TimerApp extends State<TimerSection> {
     });
   }
 
+  /**
+   * A method which will generate a random scramble to time yourself on. The random scramble will habe 20 Moves
+   */
   void getScramble() {
     const moves = ["L", "R", "F", "D", "B", "U"];
     Map<String, String> inverts = {
@@ -267,25 +295,29 @@ class TimerApp extends State<TimerSection> {
     });
   }
 
+  /**
+   * A method which will get the length of the logs an adjust the height. 
+   */
   double getHeight() {
-    if(logs.length == 0){
+    if (logs.length == 0) {
       return 75;
-    }
-    else if(logs.length < 10){
-      return (75+50*(logs.length-1)).toDouble();
-    }
-    else{
+    } else if (logs.length < 10) {
+      return (75 + 50 * (logs.length - 1)).toDouble();
+    } else {
       return 300;
     }
   }
 
+  /**
+   * A method which will return datetime string, to a string DD:MM:YYYY format.
+   */
   String getFormattedDate(String date) {
     List<String> data = date.split("-");
     return "${data[2]}.${data[1]}.${data[0]}";
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     loadLogs();
     calculateAverageAndPR();
@@ -343,11 +375,13 @@ class TimerApp extends State<TimerSection> {
                                   onPressed: () {
                                     getScramble();
                                   },
-
                                   child: Text(
                                     AppLocalizations.of(context)!
                                         .generateScramble,
-                                    style: TextStyle(color: Colors.white, fontSize: AppSettings().fontSize, fontFamily: AppSettings().font),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: AppSettings().fontSize,
+                                        fontFamily: AppSettings().font),
                                   )),
                             ),
                           ]),
@@ -368,7 +402,11 @@ class TimerApp extends State<TimerSection> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        AppLocalizations.of(context)!.best + prText + "\n" + AppLocalizations.of(context)!.avg + avgText,
+                        AppLocalizations.of(context)!.best +
+                            prText +
+                            "\n" +
+                            AppLocalizations.of(context)!.avg +
+                            avgText,
                         style: TextStyle(
                           color: Colors.teal.shade100,
                           fontWeight: FontWeight.w600,
@@ -378,7 +416,9 @@ class TimerApp extends State<TimerSection> {
                       ),
                     ),
                     Text(
-                      timerInstruction.length == 0 ? AppLocalizations.of(context)!.timerOff : timerInstruction,
+                      timerInstruction.length == 0
+                          ? AppLocalizations.of(context)!.timerOff
+                          : timerInstruction,
                       style: TextStyle(
                         color: Colors.teal.shade100,
                         fontWeight: FontWeight.w600,
@@ -429,8 +469,7 @@ class TimerApp extends State<TimerSection> {
                         holding = false;
                         if (background == Colors.green) {
                           startTimer();
-                        }
-                        else{
+                        } else {
                           saveLogs();
                         }
                       },
@@ -451,84 +490,106 @@ class TimerApp extends State<TimerSection> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
-                            child : ElevatedButton(
-                            child: Text(AppLocalizations.of(context)!.showLogs, style: TextStyle(color: Colors.white, fontSize: AppSettings().fontSize, fontFamily: AppSettings().font)),
-                            onPressed: () {
-                              showDialog(context: context,
-                                  builder: (context) => StatefulBuilder(
-                                    builder: (context, setState) {
-                                      return SimpleDialog(
-                                        title: const Text("Logs"),
-                                        contentPadding: const EdgeInsets.all(10.0),
-                                        children: [
-                                          SizedBox(
-                                              height: logs.length < 9 ? null : 500,
-                                              width: double.maxFinite,
-                                              child: logs.isNotEmpty ? ListView.builder(
-                                                  shrinkWrap: true,
-                                                  itemCount: logs.length,
-                                                  itemBuilder: (context, index) {
-                                                    return Card(
-                                                      color: secondBackground,
-                                                      child: Padding(
-                                                          padding: EdgeInsets.only(top: 2),
-                                                          child: Row(children: [
-                                                            Column(children: [
-                                                              Padding(
-                                                                padding: EdgeInsets.only(left: 5),
+                            child: ElevatedButton(
+                              child: Text(
+                                  AppLocalizations.of(context)!.showLogs,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: AppSettings().fontSize,
+                                      fontFamily: AppSettings().font)),
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder:
+                                        (context) => StatefulBuilder(
+                                                builder: (context, setState) {
+                                              return SimpleDialog(
+                                                  title: const Text("Logs"),
+                                                  contentPadding:
+                                                      const EdgeInsets.all(
+                                                          10.0),
+                                                  children: [
+                                                    SizedBox(
+                                                        height: logs.length < 9
+                                                            ? null
+                                                            : 500,
+                                                        width: double.maxFinite,
+                                                        child: logs.isNotEmpty
+                                                            ? ListView.builder(
+                                                                shrinkWrap:
+                                                                    true,
+                                                                itemCount:
+                                                                    logs.length,
+                                                                itemBuilder:
+                                                                    (context,
+                                                                        index) {
+                                                                  return Card(
+                                                                    color:
+                                                                        secondBackground,
+                                                                    child: Padding(
+                                                                        padding: EdgeInsets.only(top: 2),
+                                                                        child: Row(children: [
+                                                                          Column(
+                                                                              children: [
+                                                                                Padding(
+                                                                                  padding: EdgeInsets.only(left: 5),
+                                                                                  child: Text(
+                                                                                    logs[index][0] + " |",
+                                                                                    style: TextStyle(
+                                                                                      color: Colors.teal.shade100,
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                      fontSize: (15),
+                                                                                    ),
+                                                                                  ),
+                                                                                )
+                                                                              ]),
+                                                                          Column(
+                                                                              children: [
+                                                                                Padding(
+                                                                                  padding: EdgeInsets.only(left: 2),
+                                                                                  child: Text(
+                                                                                    logs[index][1] + " |",
+                                                                                    style: TextStyle(
+                                                                                      color: Colors.teal.shade100,
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                      fontSize: (15),
+                                                                                    ),
+                                                                                  ),
+                                                                                )
+                                                                              ]),
+                                                                          Column(
+                                                                              children: [
+                                                                                RawMaterialButton(
+                                                                                  onPressed: () {
+                                                                                    setState(() {
+                                                                                      logs.removeAt(index);
+                                                                                      calculateAverageAndPR();
+                                                                                    });
+                                                                                  },
+                                                                                  child: Text("X", style: TextStyle(color: Colors.teal.shade100, fontWeight: FontWeight.w600, fontSize: 15)),
+                                                                                ),
+                                                                              ]),
+                                                                        ])),
+                                                                  );
+                                                                })
+                                                            : Center(
                                                                 child: Text(
-                                                                  logs[index][0]+" |",
-                                                                  style: TextStyle(
-                                                                    color: Colors.teal.shade100,
-                                                                    fontWeight: FontWeight.w600,
-                                                                    fontSize: (15),
-                                                                  ),
-                                                                ),
-                                                              )
-                                                            ]),
-                                                            Column(children: [
-                                                              Padding(
-                                                                padding: EdgeInsets.only(left: 2),
-                                                                child: Text(
-                                                                  logs[index][1]+" |",
-                                                                  style: TextStyle(
-                                                                    color: Colors.teal.shade100,
-                                                                    fontWeight: FontWeight.w600,
-                                                                    fontSize: (15),
-                                                                  ),
-                                                                ),
-                                                              )
-                                                            ]),
-                                                            Column(children: [
-                                                              RawMaterialButton(
-                                                                  onPressed: () {
-                                                                    setState(() {
-                                                                      logs.removeAt(index);
-                                                                      calculateAverageAndPR();
-                                                                    });
-                                                                  },
-                                                                  child: Text(
-                                                                      "X",
-                                                                      style: TextStyle(
-                                                                          color: Colors.teal.shade100,
-                                                                          fontWeight: FontWeight.w600,
-                                                                          fontSize: 15)),
-                                                                ),
-
-                                                            ]),
-                                                          ])),
-                                                    );
-                                                  }) : Center(child: Text(AppLocalizations.of(context)!.emptyLogs,
-                                                  style: TextStyle(
-                                                    fontSize: AppSettings().fontSize,
-                                                    fontFamily: AppSettings().font,
-                                              )))),
-                                        ]
-                                      );
-                                    }
-                                  ));
-                            },
-                          ),
+                                                                    AppLocalizations.of(
+                                                                            context)!
+                                                                        .emptyLogs,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          AppSettings()
+                                                                              .fontSize,
+                                                                      fontFamily:
+                                                                          AppSettings()
+                                                                              .font,
+                                                                    )))),
+                                                  ]);
+                                            }));
+                              },
+                            ),
                           ),
                         ],
                       ),

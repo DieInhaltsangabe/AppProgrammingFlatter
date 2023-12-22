@@ -62,6 +62,10 @@ class InputSectionState extends State<InputSection> {
       [Colors.blue, Colors.green]
     ],
   ];
+
+  /**
+   * Method which will take current cube grid oritnetation and formation, to generate the cube notation string to represent this cube
+   */
   String buildCubeString() {
     rotateCube(grids[4]);
     rotateCube(grids[4]);
@@ -114,12 +118,18 @@ class InputSectionState extends State<InputSection> {
     return stringArray.join();
   }
 
+  /**
+   * Switches the rendered face of the cube.
+   */
   void switchGrid(int newIndex) {
     setState(() {
       currentGridIndex = newIndex;
     });
   }
 
+  /**
+   * Rotate a single face from the cube by 90 degrees, to fix a conversion error we faced.
+   */
   void rotateCube(List<List<Color>> grid) {
     int N = grid.length - 1;
 
@@ -142,6 +152,9 @@ class InputSectionState extends State<InputSection> {
     }
   }
 
+  /**
+   * Check if the Cube Input has enough occurances of each color (exactly 9)
+   */
   bool ValidateCube() {
     var numberOfColors = {for (var color in colors) color: 0};
     for (var grid in grids) {
@@ -165,6 +178,10 @@ class InputSectionState extends State<InputSection> {
     return true;
   }
 
+  /**
+   * When input is done, this method is called to check if it i filled up correctly.
+   * If not a dialog will be shown. If it is, it will return to Main View
+   */
   String submitCube() {
     if (!ValidateCube()) {
       showDialog(

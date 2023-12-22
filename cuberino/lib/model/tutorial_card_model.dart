@@ -1,3 +1,4 @@
+// a interface technically
 class TutorialCardModel {
   const TutorialCardModel(
       {required this.id,

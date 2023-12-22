@@ -29,6 +29,9 @@ class TutorialRepository {
     ];
   }
 
+/**
+ * All currently wrote tutorials, which are defined as tutorial card models
+ */
   static loadDataChild(int id, BuildContext context) {
     var tutorials = [
       TutorialCardModel(
