@@ -1,4 +1,3 @@
-import 'package:cuberino/pages/tutorial.dart';
 import 'package:cuberino/pages/tutorial_section.dart';
 import 'package:flutter/material.dart';
 import 'package:cuberino/main.dart';

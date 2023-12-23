@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cuberino/app_settings.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:cuberino/components/bottom_app_bar.dart';
 
 import '../main.dart';
 
@@ -58,13 +57,16 @@ class _BackgroundColorSelectState extends State<BackgroundColorSelect> {
                   _appSettings.background_color = color;
                 });
               },
-              showLabel: true,
               pickerAreaHeightPercent: 0.8,
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: Text(AppLocalizations.of(context)!.errorAccept,
+                  style: TextStyle(
+                      fontSize: AppSettings().fontSize,
+                      fontFamily: AppSettings().font,
+                      color: Theme.of(context).colorScheme.onSurface)),
               onPressed: () {
                 Navigator.of(context).pop();
               },

@@ -68,5 +68,11 @@
   "north":"N",
   "south":"S",
   "middleSide": "The middle color indicates the respective side.",
-  "import": "Import/Export"
+  "import": "Import/Export",
+  "error": "Error",
+  "fieldNotCorrectFilled": "Fields are filled incorrectly",
+  "errorAccept": "OK",
+  "cubeNotCorrect": "Unfortunately, the cube is not correct.",
+  "cubeInput": "Enter Cube String Here",
+  "copy":"kopieren"
 }

@@ -85,6 +85,26 @@ class CubeState extends State<Cube> {
   }
 
 /**
+   * The method parses the String to an object
+   * has been inspired by Move.parse Methode Cuber Package
+   */
+  C.Move inverteMove(String move) {
+    final letter = move[0].toUpperCase();
+    var inverted;
+    final double = move.length > 1 && move[1] == '2';
+    if (double) {
+      inverted = (move.length > 1 && move[1] == "'");
+      print("double");
+    } else {
+      inverted = !(move.length > 1 && move[1] == "'");
+      print("not double");
+    }
+    final color = C.Color.of(letter);
+
+    return C.Move(color, inverted: inverted, double: double);
+  }
+
+/**
    * The method takes a cube face (white, red, blue, green, orange or yellow)
    * and rotates the face by 90 degrees.
    */
@@ -977,13 +997,27 @@ class CubeState extends State<Cube> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
-                                          title: Text('Fehler'),
+                                          title: Text(
+                                              AppLocalizations.of(context)!
+                                                  .error,
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      AppSettings().fontSize,
+                                                  fontFamily:
+                                                      AppSettings().font)),
                                           content: Text(
-                                              'Der Würfel ist leider nicht korrekt.'),
+                                              AppLocalizations.of(context)!
+                                                  .cubeNotCorrect,
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      AppSettings().fontSize,
+                                                  fontFamily:
+                                                      AppSettings().font)),
                                           actions: <Widget>[
                                             TextButton(
                                               child: Text(
-                                                'OK',
+                                                AppLocalizations.of(context)!
+                                                    .errorAccept,
                                                 style: TextStyle(
                                                     fontSize:
                                                         AppSettings().fontSize,
@@ -1007,13 +1041,26 @@ class CubeState extends State<Cube> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                        title: Text('Fehler'),
+                                        title: Text(
+                                            AppLocalizations.of(context)!.error,
+                                            style: TextStyle(
+                                                fontSize:
+                                                    AppSettings().fontSize,
+                                                fontFamily:
+                                                    AppSettings().font)),
                                         content: Text(
-                                            'Der Würfel ist leider nicht korrekt.'),
+                                            AppLocalizations.of(context)!
+                                                .cubeNotCorrect,
+                                            style: TextStyle(
+                                                fontSize:
+                                                    AppSettings().fontSize,
+                                                fontFamily:
+                                                    AppSettings().font)),
                                         actions: <Widget>[
                                           TextButton(
                                             child: Text(
-                                              'OK',
+                                              AppLocalizations.of(context)!
+                                                  .errorAccept,
                                               style: TextStyle(
                                                   fontSize:
                                                       AppSettings().fontSize,
@@ -1056,6 +1103,7 @@ class CubeState extends State<Cube> {
                               setState(() {
                                 solution = cubesolved.toString();
                                 solutionList = solution.split(" ");
+                                solutionList.add("-");
                               });
                             },
                             child: Text(
@@ -1091,11 +1139,16 @@ class CubeState extends State<Cube> {
                         IconButton(
                           icon: Icon(Icons.arrow_back),
                           onPressed: () {
-                            setState(() {
-                              if (!(solutionIndex <= 0)) {
+                            if (!(solutionIndex <= 0)) {
+                              var oldCube = C.Cube.from(cube);
+                              var newCube = oldCube.move(
+                                  inverteMove(solutionList[solutionIndex - 1]));
+                              setState(() {
                                 solutionIndex--;
-                              }
-                            });
+                                cube = newCube.definition;
+                                print(newCube.definition);
+                              });
+                            }
                           },
                         ),
                         Container(
@@ -1121,24 +1174,35 @@ class CubeState extends State<Cube> {
                         IconButton(
                           icon: Icon(Icons.arrow_forward),
                           onPressed: () {
-                            setState(() {
-                              if (solutionIndex < solutionList.length - 1) {
+                            if (solutionIndex < solutionList.length - 1) {
+                              var oldCube = C.Cube.from(cube);
+                              var newCube = oldCube.move(
+                                  C.Move.parse(solutionList[solutionIndex]));
+                              setState(() {
                                 solutionIndex++;
-                              }
-                            });
+                                cube = newCube.definition;
+                                print(newCube.definition);
+                              });
+                            }
                           },
                         ),
                       ],
                     ),
                   ),
                   Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(((solutionList.length == 0 ? "0" : (solutionIndex+1).toString()) + " | " + (solutionList.length.toString())))
-                      ]
-                    )
-                  )
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                        Text(
+                            ((solutionList.length == 0
+                                    ? "0"
+                                    : (solutionIndex + 1).toString()) +
+                                " | " +
+                                ((solutionList.length).toString())),
+                            style: TextStyle(
+                                fontSize: AppSettings().fontSize,
+                                fontFamily: AppSettings().font))
+                      ]))
                 ],
               )),
             )

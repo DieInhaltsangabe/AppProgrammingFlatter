@@ -59,5 +59,11 @@
   "north":"K",
   "south":"G",
   "middleSide": "Orta renk, ilgili tarafı belirtir.",
-  "import": "İçe Aktar/Dışa Aktar"
+  "import": "İçe Aktar/Dışa Aktar",
+  "error": "Hata",
+  "fieldNotCorrectFilled": "Alanlar yanlış dolduruldu",
+  "errorAccept": "Tamam",
+  "cubeNotCorrect": "Maalesef, küp doğru değil.",
+  "cubeInput": "Küp Dizisini Buraya Girin",
+  "copy": "Kopyala"
   }

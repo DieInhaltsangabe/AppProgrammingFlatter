@@ -242,7 +242,6 @@ class TimerApp extends State<TimerSection> {
     };
     var random = Random();
     var scramble = [];
-    var len = scramble.length;
     // Single, Double, Revert
     while (scramble.length < 20) {
       var move = random.nextInt(moves.length);
@@ -318,7 +317,6 @@ class TimerApp extends State<TimerSection> {
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme colorScheme = Theme.of(context).colorScheme;
     loadLogs();
     calculateAverageAndPR();
     return Scaffold(

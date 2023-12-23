@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:cuberino/app_settings.dart';
@@ -75,7 +74,6 @@ class InputSectionState extends State<InputSection> {
     rotateCube(grids[5]);
 
     var stringArray = [];
-    var counter = 0;
     var sortedGrid = [
       grids[4],
       grids[1],
@@ -188,12 +186,18 @@ class InputSectionState extends State<InputSection> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Fehler'),
-            content: Text('Felder sind falsch gefüllt'),
+            title: Text(AppLocalizations.of(context)!.error,
+                style: TextStyle(
+                    fontSize: AppSettings().fontSize,
+                    fontFamily: AppSettings().font)),
+            content: Text(AppLocalizations.of(context)!.fieldNotCorrectFilled,
+                style: TextStyle(
+                    fontSize: AppSettings().fontSize,
+                    fontFamily: AppSettings().font)),
             actions: <Widget>[
               TextButton(
                 child: Text(
-                  'OK',
+                  AppLocalizations.of(context)!.errorAccept,
                   style: TextStyle(
                       fontSize: AppSettings().fontSize,
                       fontFamily: AppSettings().font,
@@ -222,8 +226,11 @@ class InputSectionState extends State<InputSection> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center, // Add this line
             children: [
-              Text(AppLocalizations.of(context)!
-                  .middleSide), //Vielleicht ein Never show this again screen mit hint davor
+              Text(AppLocalizations.of(context)!.middleSide,
+                  style: TextStyle(
+                      fontSize: AppSettings().fontSize,
+                      fontFamily: AppSettings()
+                          .font)), //Vielleicht ein Never show this again screen mit hint davor
               const SizedBox(height: 10),
               Container(
                 width: 50,
@@ -232,7 +239,9 @@ class InputSectionState extends State<InputSection> {
                 child: Align(
                     alignment: Alignment.center,
                     child: Text(AppLocalizations.of(context)!.north,
-                        style: TextStyle(fontSize: _appSettings.fontSize))),
+                        style: TextStyle(
+                            fontSize: AppSettings().fontSize,
+                            fontFamily: AppSettings().font))),
               ),
               const SizedBox(height: 15),
               Row(
@@ -381,7 +390,9 @@ class InputSectionState extends State<InputSection> {
                   child: Align(
                       alignment: Alignment.center,
                       child: Text(AppLocalizations.of(context)!.south,
-                          style: TextStyle(fontSize: _appSettings.fontSize)))),
+                          style: TextStyle(
+                              fontSize: AppSettings().fontSize,
+                              fontFamily: AppSettings().font)))),
               const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -439,17 +450,20 @@ class InputSectionState extends State<InputSection> {
                         _textFieldController.text = submitCube();
                       }
                       return AlertDialog(
-                        title: Text('Exportieren/Importieren'),
+                        title: Text(AppLocalizations.of(context)!.import,
+                            style: TextStyle(
+                                fontSize: AppSettings().fontSize,
+                                fontFamily: AppSettings().font)),
                         content: TextField(
                           controller: _textFieldController,
                           decoration: InputDecoration(
-                            hintText: "Cube String hier eingeben",
+                            hintText: AppLocalizations.of(context)!.cubeInput,
                           ),
                         ),
                         actions: <Widget>[
                           TextButton(
                             child: Text(
-                              'OK',
+                              AppLocalizations.of(context)!.errorAccept,
                               style: TextStyle(
                                 fontSize: AppSettings().fontSize,
                                 fontFamily: AppSettings().font,
@@ -463,7 +477,7 @@ class InputSectionState extends State<InputSection> {
                           ),
                           TextButton(
                             child: Text(
-                              'Copy',
+                              AppLocalizations.of(context)!.copy,
                               style: TextStyle(
                                 fontSize: AppSettings().fontSize,
                                 fontFamily: AppSettings().font,

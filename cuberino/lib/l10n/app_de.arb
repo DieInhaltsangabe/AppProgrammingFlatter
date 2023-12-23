@@ -59,5 +59,11 @@
   "north":"N",
   "south":"S",
   "middleSide":"Die mittlere Farbe gibt die jeweilige Seite an.",
-  "import":"Importieren/Exportieren"
+  "import":"Importieren/Exportieren",
+  "error":"Fehler",
+  "fieldNotCorrectFilled":"Felder sind falsch gefüllt",
+  "errorAccept":"OK",
+  "cubeNotCorrect":"Der Würfel ist leider nicht korrekt.",
+  "cubeInput": "Cube String hier eingeben",
+  "copy":"kopieren"
   }
