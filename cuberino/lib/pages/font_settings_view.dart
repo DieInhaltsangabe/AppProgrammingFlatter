@@ -48,11 +48,11 @@ class _FontSettingsViewState extends State<FontSettingsView> {
                     fontSize: _appSettings.fontSize,
                     fontFamily: _appSettings.font),
               ),
-              value: _appSettings.fontSize == 20.0,
+              value: _appSettings.fontSize == 17.0,
               onChanged: (bool? value) {
                 if (value != null && value) {
                   setState(() {
-                    _appSettings.fontSize = 20.0;
+                    _appSettings.fontSize = 17.0;
                   });
                 }
               },
@@ -64,11 +64,11 @@ class _FontSettingsViewState extends State<FontSettingsView> {
                     fontSize: _appSettings.fontSize,
                     fontFamily: _appSettings.font),
               ),
-              value: _appSettings.fontSize == 25.0,
+              value: _appSettings.fontSize == 20.0,
               onChanged: (bool? value) {
                 if (value != null && value) {
                   setState(() {
-                    _appSettings.fontSize = 25.0;
+                    _appSettings.fontSize = 20.0;
                   });
                 }
               },

@@ -1132,6 +1132,9 @@ class CubeState extends State<Cube> {
                           OutlineInputBorder(), // Add a border around the TextField
                     ),
                   ),
+                  const SizedBox(
+                    height: 35,
+                  ),
                   Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1152,8 +1155,8 @@ class CubeState extends State<Cube> {
                           },
                         ),
                         Container(
-                          width: 50,
-                          height: 50,
+                          width: 60,
+                          height: 60,
                           child: TextField(
                             controller: TextEditingController(
                                 text: solutionList.isNotEmpty

@@ -17,7 +17,10 @@ class Tutorial extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 4.0),
-            child: Text(TutorialRepository.loadCaptionText(parentId, context)),
+            child: Text(TutorialRepository.loadCaptionText(parentId, context),
+                style: TextStyle(
+                    fontSize: AppSettings().fontSize,
+                    fontFamily: AppSettings().font)),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
@@ -30,10 +33,19 @@ class Tutorial extends StatelessWidget {
             ),
           ),
           Expanded(
-              child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 4.0),
-                  child: Text(TutorialRepository.loadTutorial(parentId, context)
-                      .subsectionText))),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 4.0),
+              child: SingleChildScrollView(
+                child: Text(
+                  TutorialRepository.loadTutorial(parentId, context)
+                      .subsectionText,
+                  style: TextStyle(
+                      fontSize: AppSettings().fontSize,
+                      fontFamily: AppSettings().font),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

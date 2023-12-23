@@ -177,17 +177,19 @@ class Challanges extends State<ChallangesSection> {
   _loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String challangeString = prefs.getString("challanges") ?? "";
-    var parsed = json.decode(challangeString);
-    parsed[1] = DateTime.parse(parsed[1]);
+    if ("" != challangeString) {
+      var parsed = json.decode(challangeString);
+      parsed[1] = DateTime.parse(parsed[1]);
 
-    if (DateTime.now().isAfter(parsed[1])) {
-      parsed[0] = parsed[0] + 1;
+      if (DateTime.now().isAfter(parsed[1])) {
+        parsed[0] = parsed[0] + 1;
+      }
+      setState(() {
+        challangeId = parsed[0];
+      });
+      print(parsed);
+      _saveData();
     }
-    setState(() {
-      challangeId = parsed[0];
-    });
-    print(parsed);
-    _saveData();
   }
 
   /** 

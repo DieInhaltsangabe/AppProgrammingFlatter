@@ -1,3 +1,4 @@
+import 'package:cuberino/app_settings.dart';
 import 'package:cuberino/components/tutorialdetail.dart';
 import 'package:cuberino/pages/tutorial.dart';
 import 'package:flutter/material.dart';
@@ -51,9 +52,23 @@ class TutorialCard extends StatelessWidget {
             Expanded(
               child: Column(
                 children: [
-                  Text(captionText),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Text(captionText,
+                          style: TextStyle(
+                              fontSize: AppSettings().fontSize,
+                              fontFamily: AppSettings().font)),
+                    ),
+                  ),
                   const SizedBox(height: 8.0),
-                  Text(subsectionText),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Text(subsectionText,
+                          style: TextStyle(
+                              fontSize: AppSettings().fontSize,
+                              fontFamily: AppSettings().font)),
+                    ),
+                  ),
                 ],
               ),
             ),

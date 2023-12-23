@@ -5,7 +5,6 @@ import 'font_settings_view.dart';
 import 'language_settings_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class SettingsPage extends StatefulWidget {
   @override
   _SettingsPageState createState() => _SettingsPageState();
@@ -18,13 +17,26 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.settings),
       ),
-      body:
-      ListView(
+      body: ListView(
         children: [
-          ListNavigation(AppLocalizations.of(context)!.language, (){Navigator.push(context, MaterialPageRoute(builder: (context) => LanguageSettings()));}),
-          ListNavigation("Font", (){Navigator.push(context, MaterialPageRoute(builder: (context) => FontSettingsView()));}),
-          ListNavigation(AppLocalizations.of(context)!.backgroundcolor, (){Navigator.push(context, MaterialPageRoute(builder: (context) => BackgroundColorSelect()));}),
-          ListNavigation(AppLocalizations.of(context)!.cubeZoomSettings, (){Navigator.push(context, MaterialPageRoute(builder: (context) => CubeZoom()));})
+          ListNavigation(AppLocalizations.of(context)!.language, () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => LanguageSettings()));
+          }),
+          ListNavigation("Font", () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FontSettingsView()));
+          }),
+          ListNavigation(AppLocalizations.of(context)!.backgroundcolor, () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => BackgroundColorSelect()));
+          }),
+          ListNavigation(AppLocalizations.of(context)!.cubeZoomSettings, () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => CubeZoom()));
+          })
         ],
       ),
     );
@@ -35,7 +47,7 @@ class ListNavigation extends StatelessWidget {
   String listName = "";
   VoidCallback? onPressed;
 
-  ListNavigation(String listName, VoidCallback? onPressed){
+  ListNavigation(String listName, VoidCallback? onPressed) {
     this.listName = listName;
     this.onPressed = onPressed;
   }
@@ -51,7 +63,9 @@ class ListNavigation extends StatelessWidget {
           child: Container(
             height: 50,
             color: Colors.white70,
-            child: Center(child: Text(listName),),
+            child: Center(
+              child: Text(listName),
+            ),
           ),
         ),
       ),
