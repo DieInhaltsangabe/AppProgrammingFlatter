@@ -80,7 +80,7 @@ class CubeState extends State<Cube> {
   @override
   void initState() {
     super.initState();
-    final newCube = C.Cube.solved;
+    final newCube = C.Cube.checkerboard;
     cube = newCube.definition;
   }
 
@@ -1131,6 +1131,14 @@ class CubeState extends State<Cube> {
                       ],
                     ),
                   ),
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(((solutionList.length == 0 ? "0" : (solutionIndex+1).toString()) + " | " + (solutionList.length.toString())))
+                      ]
+                    )
+                  )
                 ],
               )),
             )
