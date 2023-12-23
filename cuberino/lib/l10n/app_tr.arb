@@ -11,7 +11,7 @@
   "emptyLogs": "Bulunamadi.",
   "showLogs": "Log göster",
   "todaysChallenge": "Bügünün Challangesi",
-  "cubeZoomSettings": "Cube Zoom",
+  "cubeZoomSettings": "Küp yakınlaştırma",
   "changecolor": "Arka plan rengi değiştir",
   "challengeSolutionToPattern": "Çözülmüş bir Küpten desene ulaşmak için bu algoritmayı kullanın",
   "challengePatternToSolved": "Küpü normale döndürmek için bu algoritmayı kullanın",
@@ -65,5 +65,12 @@
   "errorAccept": "Tamam",
   "cubeNotCorrect": "Maalesef, küp doğru değil.",
   "cubeInput": "Küp Dizisini Buraya Girin",
-  "copy": "Kopyala"
-  }
+  "copy": "Kopyala",
+  "fontsize": "Yazi boyutunu seç",
+  "small": "Küçük",
+  "medium": "Orta",
+  "large": "Büyük",
+  "fontfamily": "Yazi tipi seç",
+  "cubeZoom": "Küp boyutunu seç",
+  "font": "Yazi tipi"
+}

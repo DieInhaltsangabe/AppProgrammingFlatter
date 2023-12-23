@@ -74,5 +74,12 @@
   "errorAccept": "OK",
   "cubeNotCorrect": "Unfortunately, the cube is not correct.",
   "cubeInput": "Enter Cube String Here",
-  "copy":"kopieren"
+  "copy":"copy",
+  "fontsize": "Select font size",
+  "small": "Small",
+  "medium": "Medium",
+  "large": "Large",
+  "fontfamily": "Select Font Family",
+  "cubeZoom": "Select Cube Zoom Size",
+  "font": "Font"
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cuberino/app_settings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../main.dart';
 
@@ -20,14 +21,14 @@ class _FontSettingsViewState extends State<FontSettingsView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Select Font Size',
+              AppLocalizations.of(context)!.fontsize,
               style: TextStyle(
                   fontSize: _appSettings.fontSize,
                   fontFamily: _appSettings.font),
             ),
             CheckboxListTile(
               title: Text(
-                'Small',
+                AppLocalizations.of(context)!.small,
                 style: TextStyle(
                     fontSize: _appSettings.fontSize,
                     fontFamily: _appSettings.font),
@@ -43,7 +44,7 @@ class _FontSettingsViewState extends State<FontSettingsView> {
             ),
             CheckboxListTile(
               title: Text(
-                'Medium',
+                AppLocalizations.of(context)!.medium,
                 style: TextStyle(
                     fontSize: _appSettings.fontSize,
                     fontFamily: _appSettings.font),
@@ -59,7 +60,7 @@ class _FontSettingsViewState extends State<FontSettingsView> {
             ),
             CheckboxListTile(
               title: Text(
-                'Large',
+                AppLocalizations.of(context)!.large,
                 style: TextStyle(
                     fontSize: _appSettings.fontSize,
                     fontFamily: _appSettings.font),
@@ -75,7 +76,7 @@ class _FontSettingsViewState extends State<FontSettingsView> {
             ),
             Divider(),
             Text(
-              'Select Font Family',
+              AppLocalizations.of(context)!.fontfamily,
               style: TextStyle(
                   fontSize: _appSettings.fontSize,
                   fontFamily: _appSettings.font),

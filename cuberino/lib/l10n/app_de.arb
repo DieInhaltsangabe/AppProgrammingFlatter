@@ -65,5 +65,12 @@
   "errorAccept":"OK",
   "cubeNotCorrect":"Der Würfel ist leider nicht korrekt.",
   "cubeInput": "Cube String hier eingeben",
-  "copy":"kopieren"
-  }
+  "copy":"kopieren",
+  "fontsize": "Schriftgröße auswählen,",
+  "small": "Klein",
+  "medium": "Medium",
+  "large": "Groß",
+  "fontfamily": "Schriftart auswählen",
+  "cubeZoom": "Würfel Größe wählen",
+  "font": "Schriftart"
+}

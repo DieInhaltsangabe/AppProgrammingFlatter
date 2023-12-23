@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cuberino/app_settings.dart';
 import 'package:cuberino/main.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class CubeZoom extends StatefulWidget {
   const CubeZoom({Key? key}) : super(key: key);
@@ -20,14 +22,14 @@ class _CubeZoomSettingsState extends State<CubeZoom> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Select Cube Zoom Size',
+              AppLocalizations.of(context)!.cubeZoom,
               style: TextStyle(
                   fontSize: _appSettings.fontSize,
                   fontFamily: _appSettings.font),
             ),
             CheckboxListTile(
               title: Text(
-                'Small',
+                AppLocalizations.of(context)!.small,
                 style: TextStyle(
                     fontSize: _appSettings.fontSize,
                     fontFamily: _appSettings.font),
@@ -43,7 +45,7 @@ class _CubeZoomSettingsState extends State<CubeZoom> {
             ),
             CheckboxListTile(
               title: Text(
-                'Medium',
+                AppLocalizations.of(context)!.medium,
                 style: TextStyle(
                     fontSize: _appSettings.fontSize,
                     fontFamily: _appSettings.font),
@@ -59,7 +61,7 @@ class _CubeZoomSettingsState extends State<CubeZoom> {
             ),
             CheckboxListTile(
               title: Text(
-                'Large',
+                AppLocalizations.of(context)!.large,
                 style: TextStyle(
                     fontSize: _appSettings.fontSize,
                     fontFamily: _appSettings.font),

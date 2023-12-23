@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'cube_zoom_settings_view.dart';
 import 'font_settings_view.dart';
 import 'language_settings_view.dart';
+import 'package:cuberino/app_settings.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -11,11 +12,16 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  final AppSettings _appSettings = AppSettings();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.settings),
+        title: Text(AppLocalizations.of(context)!.settings,
+            style: TextStyle(
+            fontSize: _appSettings.fontSize,
+            fontFamily: _appSettings.font),
+        ),
       ),
       body: ListView(
         children: [
@@ -23,7 +29,7 @@ class _SettingsPageState extends State<SettingsPage> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => LanguageSettings()));
           }),
-          ListNavigation("Font", () {
+          ListNavigation(AppLocalizations.of(context)!.font, () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => FontSettingsView()));
           }),
